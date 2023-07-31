@@ -1,5 +1,6 @@
-# US Core Test Kit
+# DaVinci PDEX Drug Formulary Test Kit
 
+**TODO: Update README**
 This is an [Inferno](https://inferno-framework.github.io/inferno-core/) test kit
 for the US Core Implementation Guide
 [v3.1.1](http://hl7.org/fhir/us/core/STU3.1.1/),
