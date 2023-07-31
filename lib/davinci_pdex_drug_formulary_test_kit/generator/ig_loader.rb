@@ -5,7 +5,7 @@ require 'rubygems/package'
 require 'zlib'
 require_relative 'ig_resources'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class IGLoader
       attr_accessor :ig_file_name

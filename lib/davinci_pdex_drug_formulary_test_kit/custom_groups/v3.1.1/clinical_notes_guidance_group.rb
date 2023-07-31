@@ -2,7 +2,7 @@
 require_relative '../clinical_note_attachment_test'
 require_relative '../clinical_note_type_test'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   module USCoreV311
     class ClinicalNotesGuidanceGroup < Inferno::TestGroup
       id :us_core_v311_clinical_notes_guidance

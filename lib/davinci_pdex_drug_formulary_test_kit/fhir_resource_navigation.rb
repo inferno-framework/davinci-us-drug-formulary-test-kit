@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   module FHIRResourceNavigation
     DAR_EXTENSION_URL = 'http://hl7.org/fhir/StructureDefinition/data-absent-reason'.freeze
 

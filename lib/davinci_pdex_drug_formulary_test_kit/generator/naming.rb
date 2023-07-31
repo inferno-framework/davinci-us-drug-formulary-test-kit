@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     module Naming
       ALLERGY_INTOLERANCE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance'

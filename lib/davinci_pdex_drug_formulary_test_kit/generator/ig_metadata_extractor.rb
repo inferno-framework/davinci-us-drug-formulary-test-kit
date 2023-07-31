@@ -1,7 +1,7 @@
 require_relative 'ig_metadata'
 require_relative 'group_metadata_extractor'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class IGMetadataExtractor
       attr_accessor :ig_resources, :metadata

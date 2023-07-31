@@ -1,11 +1,11 @@
 require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/custom_groups/clinical_note_type_test'
 
-RSpec.describe USCoreTestKit::ClinicalNoteTypeTest do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::ClinicalNoteTypeTest do
   let(:url) { 'http://example.com/fhir' }
   let(:patient_id) { '85' }
   let(:test_scratch) { {} }
   let(:test_class) do
-    Class.new(USCoreTestKit::ClinicalNoteTypeTest) do
+    Class.new(DaVinciPDEXDrugFormularyTestKit::ClinicalNoteTypeTest) do
       fhir_client { url 'http://example.com/fhir' }
     end
   end

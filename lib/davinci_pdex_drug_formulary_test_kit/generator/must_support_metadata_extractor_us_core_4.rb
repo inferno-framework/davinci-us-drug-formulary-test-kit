@@ -1,6 +1,6 @@
 require_relative 'must_support_metadata_extractor_us_core_3'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class MustSupportMetadataExtractorUsCore4
       attr_accessor :profile, :must_supports

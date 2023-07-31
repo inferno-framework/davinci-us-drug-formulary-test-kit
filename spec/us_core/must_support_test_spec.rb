@@ -1,4 +1,4 @@
-RSpec.describe USCoreTestKit::MustSupportTest do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::MustSupportTest do
   let(:suite) { Inferno::Repositories::TestSuites.new.find('us_core_v400') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
@@ -197,7 +197,7 @@ RSpec.describe USCoreTestKit::MustSupportTest do
     end
 
     context 'slicing with type' do
-      let(:test_class) { USCoreTestKit::USCoreV400::SmokingstatusMustSupportTest }
+      let(:test_class) { DaVinciPDEXDrugFormularyTestKit::USCoreV400::SmokingstatusMustSupportTest }
       let(:observation) {
         FHIR::Observation.new(
           status: 'final',
@@ -268,7 +268,7 @@ RSpec.describe USCoreTestKit::MustSupportTest do
 
     context 'slicing with requiredBinding' do
       context 'Condition ProblemsHealthConcerns' do
-        let(:test_class) { USCoreTestKit::USCoreV501::ConditionProblemsHealthConcernsMustSupportTest }
+        let(:test_class) { DaVinciPDEXDrugFormularyTestKit::USCoreV501::ConditionProblemsHealthConcernsMustSupportTest }
         let(:condition) {
           FHIR::Condition.new(
             extension: [
@@ -357,7 +357,7 @@ RSpec.describe USCoreTestKit::MustSupportTest do
       end
 
       context 'MedicationRequest' do
-        let(:test_class) { USCoreTestKit::USCoreV501::MedicationRequestMustSupportTest }
+        let(:test_class) { DaVinciPDEXDrugFormularyTestKit::USCoreV501::MedicationRequestMustSupportTest }
         let(:medication_request_1) {
           FHIR::MedicationRequest.new(
             status: 'active',
@@ -409,7 +409,7 @@ RSpec.describe USCoreTestKit::MustSupportTest do
   end
 
   describe 'must support test for choices' do
-    let(:test_class) { USCoreTestKit::USCoreV501::ConditionProblemsHealthConcernsMustSupportTest }
+    let(:test_class) { DaVinciPDEXDrugFormularyTestKit::USCoreV501::ConditionProblemsHealthConcernsMustSupportTest }
     let(:condition) {
       FHIR::Condition.new(
         extension: [

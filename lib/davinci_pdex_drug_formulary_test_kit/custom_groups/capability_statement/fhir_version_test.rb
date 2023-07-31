@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class FHIRVersionTest < Inferno::Test
     id :us_core_fhir_version
     title 'Server is using FHIR R4'

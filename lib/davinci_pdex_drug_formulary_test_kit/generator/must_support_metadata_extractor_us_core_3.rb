@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class MustSupportMetadataExtractorUsCore3
       attr_accessor :profile, :must_supports

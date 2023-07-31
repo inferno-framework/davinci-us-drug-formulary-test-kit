@@ -1,7 +1,7 @@
-RSpec.describe USCoreTestKit::ReferenceResolutionTest do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::ReferenceResolutionTest do
   let(:test_class) do
     Class.new(Inferno::Entities::Test) do
-      include USCoreTestKit::ReferenceResolutionTest
+      include DaVinciPDEXDrugFormularyTestKit::ReferenceResolutionTest
 
       fhir_client { url 'https://example.com/fhir' }
     end

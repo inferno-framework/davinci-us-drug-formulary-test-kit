@@ -1,9 +1,9 @@
 require_relative '../../../validation_test'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   module <%= module_name %>
     class <%= class_name %> < Inferno::Test
-      include USCoreTestKit::ValidationTest
+      include DaVinciPDEXDrugFormularyTestKit::ValidationTest
 
       id :<%= test_id %>
       title '<%= resource_type %> resources returned during previous tests conform to the <%= profile_name %>'

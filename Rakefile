@@ -22,6 +22,6 @@ namespace :us_core do
   task :generate do
     require_relative 'lib/davinci_pdex_drug_formulary_test_kit/generator'
 
-    USCoreTestKit::Generator.generate
+    DaVinciPDEXDrugFormularyTestKit::Generator.generate
   end
 end

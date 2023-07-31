@@ -5,7 +5,7 @@ require_relative '../capability_statement/json_support_test'
 require_relative '../capability_statement/profile_support_test'
 require_relative '../capability_statement/instantiate_test'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   module USCoreV610
     class CapabilityStatementGroup < Inferno::TestGroup
       id :us_core_v610_capability_statement

@@ -1,6 +1,6 @@
 require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/custom_groups/clinical_note_attachment_test'
 
-RSpec.describe USCoreTestKit::ClinicalNoteAttachmentTest do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::ClinicalNoteAttachmentTest do
   let(:clinical_note_attachment_test) { Inferno::Repositories::Tests.new.find('us_core_clinical_note_attachments') }
   let(:suite) { Inferno::Repositories::TestSuites.new.find('us_core_v311') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }

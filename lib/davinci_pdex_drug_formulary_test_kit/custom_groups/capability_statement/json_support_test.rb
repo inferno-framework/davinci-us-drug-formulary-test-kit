@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class JSONSupportTest < Inferno::Test
     id :us_core_json_support
     title 'FHIR server capability states JSON support'

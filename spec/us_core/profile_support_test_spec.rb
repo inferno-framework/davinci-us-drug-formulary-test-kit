@@ -1,6 +1,6 @@
 require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/custom_groups/capability_statement/profile_support_test'
 
-RSpec.describe USCoreTestKit::ProfileSupportTest do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
   def run(runnable, inputs = {})
     test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
     test_run = Inferno::Repositories::TestRuns.new.create(test_run_params)

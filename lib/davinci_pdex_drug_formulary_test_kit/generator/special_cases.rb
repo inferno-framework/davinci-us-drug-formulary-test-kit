@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     module SpecialCases
       RESOURCES_TO_EXCLUDE = [

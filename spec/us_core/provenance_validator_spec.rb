@@ -1,6 +1,6 @@
 require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/provenance_validator'
 
-RSpec.describe USCoreTestKit::ProvenanceValidator do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProvenanceValidator do
   let(:provenance_id){'123'}
 
   describe '.validate' do

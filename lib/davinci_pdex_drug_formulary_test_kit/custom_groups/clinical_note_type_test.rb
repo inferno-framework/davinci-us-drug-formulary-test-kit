@@ -1,6 +1,6 @@
 require_relative '../search_test'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class ClinicalNoteTypeTest < Inferno::Test
     include SearchTest
 

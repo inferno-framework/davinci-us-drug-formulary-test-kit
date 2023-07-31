@@ -4,7 +4,7 @@ require_relative 'must_support_metadata_extractor_us_core_4'
 require_relative 'must_support_metadata_extractor_us_core_5'
 require_relative 'must_support_metadata_extractor_us_core_6'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class MustSupportMetadataExtractor
       attr_accessor :profile_elements, :profile, :resource, :ig_resources

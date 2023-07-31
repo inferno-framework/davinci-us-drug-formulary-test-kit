@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class ClinicalNoteAttachmentTest < Inferno::Test
     id :us_core_clinical_note_attachments
     title 'DiagnosticReport and DocumentReference reference the same attachment'

@@ -4,7 +4,7 @@ require_relative '../capability_statement/fhir_version_test'
 require_relative '../capability_statement/json_support_test'
 require_relative '../capability_statement/profile_support_test'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   module USCoreV311
     class CapabilityStatementGroup < Inferno::TestGroup
       id :us_core_v311_capability_statement

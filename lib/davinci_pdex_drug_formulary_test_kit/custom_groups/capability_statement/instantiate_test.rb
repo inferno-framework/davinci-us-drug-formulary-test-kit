@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class InstantiateTest < Inferno::Test
     id :us_core_instantiate
     title 'Server instantiates US Core Server'

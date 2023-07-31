@@ -1,4 +1,4 @@
-RSpec.describe USCoreTestKit::ReferenceResolutionTest do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::ReferenceResolutionTest do
   let(:suite) { Inferno::Repositories::TestSuites.new.find('us_core_v400') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
@@ -21,7 +21,7 @@ RSpec.describe USCoreTestKit::ReferenceResolutionTest do
 
   describe 'reference validation with target profiles' do
     let(:test_class) do
-      Class.new(USCoreTestKit::USCoreV400::DiagnosticReportNoteReferenceResolutionTest) do
+      Class.new(DaVinciPDEXDrugFormularyTestKit::USCoreV400::DiagnosticReportNoteReferenceResolutionTest) do
         fhir_client { url :url }
         input :url
       end
@@ -125,7 +125,7 @@ RSpec.describe USCoreTestKit::ReferenceResolutionTest do
 
   describe 'reference validation without target profile' do
     let(:test_class) do
-      Class.new(USCoreTestKit::USCoreV311::DocumentReferenceReferenceResolutionTest) do
+      Class.new(DaVinciPDEXDrugFormularyTestKit::USCoreV311::DocumentReferenceReferenceResolutionTest) do
         fhir_client { url :url }
         input :url
       end

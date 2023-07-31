@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class ProfileSupportTest < Inferno::Test
     id :us_core_profile_support
     title 'Capability Statement lists support for required US Core Profiles'

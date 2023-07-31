@@ -6,7 +6,7 @@ require_relative '../../custom_groups/data_absent_reason_group'
 require_relative '../../provenance_validator'
 <% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
 <% end %>
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   module <%= module_name %>
     class <%= class_name %> < Inferno::TestSuite
       title '<%= title %>'

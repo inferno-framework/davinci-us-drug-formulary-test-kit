@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   module USCoreV400
     class DocumentReferenceCustodianTest < Inferno::Test
       id :us_core_v400_document_reference_custodian_test

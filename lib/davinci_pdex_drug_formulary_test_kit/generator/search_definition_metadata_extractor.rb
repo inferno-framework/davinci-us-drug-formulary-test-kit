@@ -1,6 +1,6 @@
 require_relative 'value_extractor'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class SearchDefinitionMetadataExtractor
       attr_accessor :ig_resources, :name, :resource, :profile_elements

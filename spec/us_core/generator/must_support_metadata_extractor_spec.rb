@@ -1,6 +1,6 @@
 require_relative '../../../lib/davinci_pdex_drug_formulary_test_kit/generator/must_support_metadata_extractor.rb'
 
-RSpec.describe USCoreTestKit::Generator::MustSupportMetadataExtractor do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::Generator::MustSupportMetadataExtractor do
   let(:profile) do
     profile = double("profile")
     allow(profile).to receive(:baseDefinition).and_return("baseDefinition")

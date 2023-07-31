@@ -1,7 +1,7 @@
 require_relative 'naming'
 require_relative 'special_cases'
 
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class ProvenanceRevincludeSearchTestGenerator
       class << self

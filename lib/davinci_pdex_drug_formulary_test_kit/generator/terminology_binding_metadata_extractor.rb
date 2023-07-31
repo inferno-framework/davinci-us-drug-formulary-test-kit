@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class TerminologyBindingMetadataExtractor
       attr_accessor :profile_elements, :ig_resources, :resource

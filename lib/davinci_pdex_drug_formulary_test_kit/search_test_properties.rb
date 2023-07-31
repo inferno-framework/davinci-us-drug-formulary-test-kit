@@ -1,4 +1,4 @@
-module USCoreTestKit
+module DaVinciPDEXDrugFormularyTestKit
   class SearchTestProperties
     ATTRIBUTES = [
       :resource_type,

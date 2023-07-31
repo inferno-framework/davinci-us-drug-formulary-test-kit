@@ -1,6 +1,6 @@
 require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/custom_groups/v4.0.0/document_reference_custodian_test'
 
-RSpec.describe USCoreTestKit::USCoreV400::DocumentReferenceCustodianTest do
+RSpec.describe DaVinciPDEXDrugFormularyTestKit::USCoreV400::DocumentReferenceCustodianTest do
   let(:document_reference_custodian_test) { Inferno::Repositories::Tests.new.find('us_core_v400_document_reference_custodian_test') }
   let(:suite) { Inferno::Repositories::TestSuites.new.find('us_core_v400') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
