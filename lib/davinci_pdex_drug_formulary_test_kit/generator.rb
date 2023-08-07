@@ -33,19 +33,19 @@ module DaVinciPDEXDrugFormularyTestKit
       puts "Generating tests for IG #{File.basename(ig_file_name)}"
       load_ig_package
       extract_metadata
-      generate_resource_list
-      generate_search_tests
+      # generate_resource_list
+      # generate_search_tests
       generate_read_tests
-      # TODO: generate_vread_tests
-      # TODO: generate_history_tests
-      generate_provenance_revinclude_search_tests
-      generate_validation_tests
-      generate_must_support_tests
-      generate_reference_resolution_tests
+      # # TODO: generate_vread_tests
+      # # TODO: generate_history_tests
+      # generate_provenance_revinclude_search_tests
+      # generate_validation_tests
+      # generate_must_support_tests
+      # generate_reference_resolution_tests
 
       generate_groups
 
-      generate_suites
+      # generate_suites
     end
 
     def extract_metadata

@@ -36,21 +36,22 @@ module DaVinciPDEXDrugFormularyTestKit
             title: title,
             short_description: short_description,
             interactions: interactions,
-            operations: operations,
-            searches: searches,
-            search_definitions: search_definitions,
-            include_params: include_params,
-            revincludes: revincludes,
-            required_concepts: required_concepts,
-            must_supports: must_supports,
-            mandatory_elements: mandatory_elements,
-            bindings: bindings,
-            references: references
+            # operations: operations,
+            # searches: searches,
+            searches: [],
+            # search_definitions: search_definitions,
+            # include_params: include_params,
+            # revincludes: revincludes,
+            # required_concepts: required_concepts,
+            # must_supports: must_supports,
+            # mandatory_elements: mandatory_elements,
+            # bindings: bindings,
+            # references: references
             # tests: []
           }
 
-        mark_mandatory_and_must_support_searches
-        handle_special_cases
+        # mark_mandatory_and_must_support_searches
+        # handle_special_cases
 
         @group_metadata_hash
       end
