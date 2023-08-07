@@ -52,9 +52,10 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def delayed?
-        return false if resource == 'Patient'
+        return false
+        # return false if resource == 'Patient'
 
-        no_patient_searches? || non_uscdi_resource?
+        # no_patient_searches? || non_uscdi_resource?
       end
 
       def no_patient_searches?

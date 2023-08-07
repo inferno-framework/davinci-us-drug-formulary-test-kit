@@ -2,7 +2,6 @@ module DaVinciPDEXDrugFormularyTestKit
   class Generator
     module SpecialCases
       RESOURCES_TO_EXCLUDE = [
-        'Location',
         'Medication',
         'PractitionerRole'
       ].freeze

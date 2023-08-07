@@ -8,8 +8,8 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def initialize(ig_resources)
         self.ig_resources = ig_resources
-        add_missing_supported_profiles
-        remove_extra_supported_profiles
+        # add_missing_supported_profiles
+        # remove_extra_supported_profiles
         self.metadata = IGMetadata.new
       end
 
@@ -64,12 +64,11 @@ module DaVinciPDEXDrugFormularyTestKit
         metadata.groups =
           resources_in_capability_statement.flat_map do |resource|
             resource.supportedProfile&.map do |supported_profile|
-              next if supported_profile == 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire'
               GroupMetadataExtractor.new(resource, supported_profile, metadata, ig_resources).group_metadata
             end
           end.compact
 
-        metadata.postprocess_groups(ig_resources)
+        # metadata.postprocess_groups(ig_resources)
       end
     end
   end

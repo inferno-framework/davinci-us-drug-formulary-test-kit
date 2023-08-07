@@ -100,7 +100,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def generate
-        add_special_tests
+        # add_special_tests
         File.open(output_file_name, 'w') { |f| f.write(output) }
         group_metadata.id = group_id
         group_metadata.file_name = base_output_file_name
