@@ -1,17 +1,14 @@
 module DaVinciPDEXDrugFormularyTestKit
   class ProfileSupportTest < Inferno::Test
-    id :us_core_profile_support
-    title 'Capability Statement lists support for required US Core Profiles'
+    id :usdf_profile_support
+    title 'Capability Statement lists support for required US Drug Formulary Profiles'
     description %(
-      The US Core Implementation Guide states:
+      The US Drug Formulary Implementation Guide states:
 
       ```
-      The US Core Server SHALL:
-      1. Support the US Core Patient resource profile.
-      2. Support at least one additional resource profile from the list of US
-         Core Profiles.
+      The US Drug Formulary Server SHALL:
+      1. Support all profiles defined in the USDF Implementation Guide.
 
-      In order to support USCDI, servers must support all USCDI resources.
       ```
     )
     uses_request :capability_statement
@@ -25,26 +22,17 @@ module DaVinciPDEXDrugFormularyTestKit
           &.each_with_object([]) do |rest, resources|
             rest.resource.each { |resource| resources << resource.type }
           end.uniq
+      usdf_resources = config.options[:required_resources]
+      unsupported_resources = usdf_resources - supported_resources
 
-      assert supported_resources.include?('Patient'), 'US Core Patient profile not supported'
+      all_resources_supported =  !unsupported_resources.any?
 
-      us_core_resources = config.options[:us_core_resources]
-
-      other_resources = us_core_resources.reject { |resource_type| resource_type == 'Patient' }
-      other_resources_supported = other_resources.any? { |resource| supported_resources.include? resource }
-      assert other_resources_supported, 'No US Core resources other than Patient are supported'
-
-      if config.options[:required_resources].present?
-        missing_resources = config.options[:required_resources] - supported_resources
-
-        missing_resource_list =
-          missing_resources
+      unsupported_resource_list =
+          unsupported_resources
           .map { |resource| "`#{resource}`" }
           .join(', ')
 
-        assert missing_resources.empty?,
-               "The CapabilityStatement did not list support for the following resources: #{missing_resource_list}"
-      end
+      assert all_resources_supported, "Not all US Drug Formulary resources are supported. Missing support for: #{unsupported_resource_list}"
     end
   end
 end

@@ -1,4 +1,1 @@
-require_relative 'davinci_pdex_drug_formulary_test_kit/generated/v3.1.1/us_core_test_suite'
-require_relative 'davinci_pdex_drug_formulary_test_kit/generated/v4.0.0/us_core_test_suite'
-require_relative 'davinci_pdex_drug_formulary_test_kit/generated/v5.0.1/us_core_test_suite'
-require_relative 'davinci_pdex_drug_formulary_test_kit/generated/v6.1.0/us_core_test_suite'
+require_relative 'davinci_pdex_drug_formulary_test_kit/generated/v2.0.0/usdf_test_suite'

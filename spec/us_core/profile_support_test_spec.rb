@@ -17,7 +17,7 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
 
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('us_core_v311') }
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v200') }
   let(:test) { described_class }
   let(:url) { 'http://example.com/fhir' }
 
@@ -26,66 +26,67 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
       allow_any_instance_of(test).to receive(:config).and_return(
                                        OpenStruct.new(
                                          options: {
-                                           us_core_resources: ['Patient', 'Condition', 'Observation']
+                                          # omitting 'GraphDefinition'
+                                           required_resources: ['InsurancePlan', 'Basic', 'MedicationKnowledge', 'Location']
                                          }
                                        )
                                      )
     end
 
-    it 'fails if Patient is not supported' do
+    it 'fails if not all base resources are supported' do
       response_body =
         FHIR::CapabilityStatement.new(
           rest: [
             {
               resource: [
                 {
-                  type: 'Condition'
-                }
-              ]
-            }
-          ]
-        ).to_json
-      repo_create(:request, response_body:, name: 'capability_statement', test_session_id: test_session.id)
-
-      result = run(test, url:)
-
-      expect(result.result).to eq('fail')
-      expect(result.result_message).to eq('US Core Patient profile not supported')
-    end
-
-    it 'fails if only the Patient resource is supported' do
-      response_body =
-        FHIR::CapabilityStatement.new(
-          rest: [
-            {
-              resource: [
-                {
-                  type: 'Patient'
-                }
-              ]
-            }
-          ]
-        ).to_json
-      repo_create(:request, response_body:, name: 'capability_statement', test_session_id: test_session.id)
-
-      result = run(test, url:)
-
-      expect(result.result).to eq('fail')
-      expect(result.result_message).to eq('No US Core resources other than Patient are supported')
-    end
-
-    it 'passes if Patient and one other resource are supported' do
-      response_body =
-        FHIR::CapabilityStatement.new(
-          rest: [
-            {
-              resource: [
-                {
-                  type: 'Patient'
+                  type: 'InsurancePlan'
                 },
                 {
-                  type: 'Observation'
+                  type: 'Basic'
+                },
+                {
+                  type: 'MedicationKnowledge'
                 }
+                # ,
+                # {
+                #   type: 'GraphDefinition'
+                # }
+              ]
+            }
+          ]
+        ).to_json
+      repo_create(:request, response_body:, name: 'capability_statement', test_session_id: test_session.id)
+
+      result = run(test, url:)
+
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to include('Location')
+    end
+
+
+    it 'passes if only required resources are supported' do
+      response_body =
+        FHIR::CapabilityStatement.new(
+          rest: [
+            {
+              resource: [
+                {
+                  type: 'InsurancePlan'
+                },
+                {
+                  type: 'Basic'
+                },
+                {
+                  type: 'MedicationKnowledge'
+                },
+                {
+                  type: 'Location'
+                }
+                # ,
+                # {
+                #   type: 'GraphDefinition'
+                # }
               ]
             }
           ]
@@ -96,31 +97,30 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
 
       expect(result.result).to eq('pass')
     end
-  end
 
-  context 'with required resources' do
-    before do
-      allow_any_instance_of(test).to receive(:config).and_return(
-                                       OpenStruct.new(
-                                         options: {
-                                           us_core_resources: ['Patient', 'Condition', 'Observation'],
-                                           required_resources: ['Patient', 'Condition', 'Observation']
-                                         }
-                                       )
-                                     )
-    end
-
-    it 'fails if not all required resources are supported' do
+    it 'passes if unrequired resources are supported as well' do
       response_body =
         FHIR::CapabilityStatement.new(
           rest: [
             {
               resource: [
                 {
-                  type: 'Patient'
+                  type: 'InsurancePlan'
                 },
                 {
-                  type: 'Observation'
+                  type: 'Basic'
+                },
+                {
+                  type: 'MedicationKnowledge'
+                },
+                {
+                  type: 'Location'
+                },
+                {
+                  type: 'GraphDefinition'
+                },
+                {
+                  type: 'Patient'
                 }
               ]
             }
@@ -129,34 +129,6 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
       repo_create(:request, response_body:, name: 'capability_statement', test_session_id: test_session.id)
 
       result = run(test, url:)
-
-      expect(result.result).to eq('fail')
-      expect(result.result_message).to include('Condition')
-    end
-
-    it 'passes if not required resources are supported' do
-      response_body =
-        FHIR::CapabilityStatement.new(
-          rest: [
-            {
-              resource: [
-                {
-                  type: 'Patient'
-                },
-                {
-                  type: 'Observation'
-                },
-                {
-                  type: 'Condition'
-                }
-              ]
-            }
-          ]
-        ).to_json
-      repo_create(:request, response_body:, name: 'capability_statement', test_session_id: test_session.id)
-
-      result = run(test, url:)
-
       expect(result.result).to eq('pass')
     end
   end

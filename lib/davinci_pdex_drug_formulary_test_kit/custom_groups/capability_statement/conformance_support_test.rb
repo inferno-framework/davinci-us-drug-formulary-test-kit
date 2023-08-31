@@ -1,6 +1,6 @@
 module DaVinciPDEXDrugFormularyTestKit
   class ConformanceSupportTest < Inferno::Test
-    id :us_core_conformance_support
+    id :usdf_conformance_support
     title 'FHIR Server supports the conformance interaction'
     description %(
       The conformance 'whole system' interaction provides a method to get the

@@ -1,3 +1,5 @@
+require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/date_search_validation'
+
 class DateSearchValidationClass
   include DaVinciPDEXDrugFormularyTestKit::DateSearchValidation
 end

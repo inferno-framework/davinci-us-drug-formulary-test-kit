@@ -1,3 +1,6 @@
+require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/must_support_test'
+
+
 RSpec.describe DaVinciPDEXDrugFormularyTestKit::MustSupportTest do
   let(:suite) { Inferno::Repositories::TestSuites.new.find('us_core_v400') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
