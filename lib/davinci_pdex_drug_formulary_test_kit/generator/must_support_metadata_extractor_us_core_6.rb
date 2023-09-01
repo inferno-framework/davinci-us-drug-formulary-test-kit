@@ -5,7 +5,7 @@ module DaVinciPDEXDrugFormularyTestKit
     class MustSupportMetadataExtractorUsCore6
       attr_accessor :profile, :must_supports
 
-      US_CORE_CATEGORY = ['sdoh', 'functional-status', 'disability-status', 'cognitive-status']
+      US_CORE_CATEGORY = ['sdoh', 'functional-status', 'disability-status', 'cognitive-status'].freeze
 
       def initialize(profile, must_supports)
         self.profile = profile
@@ -56,10 +56,10 @@ module DaVinciPDEXDrugFormularyTestKit
           }
         end
 
-        if more_choices.present?
-          must_supports[:choices] ||= []
-          must_supports[:choices].concat(more_choices)
-        end
+        return unless more_choices.present?
+
+        must_supports[:choices] ||= []
+        must_supports[:choices].concat(more_choices)
       end
 
       def add_patient_uscdi_elements
@@ -76,8 +76,6 @@ module DaVinciPDEXDrugFormularyTestKit
             element[:path] = 'deceasedDateTime'
           end
         end
-
-
       end
     end
   end

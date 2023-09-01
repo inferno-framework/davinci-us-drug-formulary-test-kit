@@ -13,7 +13,7 @@ module DaVinciPDEXDrugFormularyTestKit
       capability_statement = resource
 
       assert capability_statement.instantiates.include?('http://hl7.org/fhir/us/davinci-drug-formulary/CapabilityStatement/usdf-server'),
-        "Server CapabilityStatement.instantiates does not include 'http://hl7.org/fhir/us/davinci-drug-formulary/CapabilityStatement/usdf-server'"
+             "Server CapabilityStatement.instantiates does not include 'http://hl7.org/fhir/us/davinci-drug-formulary/CapabilityStatement/usdf-server'"
     end
   end
 end

@@ -31,7 +31,7 @@ module DaVinciPDEXDrugFormularyTestKit
       def is_uscdi_requirement_element?(element)
         element.extension.any? do |extension|
           extension.url == 'http://hl7.org/fhir/us/core/StructureDefinition/uscdi-requirement' &&
-          extension.valueBoolean
+            extension.valueBoolean
         end && !element.mustSupport
       end
 
@@ -49,19 +49,21 @@ module DaVinciPDEXDrugFormularyTestKit
             id: element.id,
             url: element.type.first.profile.first
           }.tap do |metadata|
-            if is_uscdi_requirement_element?(element)
-              metadata[:uscdi_only] = true
-            end
+            metadata[:uscdi_only] = true if is_uscdi_requirement_element?(element)
           end
         end
       end
 
       def must_support_slice_elements
-        all_must_support_elements.select { |element| !element.path.end_with?('extension') && element.sliceName.present? }
+        all_must_support_elements.select do |element|
+          !element.path.end_with?('extension') && element.sliceName.present?
+        end
       end
 
       def sliced_element(slice)
-        profile_elements.find { |element| element.id == slice.path || element.id == slice.id.sub(":#{slice.sliceName}", '') }
+        profile_elements.find do |element|
+          element.id == slice.path || element.id == slice.id.sub(":#{slice.sliceName}", '')
+        end
       end
 
       def discriminators(slice)
@@ -122,15 +124,13 @@ module DaVinciPDEXDrugFormularyTestKit
                 {
                   type: 'requiredBinding',
                   path: discriminator_path,
-                  values: values
+                  values:
                 }
               else
                 raise StandardError, 'Unsupported discriminator pattern type'
               end
 
-            if is_uscdi_requirement_element?(current_element)
-              metadata[:uscdi_only] = true
-            end
+            metadata[:uscdi_only] = true if is_uscdi_requirement_element?(current_element)
           end
         end
       end
@@ -163,9 +163,7 @@ module DaVinciPDEXDrugFormularyTestKit
               code: type_code.upcase_first
             }
           }.tap do |metadata|
-            if is_uscdi_requirement_element?(current_element)
-              metadata[:uscdi_only] = true
-            end
+            metadata[:uscdi_only] = true if is_uscdi_requirement_element?(current_element)
           end
         end
       end
@@ -197,9 +195,7 @@ module DaVinciPDEXDrugFormularyTestKit
               }
             end
 
-            if is_uscdi_requirement_element?(current_element)
-              metadata[:uscdi_only] = true
-            end
+            metadata[:uscdi_only] = true if is_uscdi_requirement_element?(current_element)
           end
         end
       end
@@ -229,27 +225,27 @@ module DaVinciPDEXDrugFormularyTestKit
       def type_must_support_extension?(extensions)
         extensions&.any? do |extension|
           extension.url == 'http://hl7.org/fhir/StructureDefinition/elementdefinition-type-must-support' &&
-          extension.valueBoolean
+            extension.valueBoolean
         end
       end
 
       def save_type_code?(type)
-        'Reference' == type.code
+        type.code == 'Reference'
       end
 
       def get_type_must_support_metadata(current_metadata, current_element)
         current_element.type.map do |type|
-          if type_must_support_extension?(type.extension)
-            metadata =
+          next unless type_must_support_extension?(type.extension)
+
+          metadata =
             {
               path: "#{current_metadata[:path].delete_suffix('[x]')}#{type.code.upcase_first}",
               original_path: current_metadata[:path]
             }
-            metadata[:types] = [type.code] if save_type_code?(type)
-            handle_type_must_support_target_profiles(type, metadata) if type.code == 'Reference'
+          metadata[:types] = [type.code] if save_type_code?(type)
+          handle_type_must_support_target_profiles(type, metadata) if type.code == 'Reference'
 
-            metadata
-          end
+          metadata
         end.compact
       end
 
@@ -271,13 +267,14 @@ module DaVinciPDEXDrugFormularyTestKit
       def handle_choice_type_in_sliced_element(current_metadata, must_support_elements_metadata)
         choice_element_metadata = must_support_elements_metadata.find do |metadata|
           metadata[:original_path].present? &&
-          current_metadata[:path].include?( metadata[:original_path] )
+            current_metadata[:path].include?(metadata[:original_path])
         end
 
-        if choice_element_metadata.present?
-          current_metadata[:original_path] = current_metadata[:path]
-          current_metadata[:path] = current_metadata[:path].sub(choice_element_metadata[:original_path], choice_element_metadata[:path])
-        end
+        return unless choice_element_metadata.present?
+
+        current_metadata[:original_path] = current_metadata[:path]
+        current_metadata[:path] =
+          current_metadata[:path].sub(choice_element_metadata[:original_path], choice_element_metadata[:path])
       end
 
       def must_support_elements
@@ -285,9 +282,7 @@ module DaVinciPDEXDrugFormularyTestKit
           {
             path: current_element.path.gsub("#{resource}.", '')
           }.tap do |current_metadata|
-            if is_uscdi_requirement_element?(current_element)
-              current_metadata[:uscdi_only] = true
-            end
+            current_metadata[:uscdi_only] = true if is_uscdi_requirement_element?(current_element)
 
             type_must_support_metadata = get_type_must_support_metadata(current_metadata, current_element)
 
@@ -296,10 +291,13 @@ module DaVinciPDEXDrugFormularyTestKit
             else
               handle_choice_type_in_sliced_element(current_metadata, must_support_elements_metadata)
 
-              supported_types = current_element.type.select { |type| save_type_code?(type) }.map { |type| type.code }
+              supported_types = current_element.type.select { |type| save_type_code?(type) }.map(&:code)
               current_metadata[:types] = supported_types if supported_types.present?
 
-              handle_type_must_support_target_profiles(current_element.type.first, current_metadata) if current_element.type.first&.code == 'Reference'
+              if current_element.type.first&.code == 'Reference'
+                handle_type_must_support_target_profiles(current_element.type.first,
+                                                         current_metadata)
+              end
 
               handle_fixed_values(current_metadata, current_element)
 
@@ -345,34 +343,37 @@ module DaVinciPDEXDrugFormularyTestKit
 
       # Exclude Observation.component from vital sign profiles except observation-bp and observation-pulse-ox
       def remove_vital_sign_component
-        if is_vital_sign? && !is_blood_pressure? && profile.name != 'USCorePulseOximetryProfile'
-          @must_supports[:elements].delete_if do |element|
-            element[:path].start_with?('component')
-          end
+        return unless is_vital_sign? && !is_blood_pressure? && profile.name != 'USCorePulseOximetryProfile'
+
+        @must_supports[:elements].delete_if do |element|
+          element[:path].start_with?('component')
         end
       end
 
       # Exclude Observation.value[x] from observation-bp
       def remove_blood_pressure_value
-        if is_blood_pressure?
-          @must_supports[:elements].delete_if do |element|
-            element[:path].start_with?('value[x]') || element[:original_path]&.start_with?('value[x]')
-          end
-          @must_supports[:slices].delete_if do |slice|
-            slice[:path].start_with?('value[x]')
-          end
+        return unless is_blood_pressure?
+
+        @must_supports[:elements].delete_if do |element|
+          element[:path].start_with?('value[x]') || element[:original_path]&.start_with?('value[x]')
+        end
+        @must_supports[:slices].delete_if do |slice|
+          slice[:path].start_with?('value[x]')
         end
       end
 
-      # ONC and US Core 4.0.0 both clarified that health IT developers that always provide HL7 FHIR "observation" values
-      # are not required to demonstrate Health IT Module support for "dataAbsentReason" elements.
-      # Remove MS check for dataAbsentReason and component.dataAbsentReason from vital sign profiles and observation lab profile
-      # Smoking status profile does not have MS on dataAbsentReason. It is safe to use profile.type == 'Observation'
+      # ONC and US Core 4.0.0 both clarified that health IT developers that
+      # always provide HL7 FHIR "observation" values are not required to
+      # demonstrate Health IT Module support for "dataAbsentReason" elements.
+      # Remove MS check for dataAbsentReason and component.dataAbsentReason from
+      # vital sign profiles and observation lab profile Smoking status profile
+      # does not have MS on dataAbsentReason. It is safe to use profile.type ==
+      # 'Observation'
       def remove_observation_data_absent_reason
-        if profile.type == 'Observation'
-          @must_supports[:elements].delete_if do |element|
-            ['dataAbsentReason', 'component.dataAbsentReason'].include?(element[:path])
-          end
+        return unless profile.type == 'Observation'
+
+        @must_supports[:elements].delete_if do |element|
+          ['dataAbsentReason', 'component.dataAbsentReason'].include?(element[:path])
         end
       end
     end

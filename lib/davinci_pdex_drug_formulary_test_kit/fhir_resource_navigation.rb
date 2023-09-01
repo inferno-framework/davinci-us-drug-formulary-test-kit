@@ -16,7 +16,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end.compact
     end
 
-    def find_a_value_at(element, path, include_dar: false)
+    def find_a_value_at(element, path, include_dar: false, &block)
       return nil if element.nil?
 
       elements = Array.wrap(element)
@@ -24,11 +24,11 @@ module DaVinciPDEXDrugFormularyTestKit
       if path.empty?
         unless include_dar
           elements = elements.reject do |el|
-            el.respond_to?(:extension) && el.extension.any? { |ext| ext.url == DAR_EXTENSION_URL}
+            el.respond_to?(:extension) && el.extension.any? { |ext| ext.url == DAR_EXTENSION_URL }
           end
         end
 
-        return elements.find { |el| yield(el) } if block_given?
+        return elements.find(&block) if block_given?
 
         return elements.first
       end
@@ -38,10 +38,10 @@ module DaVinciPDEXDrugFormularyTestKit
 
       no_elements_present =
         elements.none? do |element|
-        child = get_next_value(element, segment)
+          child = get_next_value(element, segment)
 
-        child.present? || child == false
-      end
+          child.present? || child == false
+        end
 
       return nil if no_elements_present
 
@@ -51,9 +51,9 @@ module DaVinciPDEXDrugFormularyTestKit
         child = get_next_value(element, segment)
         element_found =
           if block_given?
-            find_a_value_at(child, remaining_path, include_dar: include_dar) { |value_found| yield(value_found) }
+            find_a_value_at(child, remaining_path, include_dar:, &block)
           else
-            find_a_value_at(child, remaining_path, include_dar: include_dar)
+            find_a_value_at(child, remaining_path, include_dar:)
           end
 
         return element_found if element_found.present? || element_found == false

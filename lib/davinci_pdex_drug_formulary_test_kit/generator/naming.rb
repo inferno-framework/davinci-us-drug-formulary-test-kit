@@ -1,32 +1,32 @@
 module DaVinciPDEXDrugFormularyTestKit
   class Generator
     module Naming
-      ALLERGY_INTOLERANCE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance'
-      CARE_PLAN = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan'
-      CARE_TEAM = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-careteam'
-      CONDITION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition'
-      IMPLANTABLE_DEVICE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-implantable-device'
-      DIAGNOSTIC_REPORT_NOTE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note'
-      DIAGNOSTIC_REPORT_LAB = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab'
-      DOCUMENT_REFERENCE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference'
-      ENCOUNTER = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter'
-      GOAL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-goal'
-      IMMUNIZATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization'
-      LOCATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-location'
-      MEDICATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication'
-      MEDICATION_REQUEST = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest'
-      SMOKING_STATUS = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus'
-      PEDIATRIC_WEIGHT_FOR_HEIGHT = 'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-weight-for-height'
-      OBSERVATION_LAB = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab'
-      PEDIATRIC_BMI_FOR_AGE = 'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-bmi-for-age'
-      PULSE_OXIMETRY = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-pulse-oximetry'
-      HEAD_CIRCUMFERENCE = 'http://hl7.org/fhir/us/core/StructureDefinition/head-occipital-frontal-circumference-percentile'
-      ORGANIZATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization'
-      PATIENT = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'
-      PRACTITIONER = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner'
-      PRACTITIONER_ROLE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole'
-      PROCEDURE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure'
-      PROVENANCE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-provenance'
+      ALLERGY_INTOLERANCE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance'.freeze
+      CARE_PLAN = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan'.freeze
+      CARE_TEAM = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-careteam'.freeze
+      CONDITION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition'.freeze
+      IMPLANTABLE_DEVICE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-implantable-device'.freeze
+      DIAGNOSTIC_REPORT_NOTE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note'.freeze
+      DIAGNOSTIC_REPORT_LAB = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab'.freeze
+      DOCUMENT_REFERENCE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference'.freeze
+      ENCOUNTER = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter'.freeze
+      GOAL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-goal'.freeze
+      IMMUNIZATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization'.freeze
+      LOCATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-location'.freeze
+      MEDICATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication'.freeze
+      MEDICATION_REQUEST = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest'.freeze
+      SMOKING_STATUS = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus'.freeze
+      PEDIATRIC_WEIGHT_FOR_HEIGHT = 'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-weight-for-height'.freeze
+      OBSERVATION_LAB = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab'.freeze
+      PEDIATRIC_BMI_FOR_AGE = 'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-bmi-for-age'.freeze
+      PULSE_OXIMETRY = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-pulse-oximetry'.freeze
+      HEAD_CIRCUMFERENCE = 'http://hl7.org/fhir/us/core/StructureDefinition/head-occipital-frontal-circumference-percentile'.freeze
+      ORGANIZATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization'.freeze
+      PATIENT = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'.freeze
+      PRACTITIONER = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner'.freeze
+      PRACTITIONER_ROLE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole'.freeze
+      PROCEDURE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure'.freeze
+      PROVENANCE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-provenance'.freeze
 
       class << self
         def resources_with_multiple_profiles

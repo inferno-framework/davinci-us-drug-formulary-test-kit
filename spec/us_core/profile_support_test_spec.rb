@@ -1,4 +1,6 @@
-require_relative '../../lib/davinci_pdex_drug_formulary_test_kit/custom_groups/capability_statement/profile_support_test'
+require_relative(
+  '../../lib/davinci_pdex_drug_formulary_test_kit/custom_groups/capability_statement/profile_support_test'
+)
 
 RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
   def run(runnable, inputs = {})
@@ -7,12 +9,12 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
     inputs.each do |name, value|
       session_data_repo.save(
         test_session_id: test_session.id,
-        name: name,
-        value: value,
+        name:,
+        value:,
         type: runnable.config.input_type(name) || 'text'
       )
     end
-    Inferno::TestRunner.new(test_session: test_session, test_run: test_run).run(runnable)
+    Inferno::TestRunner.new(test_session:, test_run:).run(runnable)
   end
 
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
@@ -24,13 +26,14 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
   context 'with no required resources' do
     before do
       allow_any_instance_of(test).to receive(:config).and_return(
-                                       OpenStruct.new(
-                                         options: {
-                                          # omitting 'GraphDefinition'
-                                           required_resources: ['InsurancePlan', 'Basic', 'MedicationKnowledge', 'Location']
-                                         }
-                                       )
-                                     )
+        OpenStruct.new(
+          options: {
+            # omitting 'GraphDefinition'
+            required_resources: ['InsurancePlan', 'Basic', 'MedicationKnowledge',
+                                 'Location']
+          }
+        )
+      )
     end
 
     it 'fails if not all base resources are supported' do
@@ -63,7 +66,6 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::ProfileSupportTest do
       expect(result.result).to eq('fail')
       expect(result.result_message).to include('Location')
     end
-
 
     it 'passes if only required resources are supported' do
       response_body =

@@ -32,10 +32,10 @@ module DaVinciPDEXDrugFormularyTestKit
         return [] unless type == 'CodeableConcept'
 
         profile_elements
-          .select do
-            |element| element.path == "#{profile_element.path}.coding.code" && element.fixedCode.present?
+          .select do |element|
+            element.path == "#{profile_element.path}.coding.code" && element.fixedCode.present?
           end
-          .map { |element| element.fixedCode }
+          .map(&:fixedCode)
       end
 
       def values_from_pattern_coding(profile_element, type)
@@ -53,7 +53,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
         profile_elements
           .select do |element|
-            element.path == profile_element.path && element.patternCodeableConcept.present? && element.min > 0
+            element.path == profile_element.path && element.patternCodeableConcept.present? && element.min.positive?
           end
           .map { |element| element.patternCodeableConcept.coding.first.code }
       end
@@ -71,7 +71,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def bound_systems_from_valueset(value_set)
-        systems = value_set&.compose&.include&.map do |include|
+        value_set&.compose&.include&.map do |include|
           if include.concept.present?
             include
           elsif include.system.present? && include.filter&.empty? # Cannot process intensional value set with filters
@@ -83,8 +83,6 @@ module DaVinciPDEXDrugFormularyTestKit
             end
           end
         end&.flatten&.compact
-
-        systems
       end
 
       def values_from_value_set_binding(the_element)
@@ -92,7 +90,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
         return [] if bound_systems.blank?
 
-        bound_systems.flat_map { |system| system.concept.map { |code| code.code } }.uniq
+        bound_systems.flat_map { |system| system.concept.map(&:code) }.uniq
       end
 
       def fhir_metadata(current_path)
@@ -105,9 +103,7 @@ module DaVinciPDEXDrugFormularyTestKit
         paths.each do |current_path|
           current_metadata = fhir_metadata(current_path)
 
-          if current_metadata&.dig('valid_codes').present?
-            values = values + current_metadata['valid_codes'].values.flatten
-          end
+          values += current_metadata['valid_codes'].values.flatten if current_metadata&.dig('valid_codes').present?
         end
 
         values

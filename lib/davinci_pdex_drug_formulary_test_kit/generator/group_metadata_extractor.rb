@@ -24,21 +24,21 @@ module DaVinciPDEXDrugFormularyTestKit
       def group_metadata_hash
         @group_metadata_hash ||=
           {
-            name: name,
-            class_name: class_name,
-            version: version,
-            reformatted_version: reformatted_version,
+            name:,
+            class_name:,
+            version:,
+            reformatted_version:,
             # test_id_prefix: test_id_prefix,
-            resource: resource,
-            profile_url: profile_url,
-            profile_name: profile_name,
-            profile_version: profile_version,
-            title: title,
-            short_description: short_description,
-            interactions: interactions,
+            resource:,
+            profile_url:,
+            profile_name:,
+            profile_version:,
+            title:,
+            short_description:,
+            interactions:,
             # operations: operations,
             # searches: searches,
-            searches: [],
+            searches: []
             # search_definitions: search_definitions,
             # include_params: include_params,
             # revincludes: revincludes,
@@ -60,12 +60,14 @@ module DaVinciPDEXDrugFormularyTestKit
         searches.each do |search|
           search[:names_not_must_support_or_mandatory] = search[:names].reject do |name|
             full_paths = search_definitions[name.to_sym][:full_paths]
-            any_must_support_elements = (must_supports[:elements]).any? do |element|
+            any_must_support_elements = must_supports[:elements].any? do |element|
               full_must_support_paths = ["#{resource}.#{element[:original_path]}", "#{resource}.#{element[:path]}"]
 
               full_paths.any? do |path|
                 # allow for non-choice, choice types, and _id
-                name == '_id' || full_must_support_paths.include?(path) || full_must_support_paths.include?("#{path}[x]")
+                name == '_id' ||
+                  full_must_support_paths.include?(path) ||
+                  full_must_support_paths.include?("#{path}[x]")
               end
             end
 
@@ -77,7 +79,7 @@ module DaVinciPDEXDrugFormularyTestKit
                 full_must_support_path = "#{resource}.#{slice[:path].sub('[x]', slice[:discriminator][:code])}"
                 base_must_support_path = "#{resource}.#{slice[:path].sub('[x]', '')}"
 
-                full_paths.intersection([full_must_support_path,base_must_support_path]).present?
+                full_paths.intersection([full_must_support_path, base_must_support_path]).present?
               else
                 false
               end
@@ -109,31 +111,31 @@ module DaVinciPDEXDrugFormularyTestKit
         'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-social-history',
         'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-survey',
         'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'
-      ]
+      ].freeze
 
       VERSION_SPECIFIC_CATEGORY_FIRST_PROFILES = {
         'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis' => ['v610'],
         'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns' => ['v610']
-      }
+      }.freeze
 
       def category_first_profile?
         ALL_VERSION_CATEGORY_FIRST_PROFILES.include?(profile_url) ||
-        VERSION_SPECIFIC_CATEGORY_FIRST_PROFILES[profile_url]&.include?(reformatted_version)
+          VERSION_SPECIFIC_CATEGORY_FIRST_PROFILES[profile_url]&.include?(reformatted_version)
       end
 
       def first_search_params
         @first_search_params ||=
-        if category_first_profile?
-          ['patient', 'category']
-        elsif resource == 'Observation'
-          ['patient', 'code']
-        elsif resource == 'MedicationRequest'
-          ['patient', 'intent']
-        elsif resource == 'CareTeam'
-          ['patient', 'status']
-        else
-          ['patient']
-        end
+          if category_first_profile?
+            ['patient', 'category']
+          elsif resource == 'Observation'
+            ['patient', 'code']
+          elsif resource == 'MedicationRequest'
+            ['patient', 'intent']
+          elsif resource == 'CareTeam'
+            ['patient', 'status']
+          else
+            ['patient']
+          end
       end
 
       def handle_special_cases
@@ -199,8 +201,10 @@ module DaVinciPDEXDrugFormularyTestKit
       def title
         title = profile.title.gsub(/US\s*Core\s*/, '').gsub(/\s*Profile/, '').strip
 
-        if (Naming.resources_with_multiple_profiles.include?(resource)) && !title.start_with?(resource) && version != 'v3.1.1'
-          title = resource + ' ' + title.split(resource).map(&:strip).join(' ')
+        if Naming.resources_with_multiple_profiles.include?(resource) &&
+           !title.start_with?(resource) &&
+           version != 'v3.1.1'
+          title = "#{resource} #{title.split(resource).map(&:strip).join(' ')}"
         end
 
         title
@@ -287,7 +291,7 @@ module DaVinciPDEXDrugFormularyTestKit
         @mandatory_elements ||=
           profile_elements
             .select { |element| element.min.positive? }
-            .map { |element| element.path }
+            .map(&:path)
             .uniq
       end
 

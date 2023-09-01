@@ -10,7 +10,6 @@ module DaVinciPDEXDrugFormularyTestKit
         self.must_supports = must_supports
       end
 
-
       def us_core_4_extractor
         @us_core_4_extractor ||= MustSupportMetadataExtractorUsCore4.new(profile, must_supports)
       end
@@ -42,10 +41,10 @@ module DaVinciPDEXDrugFormularyTestKit
           }
         end
 
-        if more_choices.present?
-          must_supports[:choices] ||= []
-          must_supports[:choices].concat(more_choices)
-        end
+        return unless more_choices.present?
+
+        must_supports[:choices] ||= []
+        must_supports[:choices].concat(more_choices)
       end
 
       def remove_patient_address_period
@@ -82,7 +81,7 @@ module DaVinciPDEXDrugFormularyTestKit
       # FHIR-37794 Server systems are not required to support US Core QuestionnaireResponse
       def remove_survey_questionnaire_response
         return unless profile.type == 'Observation' &&
-          ['us-core-observation-survey', 'us-core-observation-sdoh-assessment'].include?(profile.id)
+                      ['us-core-observation-survey', 'us-core-observation-sdoh-assessment'].include?(profile.id)
 
         element = must_supports[:elements].find { |element| element[:path] == 'derivedFrom' }
         element[:target_profiles].delete_if do |url|

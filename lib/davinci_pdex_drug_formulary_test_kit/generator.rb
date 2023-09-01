@@ -52,9 +52,7 @@ module DaVinciPDEXDrugFormularyTestKit
       self.ig_metadata = IGMetadataExtractor.new(ig_resources).extract
 
       FileUtils.mkdir_p(base_output_dir)
-      File.open(File.join(base_output_dir, 'metadata.yml'), 'w') do |file|
-        file.write(YAML.dump(ig_metadata.to_hash))
-      end
+      File.write(File.join(base_output_dir, 'metadata.yml'), YAML.dump(ig_metadata.to_hash))
     end
 
     def base_output_dir

@@ -9,13 +9,13 @@ module DaVinciPDEXDrugFormularyTestKit
           ig_metadata.groups
             .reject { |group| SpecialCases.exclude_group? group }
             .each do |group|
-              new(group, base_output_dir: base_output_dir).generate
+              new(group, base_output_dir:).generate
               next unless group.resource == 'MedicationRequest'
 
               # The Medication validation test lives in the MedicationRequest
               # group, so we need to pass in that group's metadata
               medication_group_metadata = ig_metadata.groups.find { |group| group.resource == 'Medication' }
-              new(medication_group_metadata, group, base_output_dir: base_output_dir).generate
+              new(medication_group_metadata, group, base_output_dir:).generate
             end
         end
       end
@@ -96,7 +96,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def generate
         FileUtils.mkdir_p(output_file_directory)
-        File.open(output_file_name, 'w') { |f| f.write(output) }
+        File.write(output_file_name, output)
 
         test_metadata = {
           id: test_id,
@@ -112,26 +112,26 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def description
         <<~DESCRIPTION
-        #{description_intro}
-        It verifies the presence of mandatory elements and that elements with
-        required bindings contain appropriate values. CodeableConcept element
-        bindings will fail if none of their codings have a code/system belonging
-        to the bound ValueSet. Quantity, Coding, and code element bindings will
-        fail if their code/system are not found in the valueset.
+          #{description_intro}
+          It verifies the presence of mandatory elements and that elements with
+          required bindings contain appropriate values. CodeableConcept element
+          bindings will fail if none of their codings have a code/system belonging
+          to the bound ValueSet. Quantity, Coding, and code element bindings will
+          fail if their code/system are not found in the valueset.
         DESCRIPTION
       end
 
       def description_intro
         if resource_type == 'Medication'
           <<~MEDICATION_INTRO
-          This test verifies resources returned from previous tests conform to
-          the [#{profile_name}](#{profile_url}).
+            This test verifies resources returned from previous tests conform to
+            the [#{profile_name}](#{profile_url}).
           MEDICATION_INTRO
         else
           <<~GENERIC_INTRO
-          This test verifies resources returned from the first search conform to
-          the [#{profile_name}](#{profile_url}).
-          Systems must demonstrate at least one valid example in order to pass this test.
+            This test verifies resources returned from the first search conform to
+            the [#{profile_name}](#{profile_url}).
+            Systems must demonstrate at least one valid example in order to pass this test.
           GENERIC_INTRO
         end
       end

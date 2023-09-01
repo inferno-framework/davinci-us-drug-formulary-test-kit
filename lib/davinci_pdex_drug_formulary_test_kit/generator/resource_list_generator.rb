@@ -6,7 +6,7 @@ module DaVinciPDEXDrugFormularyTestKit
           @ig_metadata = ig_metadata
 
           FileUtils.mkdir_p(base_output_dir)
-          File.open(File.join(base_output_dir, base_output_file_name), 'w') { |f| f.write(output) }
+          File.write(File.join(base_output_dir, base_output_file_name), output)
         end
 
         def resource_list
@@ -34,7 +34,7 @@ module DaVinciPDEXDrugFormularyTestKit
         end
 
         def base_output_file_name
-          "resource_list.rb"
+          'resource_list.rb'
         end
       end
     end

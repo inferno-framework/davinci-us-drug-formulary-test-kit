@@ -21,18 +21,19 @@ module DaVinciPDEXDrugFormularyTestKit
         capability_statement.rest
           &.each_with_object([]) do |rest, resources|
             rest.resource.each { |resource| resources << resource.type }
-          end.uniq
+          end&.uniq
       usdf_resources = config.options[:required_resources]
       unsupported_resources = usdf_resources - supported_resources
 
-      all_resources_supported =  !unsupported_resources.any?
+      all_resources_supported = unsupported_resources.none?
 
       unsupported_resource_list =
-          unsupported_resources
+        unsupported_resources
           .map { |resource| "`#{resource}`" }
           .join(', ')
 
-      assert all_resources_supported, "Not all US Drug Formulary resources are supported. Missing support for: #{unsupported_resource_list}"
+      assert all_resources_supported,
+             "Not all US Drug Formulary resources are supported. Missing support for: #{unsupported_resource_list}"
     end
   end
 end

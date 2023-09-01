@@ -34,30 +34,30 @@ module DaVinciPDEXDrugFormularyTestKit
           # required vital signs profiles, so they need to be added
           ig_resources.capability_statement.rest.first.resource
             .find { |resource| resource.type == 'Observation' }
-            .supportedProfile.concat [
+            .supportedProfile.push(
               'http://hl7.org/fhir/StructureDefinition/bodyheight',
               'http://hl7.org/fhir/StructureDefinition/bodytemp',
               'http://hl7.org/fhir/StructureDefinition/bp',
               'http://hl7.org/fhir/StructureDefinition/bodyweight',
               'http://hl7.org/fhir/StructureDefinition/heartrate',
               'http://hl7.org/fhir/StructureDefinition/resprate'
-            ]
+            )
         when '5.0.1'
           # The US Core v5.0.1 Server Capability Statement does not have supported-profile for Encounter
           ig_resources.capability_statement.rest.first.resource
             .find { |resource| resource.type == 'Encounter' }
-            .supportedProfile.concat [
+            .supportedProfile.push(
               'http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter'
-            ]
+            )
         end
       end
 
       def remove_extra_supported_profiles
         ig_resources.capability_statement.rest.first.resource
-            .find { |resource| resource.type == 'Observation' }
-            .supportedProfile.delete_if do |profile_url|
-              SpecialCases::PROFILES_TO_EXCLUDE.include?(profile_url)
-            end
+          .find { |resource| resource.type == 'Observation' }
+          .supportedProfile.delete_if do |profile_url|
+          SpecialCases::PROFILES_TO_EXCLUDE.include?(profile_url)
+        end
       end
 
       def add_metadata_from_resources

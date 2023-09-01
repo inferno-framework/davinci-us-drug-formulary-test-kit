@@ -73,7 +73,7 @@ module DaVinciPDEXDrugFormularyTestKit
         @search_params ||=
           search_metadata[:names].map do |name|
             {
-              name: name,
+              name:,
               path: search_definition(name)[:path]
             }
           end
@@ -93,7 +93,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def search_param_name_string
-        search_metadata[:names].join(' + ') + ' + revInclude:Provenance:target'
+        "#{search_metadata[:names].join(' + ')} + revInclude:Provenance:target"
       end
 
       def needs_patient_id?
@@ -179,7 +179,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def generate
         FileUtils.mkdir_p(output_file_directory)
-        File.open(output_file_name, 'w') { |f| f.write(output) }
+        File.write(output_file_name, output)
 
         group_metadata.add_test(
           id: test_id,

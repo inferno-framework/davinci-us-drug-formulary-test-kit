@@ -20,14 +20,14 @@ module DaVinciPDEXDrugFormularyTestKit
       failed_provenance =
         find_a_value_at(resource, 'agent') do |agent|
           ['Practitioner', 'Device'].any? { |resource_type| agent.who.reference&.include?(resource_type) } &&
-          agent.onBehalfOf.nil?
+            agent.onBehalfOf.nil?
         end
-
 
       if failed_provenance.present?
         validation_messages << {
           type: 'error',
-          message: "#{resource.resourceType}/#{resource.id}: Rule provenance-1: 'onBehalfOf SHALL be present when Provenance.agent.who is a Practitioner or Device' Failed"
+          message: "#{resource.resourceType}/#{resource.id}: Rule provenance-1: 'onBehalfOf SHALL be present when " \
+                   "Provenance.agent.who is a Practitioner or Device' Failed"
         }
       end
 

@@ -3,14 +3,15 @@ require_relative '../capability_statement/conformance_support_test'
 require_relative '../capability_statement/fhir_version_test'
 require_relative '../capability_statement/json_support_test'
 require_relative '../capability_statement/profile_support_test'
-require_relative '../capability_statement/instantiate_test.rb'
+require_relative '../capability_statement/instantiate_test'
 
 module DaVinciPDEXDrugFormularyTestKit
   module USDFV200
     class CapabilityStatementGroup < Inferno::TestGroup
       id :usdf_v200_capability_statement
       title 'Capability Statement'
-      short_description 'Retrieve information about supported server functionality using the FHIR capabilties interaction.'
+      short_description 'Retrieve information about supported server functionality ' \
+                        'using the FHIR capabilties interaction.'
       description %(
         # Background
         The #{title} Sequence tests a FHIR server's ability to formally describe
@@ -24,7 +25,7 @@ module DaVinciPDEXDrugFormularyTestKit
         The Capability Statement resource allows clients to determine which
         resources are supported by a FHIR Server. Not all servers are expected to
         implement all possible queries and data elements described in the US Drug Formulary
-        API. 
+        API.
 
         # Test Methodology
 
@@ -45,22 +46,24 @@ module DaVinciPDEXDrugFormularyTestKit
       run_as_group
 
       PROFILES = {
-        'InsurancePlan' => ['http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PayerInsurancePlan', 'http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary'].freeze,
+        'InsurancePlan' => [
+          'http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PayerInsurancePlan', 'http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary'
+        ].freeze,
         'Basic' => ['http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyItem'].freeze,
         'MedicationKnowledge' => ['http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug'].freeze,
         'Location' => ['http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-InsurancePlanLocation'].freeze
       }.freeze
 
       test from: :tls_version_test,
-          id: :standalone_auth_tls,
-          title: 'FHIR server secured by transport layer security',
-          description: %(
+           id: :standalone_auth_tls,
+           title: 'FHIR server secured by transport layer security',
+           description: %(
             Systems **SHALL** use TLS version 1.2 or higher for all transmissions
             not taking place over a secure network connection.
           ),
-          config: {
-            options: {  minimum_allowed_version: OpenSSL::SSL::TLS1_2_VERSION }
-          }
+           config: {
+             options: { minimum_allowed_version: OpenSSL::SSL::TLS1_2_VERSION }
+           }
       test from: :usdf_conformance_support
       test from: :usdf_fhir_version
       test from: :usdf_json_support

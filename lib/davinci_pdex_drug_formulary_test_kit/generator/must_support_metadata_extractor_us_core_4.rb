@@ -55,19 +55,19 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def add_device_distinct_identifier
-        if profile.type == 'Device'
-          # FHIR-36303 US Core 4.0.0 mistakenly removed MS from Device.distinctIdentifier
-          # This will be fixed in US Core 5.0.0
-          must_supports[:elements] << {
-            path: 'distinctIdentifier'
-          }
-        end
+        return unless profile.type == 'Device'
+
+        # FHIR-36303 US Core 4.0.0 mistakenly removed MS from Device.distinctIdentifier
+        # This will be fixed in US Core 5.0.0
+        must_supports[:elements] << {
+          path: 'distinctIdentifier'
+        }
       end
 
       def add_patient_uscdi_elements
         return unless profile.type == 'Patient'
 
-        #US Core 4.0.0 Section 10.112.1.1 Additional USCDI v1 Requirement:
+        # US Core 4.0.0 Section 10.112.1.1 Additional USCDI v1 Requirement:
         must_supports[:extensions] << {
           id: 'Patient.extension:race',
           url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race',
@@ -102,11 +102,14 @@ module DaVinciPDEXDrugFormularyTestKit
       def add_patient_telecom_communication_uscdi
         return unless profile.type == 'Patient'
 
-        # Though telecom.system, telecom.value, telecom.use, and communication.language are marked as MustSupport since US Core v4.0.0,
-        # their parent elements telecom, and communication are not MustSupport but listed under "Additional USCDI requirements"
-        # According to the updated FHIR spec that "When a child element is defined as Must Support and the parent element isn't,
-        # a system must support the child if it support the parent, but there's no expectation that the system must support the parent.",
-        # We add uscdi_only tag to these elements
+        # Though telecom.system, telecom.value, telecom.use, and
+        # communication.language are marked as MustSupport since US Core v4.0.0,
+        # their parent elements telecom, and communication are not MustSupport
+        # but listed under "Additional USCDI requirements" According to the
+        # updated FHIR spec that "When a child element is defined as Must
+        # Support and the parent element isn't, a system must support the child
+        # if it support the parent, but there's no expectation that the system
+        # must support the parent.", We add uscdi_only tag to these elements
         must_supports[:elements].each do |element|
           path = element[:path]
           element[:uscdi_only] = true if path.include?('telecom.') || path.include?('communication.')

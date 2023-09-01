@@ -40,7 +40,6 @@ module DaVinciPDEXDrugFormularyTestKit
         'Specimen' => ['v610']
       }.freeze
 
-
       ATTRIBUTES.each { |name| attr_accessor name }
 
       def initialize(metadata)
@@ -52,7 +51,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def delayed?
-        return false
+        false
         # return false if resource == 'Patient'
 
         # no_patient_searches? || non_uscdi_resource?
@@ -70,8 +69,8 @@ module DaVinciPDEXDrugFormularyTestKit
         self.tests ||= []
 
         test_metadata = {
-          id: id,
-          file_name: file_name
+          id:,
+          file_name:
         }
 
         if delayed? && id.include?('read')

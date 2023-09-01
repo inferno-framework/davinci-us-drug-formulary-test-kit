@@ -4,7 +4,7 @@ module DaVinciPDEXDrugFormularyTestKit
       scratch_resources[:all] ||= []
     end
 
-    def perform_read_test(resources, reply_handler = nil)
+    def perform_read_test(resources, _reply_handler = nil)
       skip_if resources.blank?, no_resources_skip_message
 
       resources_to_read = readable_resources(resources)
@@ -23,9 +23,9 @@ module DaVinciPDEXDrugFormularyTestKit
     def readable_resources(resources)
       resources
         .select { |resource| resource.is_a?(resource_class) || resource.is_a?(FHIR::Reference) }
-        .select { |resource| (resource.is_a?(FHIR::Reference) ? resource.reference.split('/').last : resource.id).present? }
+        .select { |resource| (resource.is_a?(FHIR::Reference) ? resource.reference_id : resource.id).present? }
         .compact
-        .uniq { |resource| resource.is_a?(FHIR::Reference) ? resource.reference.split('/').last : resource.id }
+        .uniq { |resource| resource.is_a?(FHIR::Reference) ? resource.reference_id : resource.id }
     end
 
     def read_and_validate(resource_to_read)
@@ -37,9 +37,9 @@ module DaVinciPDEXDrugFormularyTestKit
       assert_resource_type(resource_type)
       assert resource.id.present? && resource.id == id, bad_resource_id_message(id)
 
-      if resource_to_read.is_a? FHIR::Reference
-        all_scratch_resources << resource
-      end
+      return unless resource_to_read.is_a? FHIR::Reference
+
+      all_scratch_resources << resource
     end
 
     def resource_id(resource)
@@ -48,7 +48,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
     def no_resources_skip_message
       "No #{resource_type} resources appear to be available. " \
-      'Please use patients with more information.'
+        'Please use patients with more information.'
     end
 
     def bad_resource_id_message(expected_id)

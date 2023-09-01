@@ -30,11 +30,11 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def base_output_file_name
-        "us_core_test_suite.rb"
+        'us_core_test_suite.rb'
       end
 
       def class_name
-        "USCoreTestSuite"
+        'USCoreTestSuite'
       end
 
       def module_name
@@ -69,7 +69,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def generate
-        File.open(output_file_name, 'w') { |f| f.write(output) }
+        File.write(output_file_name, output)
       end
 
       def groups

@@ -54,7 +54,7 @@ module DaVinciPDEXDrugFormularyTestKit
             names = extension.extension.select { |param| param.valueString.present? }.map(&:valueString)
             {
               expectation: conformance_expectation(extension),
-              names: names
+              names:
             }
           end
       end
