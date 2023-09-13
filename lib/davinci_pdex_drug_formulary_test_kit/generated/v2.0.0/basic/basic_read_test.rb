@@ -1,14 +1,14 @@
 require_relative '../../../read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module USDFV200
     class BasicReadTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::ReadTest
 
       title 'Server returns correct Basic resource from Basic read interaction'
       description 'A server SHALL support the Basic read interaction.'
 
-      id :us_core_v200_basic_read_test
+      id :usdf_v200_basic_read_test
 
       def resource_type
         'Basic'

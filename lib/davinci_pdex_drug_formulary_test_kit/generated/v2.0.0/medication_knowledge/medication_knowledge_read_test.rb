@@ -1,14 +1,14 @@
 require_relative '../../../read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module USDFV200
     class MedicationKnowledgeReadTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::ReadTest
 
       title 'Server returns correct MedicationKnowledge resource from MedicationKnowledge read interaction'
       description 'A server SHALL support the MedicationKnowledge read interaction.'
 
-      id :us_core_v200_medication_knowledge_read_test
+      id :usdf_v200_medication_knowledge_read_test
 
       def resource_type
         'MedicationKnowledge'

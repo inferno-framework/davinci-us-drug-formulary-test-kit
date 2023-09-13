@@ -31,7 +31,7 @@
   :expectation: MAY
 :searches: []
 :tests:
-- :id: us_core_v200_location_read_test
+- :id: usdf_v200_location_read_test
   :file_name: location_read_test.rb
-:id: us_core_v200_location
+:id: usdf_v200_location
 :file_name: location_group.rb

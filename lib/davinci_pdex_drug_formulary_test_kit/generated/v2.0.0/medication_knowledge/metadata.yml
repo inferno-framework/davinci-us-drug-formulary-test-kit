@@ -31,7 +31,7 @@
   :expectation: MAY
 :searches: []
 :tests:
-- :id: us_core_v200_medication_knowledge_read_test
+- :id: usdf_v200_medication_knowledge_read_test
   :file_name: medication_knowledge_read_test.rb
-:id: us_core_v200_medication_knowledge
+:id: usdf_v200_medication_knowledge
 :file_name: medication_knowledge_group.rb

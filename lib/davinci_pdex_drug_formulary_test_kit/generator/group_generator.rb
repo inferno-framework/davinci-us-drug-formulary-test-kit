@@ -40,7 +40,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "USDF#{group_metadata.reformatted_version.upcase}"
       end
 
       def title
@@ -64,7 +64,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def group_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}"
+        "usdf_#{group_metadata.reformatted_version}_#{profile_identifier}"
       end
 
       def resource_type
@@ -176,10 +176,11 @@ module DaVinciPDEXDrugFormularyTestKit
         <<~DESCRIPTION
           # Background
 
-          The US Core #{title} sequence verifies that the system under test is
+          The USDF #{title} sequence verifies that the system under test is
           able to provide correct responses for #{resource_type} queries. These queries
           must contain resources conforming to the #{profile_name} as
-          specified in the US Core #{group_metadata.version} Implementation Guide.
+          specified in the US Drug Formulary #{group_metadata.version} Implementation
+          Guide.
 
           # Testing Methodology
           #{search_description}

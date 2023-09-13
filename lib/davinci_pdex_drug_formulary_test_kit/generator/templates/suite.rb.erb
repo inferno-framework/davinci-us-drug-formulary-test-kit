@@ -1,9 +1,6 @@
 require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '<%= capability_statement_file_name %>'
-require_relative '<%= clinical_notes_guidance_file_name %>'
-require_relative '../../custom_groups/data_absent_reason_group'
-require_relative '../../provenance_validator'
 <% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
 <% end %>
 module DaVinciPDEXDrugFormularyTestKit
@@ -15,23 +12,14 @@ module DaVinciPDEXDrugFormularyTestKit
         Implementation Guide](<%=ig_link %>).
 
         HL7® FHIR® resources are validated with the Java validator using
-        `tx.fhir.org` as the terminology server. Users should note that the
-        although the ONC Certification (g)(10) Standardized API Test Suite
-        includes tests from this suite, [it uses a different method to perform
-        terminology
-        validation](https://github.com/onc-healthit/onc-certification-g10-test-kit/wiki/FAQ#q-why-do-some-resources-fail-in-us-core-test-kit-with-terminology-validation-errors).
-        As a result, resource validation results may not be consistent between
-        the US Core Test Suite and the ONC Certification (g)(10) Standardized
-        API Test Suite.
+        `tx.fhir.org` as the terminology server.
       )
       version VERSION
 
       VALIDATION_MESSAGE_FILTERS = [
         %r{Sub-extension url 'introspect' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
         %r{Sub-extension url 'revoke' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
-        /Observation\.effective\.ofType\(Period\): .*vs-1:/, # Invalid invariant in FHIR v4.0.1
-        /Observation\.effective\.ofType\(Period\): .*us-core-1:/, # Invalid invariant in US Core v3.1.1
-        /Provenance.agent\[\d*\]: Rule provenance-1/ #Invalid invariant in US Core v5.0.1
+        /Observation\.effective\.ofType\(Period\): .*vs-1:/ # Invalid invariant in FHIR v4.0.1
       ].freeze
 
       VERSION_SPECIFIC_MESSAGE_FILTERS = <%=version_specific_message_filters%>.freeze
@@ -74,8 +62,6 @@ module DaVinciPDEXDrugFormularyTestKit
       group from: :<%= capability_statement_group_id %>
   <% group_id_list.each do |id| %>
       group from: :<%= id %><% end %>
-      group from: :<%= clinical_notes_guidance_group_id %>
-      group from: :us_core_311_data_absent_reason
     end
   end
 end

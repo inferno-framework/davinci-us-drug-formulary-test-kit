@@ -1,21 +1,22 @@
 require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '../../custom_groups/v2.0.0/capability_statement_group'
+require_relative 'payer_insurance_plan_group'
+require_relative 'formulary_group'
 require_relative 'basic_group'
-require_relative 'insurance_plan_group'
-require_relative 'location_group'
 require_relative 'medication_knowledge_group'
+require_relative 'location_group'
 
 module DaVinciPDEXDrugFormularyTestKit
-    module USCoreV200
+  module USDFV200
     class USDFTestSuite < Inferno::TestSuite
       title 'US Drug Formulary v2.0.0'
       description %(
         The US Core Test Kit tests systems for their conformance to the [US Core
-        Implementation Guide](https://hl7.org/fhir/us/davinci-drug-formulary/).
+        Implementation Guide](https://hl7.org/fhir/us/davinci-drug-formulary/STU2/).
 
         HL7® FHIR® resources are validated with the Java validator using
-        `tx.fhir.org` as the terminology server. 
+        `tx.fhir.org` as the terminology server.
       )
       version VERSION
 
@@ -34,7 +35,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       validator do
-        url ENV.fetch('V501_VALIDATOR_URL', 'http://validator_service:4567')
+        url ENV.fetch('V200_VALIDATOR_URL', 'http://validator_service:4567')
         message_filters = VALIDATION_MESSAGE_FILTERS + VERSION_SPECIFIC_MESSAGE_FILTERS
 
         exclude_message do |message|
@@ -64,11 +65,11 @@ module DaVinciPDEXDrugFormularyTestKit
 
       group from: :usdf_v200_capability_statement
   
-      group from: :us_core_v200_basic
-      group from: :us_core_v200_location
-      group from: :us_core_v200_insurance_plan
-      group from: :us_core_v200_medication_knowledge
-
+      group from: :usdf_v200_payer_insurance_plan
+      group from: :usdf_v200_formulary
+      group from: :usdf_v200_basic
+      group from: :usdf_v200_medication_knowledge
+      group from: :usdf_v200_location
     end
   end
 end

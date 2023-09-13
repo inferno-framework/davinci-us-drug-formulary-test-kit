@@ -1,16 +1,16 @@
-require_relative 'medication_knowledge/medication_knowledge_read_test'
+require_relative 'formulary/formulary_read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
   module USDFV200
-    class MedicationKnowledgeGroup < Inferno::TestGroup
-      title 'Formulary Drug Tests'
-      short_description 'Verify support for the server capabilities required by the Formulary Drug.'
+    class FormularyGroup < Inferno::TestGroup
+      title 'InsurancePlan Formulary Tests'
+      short_description 'Verify support for the server capabilities required by the Formulary.'
       description %(
   # Background
 
-The USDF Formulary Drug sequence verifies that the system under test is
-able to provide correct responses for MedicationKnowledge queries. These queries
-must contain resources conforming to the Formulary Drug as
+The USDF InsurancePlan Formulary sequence verifies that the system under test is
+able to provide correct responses for InsurancePlan queries. These queries
+must contain resources conforming to the Formulary as
 specified in the US Drug Formulary v2.0.0 Implementation
 Guide.
 
@@ -21,12 +21,12 @@ Guide.
 Each profile contains elements marked as "must support". This test
 sequence expects to see each of these elements at least once. If at
 least one cannot be found, the test will fail. The test will look
-through the MedicationKnowledge resources found in the first test for these
+through the InsurancePlan resources found in the first test for these
 elements.
 
 ## Profile Validation
 Each resource returned from the first search is expected to conform to
-the [Formulary Drug](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug). Each element is checked against
+the [Formulary](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary). Each element is checked against
 teminology binding and cardinality requirements.
 
 Elements with a required binding are validated against their bound
@@ -41,14 +41,14 @@ read succeeds.
 
       )
 
-      id :usdf_v200_medication_knowledge
+      id :usdf_v200_formulary
       run_as_group
 
       def self.metadata
-        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'medication_knowledge', 'metadata.yml'), aliases: true))
+        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'formulary', 'metadata.yml'), aliases: true))
       end
   
-      test from: :usdf_v200_medication_knowledge_read_test
+      test from: :usdf_v200_formulary_read_test
     end
   end
 end

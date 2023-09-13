@@ -30,7 +30,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
       class << self
         def resources_with_multiple_profiles
-          ['Condition', 'DiagnosticReport', 'Observation']
+          ['InsurancePlan']
         end
 
         def resource_has_multiple_profiles?(resource)
@@ -41,13 +41,8 @@ module DaVinciPDEXDrugFormularyTestKit
           resource = group_metadata.resource
           return resource.underscore unless resource_has_multiple_profiles?(resource)
 
-          if group_metadata.profile_url == HEAD_CIRCUMFERENCE
-            return group_metadata.reformatted_version == 'v311' ? 'head_circumference' : 'head_circumference_percentile'
-          end
-
           group_metadata.name
-            .delete_prefix('us_core_')
-            .gsub('diagnosticreport', 'diagnostic_report')
+            .delete_prefix('usdf_')
             .underscore
         end
 

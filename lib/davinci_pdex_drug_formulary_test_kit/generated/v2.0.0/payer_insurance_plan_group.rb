@@ -1,17 +1,18 @@
-require_relative 'insurance_plan/insurance_plan_read_test'
+require_relative 'payer_insurance_plan/payer_insurance_plan_read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
-    class InsurancePlanGroup < Inferno::TestGroup
-      title 'Formulary Tests'
-      short_description 'Verify support for the server capabilities required by the Formulary.'
+  module USDFV200
+    class PayerInsurancePlanGroup < Inferno::TestGroup
+      title 'InsurancePlan Payer Insurance Plan Tests'
+      short_description 'Verify support for the server capabilities required by the Payer Insurance Plan.'
       description %(
   # Background
 
-The US Core Formulary sequence verifies that the system under test is
+The USDF InsurancePlan Payer Insurance Plan sequence verifies that the system under test is
 able to provide correct responses for InsurancePlan queries. These queries
-must contain resources conforming to the Formulary as
-specified in the US Core v2.0.0 Implementation Guide.
+must contain resources conforming to the Payer Insurance Plan as
+specified in the US Drug Formulary v2.0.0 Implementation
+Guide.
 
 # Testing Methodology
 
@@ -25,7 +26,7 @@ elements.
 
 ## Profile Validation
 Each resource returned from the first search is expected to conform to
-the [Formulary](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary). Each element is checked against
+the [Payer Insurance Plan](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PayerInsurancePlan). Each element is checked against
 teminology binding and cardinality requirements.
 
 Elements with a required binding are validated against their bound
@@ -40,14 +41,14 @@ read succeeds.
 
       )
 
-      id :us_core_v200_insurance_plan
+      id :usdf_v200_payer_insurance_plan
       run_as_group
 
       def self.metadata
-        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'insurance_plan', 'metadata.yml'), aliases: true))
+        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'payer_insurance_plan', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v200_insurance_plan_read_test
+      test from: :usdf_v200_payer_insurance_plan_read_test
     end
   end
 end

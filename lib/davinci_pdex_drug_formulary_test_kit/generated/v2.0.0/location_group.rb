@@ -1,17 +1,18 @@
 require_relative 'location/location_read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module USDFV200
     class LocationGroup < Inferno::TestGroup
       title 'Insurance Plan Location Tests'
       short_description 'Verify support for the server capabilities required by the Insurance Plan Location.'
       description %(
   # Background
 
-The US Core Insurance Plan Location sequence verifies that the system under test is
+The USDF Insurance Plan Location sequence verifies that the system under test is
 able to provide correct responses for Location queries. These queries
 must contain resources conforming to the Insurance Plan Location as
-specified in the US Core v2.0.0 Implementation Guide.
+specified in the US Drug Formulary v2.0.0 Implementation
+Guide.
 
 # Testing Methodology
 
@@ -40,14 +41,14 @@ read succeeds.
 
       )
 
-      id :us_core_v200_location
+      id :usdf_v200_location
       run_as_group
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'location', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v200_location_read_test
+      test from: :usdf_v200_location_read_test
     end
   end
 end

@@ -31,7 +31,7 @@
   :expectation: MAY
 :searches: []
 :tests:
-- :id: us_core_v200_basic_read_test
+- :id: usdf_v200_basic_read_test
   :file_name: basic_read_test.rb
-:id: us_core_v200_basic
+:id: usdf_v200_basic
 :file_name: basic_group.rb

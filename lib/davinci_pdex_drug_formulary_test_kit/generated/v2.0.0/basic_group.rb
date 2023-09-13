@@ -1,17 +1,18 @@
 require_relative 'basic/basic_read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module USDFV200
     class BasicGroup < Inferno::TestGroup
       title 'Formulary Item Tests'
       short_description 'Verify support for the server capabilities required by the Formulary Item.'
       description %(
   # Background
 
-The US Core Formulary Item sequence verifies that the system under test is
+The USDF Formulary Item sequence verifies that the system under test is
 able to provide correct responses for Basic queries. These queries
 must contain resources conforming to the Formulary Item as
-specified in the US Core v2.0.0 Implementation Guide.
+specified in the US Drug Formulary v2.0.0 Implementation
+Guide.
 
 # Testing Methodology
 
@@ -40,14 +41,14 @@ read succeeds.
 
       )
 
-      id :us_core_v200_basic
+      id :usdf_v200_basic
       run_as_group
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'basic', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v200_basic_read_test
+      test from: :usdf_v200_basic_read_test
     end
   end
 end

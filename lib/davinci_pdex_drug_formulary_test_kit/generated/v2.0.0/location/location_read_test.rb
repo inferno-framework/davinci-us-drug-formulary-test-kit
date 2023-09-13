@@ -1,14 +1,14 @@
 require_relative '../../../read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module USDFV200
     class LocationReadTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::ReadTest
 
       title 'Server returns correct Location resource from Location read interaction'
       description 'A server SHALL support the Location read interaction.'
 
-      id :us_core_v200_location_read_test
+      id :usdf_v200_location_read_test
 
       def resource_type
         'Location'

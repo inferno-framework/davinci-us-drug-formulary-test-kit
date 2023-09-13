@@ -45,7 +45,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
       generate_groups
 
-      # generate_suites
+      generate_suites
     end
 
     def extract_metadata

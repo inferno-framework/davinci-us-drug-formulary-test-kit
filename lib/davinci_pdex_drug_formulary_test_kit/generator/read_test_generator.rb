@@ -53,7 +53,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def test_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}_read_test"
+        "usdf_#{group_metadata.reformatted_version}_#{profile_identifier}_read_test"
       end
 
       def class_name
@@ -61,7 +61,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "USDF#{group_metadata.reformatted_version.upcase}"
       end
 
       def resource_type

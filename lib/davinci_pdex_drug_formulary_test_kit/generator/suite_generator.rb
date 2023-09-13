@@ -30,15 +30,15 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def base_output_file_name
-        'us_core_test_suite.rb'
+        'usdf_test_suite.rb'
       end
 
       def class_name
-        'USCoreTestSuite'
+        'USDFTestSuite'
       end
 
       def module_name
-        "USCore#{ig_metadata.reformatted_version.upcase}"
+        "USDF#{ig_metadata.reformatted_version.upcase}"
       end
 
       def output_file_name
@@ -46,11 +46,11 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def suite_id
-        "us_core_#{ig_metadata.reformatted_version}"
+        "usdf_#{ig_metadata.reformatted_version}"
       end
 
       def title
-        "US Core #{ig_metadata.ig_version}"
+        "US Drug Formulary #{ig_metadata.ig_version}"
       end
 
       def validator_env_name
@@ -58,14 +58,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def ig_link
-        case ig_metadata.ig_version
-        when 'v5.0.1'
-          'http://hl7.org/fhir/us/core/STU5.0.1'
-        when 'v4.0.0'
-          'http://hl7.org/fhir/us/core/STU4'
-        when 'v3.1.1'
-          'http://hl7.org/fhir/us/core/STU3.1.1'
-        end
+        'https://hl7.org/fhir/us/davinci-drug-formulary/STU2/'
       end
 
       def generate
@@ -92,23 +85,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def capability_statement_group_id
-        "us_core_#{ig_metadata.reformatted_version}_capability_statement"
-      end
-
-      def clinical_notes_guidance_file_name
-        if ig_metadata.ig_version == 'v3.1.1'
-          "../../custom_groups/#{ig_metadata.ig_version}/clinical_notes_guidance_group"
-        else
-          '../../custom_groups/v4.0.0/clinical_notes_guidance_group'
-        end
-      end
-
-      def clinical_notes_guidance_group_id
-        if ig_metadata.reformatted_version == 'v311'
-          "us_core_#{ig_metadata.reformatted_version}_clinical_notes_guidance"
-        else
-          'us_core_v400_clinical_notes_guidance'
-        end
+        "usdf_#{ig_metadata.reformatted_version}_capability_statement"
       end
     end
   end
