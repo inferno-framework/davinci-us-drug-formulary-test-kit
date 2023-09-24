@@ -1,3 +1,9 @@
+require_relative 'medication_knowledge/medication_knowledge_status_search_test'
+require_relative 'medication_knowledge/medication_knowledge_id_search_test'
+require_relative 'medication_knowledge/medication_knowledge_lastupdated_search_test'
+require_relative 'medication_knowledge/medication_knowledge_code_search_test'
+require_relative 'medication_knowledge/medication_knowledge_drug_name_search_test'
+require_relative 'medication_knowledge/medication_knowledge_doseform_search_test'
 require_relative 'medication_knowledge/medication_knowledge_read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
@@ -6,15 +12,36 @@ module DaVinciPDEXDrugFormularyTestKit
       title 'Formulary Drug Tests'
       short_description 'Verify support for the server capabilities required by the Formulary Drug.'
       description %(
-  # Background
+# Background
 
 The USDF Formulary Drug sequence verifies that the system under test is
 able to provide correct responses for MedicationKnowledge queries. These queries
 must contain resources conforming to the Formulary Drug as
-specified in the US Drug Formulary v2.0.0 Implementation
-Guide.
+specified in the USDF v2.0.0 Implementation Guide.
 
 # Testing Methodology
+## Searching
+This test sequence will first perform each required search associated
+with this resource. This sequence will perform searches with the
+following parameters:
+
+* status
+* _id
+* _lastUpdated
+* code
+* drug-name
+
+### Search Parameters
+The first search uses the selected resources from the prior launch
+sequence. Any subsequent searches will look for its parameter values
+from the results of the first search. If a value cannot be found this way, the search is skipped.
+
+### Search Validation
+Inferno will retrieve up to the first 20 bundle pages of the reply for
+MedicationKnowledge resources and save them for subsequent tests. Each of
+these resources is then checked to see if it matches the searched
+parameters in accordance with [FHIR search
+guidelines](https://www.hl7.org/fhir/search.html).
 
 
 ## Must Support
@@ -48,6 +75,12 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'medication_knowledge', 'metadata.yml'), aliases: true))
       end
   
+      test from: :us_core_v200_medication_knowledge_status_search_test
+      test from: :us_core_v200_medication_knowledge__id_search_test
+      test from: :us_core_v200_medication_knowledge__lastUpdated_search_test
+      test from: :us_core_v200_medication_knowledge_code_search_test
+      test from: :us_core_v200_medication_knowledge_drug_name_search_test
+      test from: :us_core_v200_medication_knowledge_doseform_search_test
       test from: :usdf_v200_medication_knowledge_read_test
     end
   end

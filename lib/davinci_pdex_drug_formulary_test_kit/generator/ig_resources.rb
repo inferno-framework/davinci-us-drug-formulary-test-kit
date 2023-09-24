@@ -1,3 +1,5 @@
+require 'fhir_models'
+
 module DaVinciPDEXDrugFormularyTestKit
   class Generator
     class IGResources
@@ -37,10 +39,15 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def search_param_by_resource_and_name(resource, name)
         # remove '_' from search parameter name, such as _id or _tag
-        normalized_name = normalized_name = name.to_s.delete_prefix('_')
+        normalized_name = name.to_s.delete_prefix('_')
 
-        resources_by_type['SearchParameter']
-          .find { |param| param.id == "us-core-#{resource.downcase}-#{normalized_name}" }
+        res = resources_by_type['SearchParameter']
+          .find { |param| param.id == "#{resource}-#{normalized_name}" }
+        if res.nil?
+          res = resources_by_type['SearchParameter']
+            .find { |param| param.id == "Resource-#{normalized_name}" }
+        end
+        res
       end
 
       private

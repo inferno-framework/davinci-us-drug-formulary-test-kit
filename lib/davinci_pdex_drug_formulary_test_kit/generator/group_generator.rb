@@ -94,8 +94,9 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def optional?
-        resource_type == 'QuestionnaireResponse' ||
-          profile_url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'
+        false
+        # resource_type == 'QuestionnaireResponse' ||
+        #   profile_url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'
       end
 
       def generate
@@ -154,21 +155,16 @@ module DaVinciPDEXDrugFormularyTestKit
           #{search_param_name_string}
 
           ### Search Parameters
-          The first search uses the selected patient(s) from the prior launch
+          The first search uses the selected resources from the prior launch
           sequence. Any subsequent searches will look for its parameter values
-          from the results of the first search. For example, the `identifier`
-          search in the patient sequence is performed by looking for an existing
-          `Patient.identifier` from any of the resources returned in the `_id`
-          search. If a value cannot be found this way, the search is skipped.
+          from the results of the first search. If a value cannot be found this way, the search is skipped.
 
           ### Search Validation
           Inferno will retrieve up to the first 20 bundle pages of the reply for
           #{search_validation_resource_type} and save them for subsequent tests. Each of
           these resources is then checked to see if it matches the searched
           parameters in accordance with [FHIR search
-          guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
-          for example, if a Patient search for `gender=male` returns a `female`
-          patient.
+          guidelines](https://www.hl7.org/fhir/search.html).
         SEARCH_DESCRIPTION
       end
 
@@ -179,8 +175,7 @@ module DaVinciPDEXDrugFormularyTestKit
           The USDF #{title} sequence verifies that the system under test is
           able to provide correct responses for #{resource_type} queries. These queries
           must contain resources conforming to the #{profile_name} as
-          specified in the US Drug Formulary #{group_metadata.version} Implementation
-          Guide.
+          specified in the USDF #{group_metadata.version} Implementation Guide.
 
           # Testing Methodology
           #{search_description}

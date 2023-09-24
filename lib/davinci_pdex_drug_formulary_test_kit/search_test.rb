@@ -15,8 +15,6 @@ module DaVinciPDEXDrugFormularyTestKit
                    :saves_delayed_references?,
                    :first_search?,
                    :fixed_value_search?,
-                   :possible_status_search?,
-                   :test_medication_inclusion?,
                    :test_post_search?,
                    :token_search_params,
                    :test_reference_variants?,
@@ -24,67 +22,38 @@ module DaVinciPDEXDrugFormularyTestKit
                    :multiple_or_search_params
 
     def all_search_params
+      param_values = if resource_type == 'Location' && first_search?
+                       resource_id_list
+                     else
+                       resource_status
+                     end
+
       @all_search_params ||=
-        patient_id_list.each_with_object({}) do |patient_id, params|
-          params[patient_id] ||= []
+        param_values.each_with_object({}) do |value, params|
+          params[value] ||= []
           new_params =
             if fixed_value_search?
-              fixed_value_search_param_values.map { |value| fixed_value_search_params(value, patient_id) }
+              fixed_value_search_param_values.map { |fixed_value| fixed_value_search_params(fixed_value, value) }
             else
-              [search_params_with_values(search_param_names, patient_id)]
+              [search_params_with_values(search_param_names, value)]
             end
           new_params.reject! do |params|
             params.any? { |_key, value| value.blank? }
           end
-
-          params[patient_id].concat(new_params)
-        end
-    end
-
-    def all_provenance_revinclude_search_params
-      @all_provenance_revinclude_search_params ||=
-        all_search_params.transform_values! do |params_list|
-          params_list.map { |params| params.merge(_revinclude: 'Provenance:target') }
+          params[value].concat(new_params)
         end
     end
 
     def any_valid_search_params?(search_params)
-      search_params.any? { |_patient_id, params| params.present? }
-    end
-
-    def run_provenance_revinclude_search_test
-      # TODO: skip if not supported?
-      skip_if !any_valid_search_params?(all_provenance_revinclude_search_params), unable_to_resolve_params_message
-
-      provenance_resources =
-        all_provenance_revinclude_search_params.flat_map do |_patient_id, params_list|
-          params_list.flat_map do |params|
-            fhir_search(resource_type, params:)
-
-            perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
-
-            check_search_response
-
-            fetch_all_bundled_resources(additional_resource_types: ['Provenance'])
-              .select { |resource| resource.resourceType == 'Provenance' }
-          end
-        end
-
-      scratch_provenance_resources[:all] ||= []
-      scratch_provenance_resources[:all].concat(provenance_resources)
-
-      save_delayed_references(provenance_resources, 'Provenance')
-
-      skip_if provenance_resources.empty?, no_resources_skip_message('Provenance')
+      search_params.any? { |_resource_id, params| params.present? }
     end
 
     def run_search_test
       # TODO: skip if not supported?
       skip_if !any_valid_search_params?(all_search_params), unable_to_resolve_params_message
-
       resources_returned =
-        all_search_params.flat_map do |patient_id, params_list|
-          params_list.flat_map { |params| perform_search(params, patient_id) }
+        all_search_params.flat_map do |resource_input, params_list|
+          params_list.flat_map { |params| perform_search(params, resource_input) }
         end
 
       skip_if resources_returned.empty?, no_resources_skip_message
@@ -92,10 +61,8 @@ module DaVinciPDEXDrugFormularyTestKit
       perform_multiple_or_search_test if multiple_or_search_params.present?
     end
 
-    def perform_search(params, patient_id)
+    def perform_search(params, resource_input)
       fhir_search(resource_type, params:)
-
-      perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
 
       check_search_response
 
@@ -104,14 +71,15 @@ module DaVinciPDEXDrugFormularyTestKit
 
       return [] if resources_returned.blank?
 
-      perform_comparator_searches(params, patient_id) if params_with_comparators.present?
+      perform_comparator_searches(params, resource_input) if params_with_comparators.present?
 
-      filter_conditions(resources_returned) if resource_type == 'Condition' && metadata.version == 'v5.0.1'
-      filter_devices(resources_returned) if resource_type == 'Device'
+      filter_insurance_plan(resources_returned) if resource_type == 'InsurancePlan'
 
       if first_search?
         all_scratch_resources.concat(resources_returned).uniq!
-        scratch_resources_for_patient(patient_id).concat(resources_returned).uniq!
+        scratch_resources_for_group(metadata.profile_url).concat(resources_returned).uniq!
+        # scratch_resources_for_group(resource_input).concat(resources_returned).uniq!
+
       end
 
       resources_returned.each do |resource|
@@ -123,9 +91,8 @@ module DaVinciPDEXDrugFormularyTestKit
       return resources_returned if all_search_variants_tested?
 
       perform_post_search(resources_returned, params) if test_post_search?
-      test_medication_inclusion(resources_returned, params, patient_id) if test_medication_inclusion?
       perform_reference_with_type_search(params, resources_returned.count) if test_reference_variants?
-      perform_search_with_system(params, patient_id) if token_search_params.present?
+      perform_search_with_system(params, resource_input) if token_search_params.present?
 
       resources_returned
     end
@@ -137,8 +104,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
       post_search_resources = fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
 
-      filter_conditions(post_search_resources) if resource_type == 'Condition' && metadata.version == 'v5.0.1'
-      filter_devices(post_search_resources) if resource_type == 'Device'
+      filter_insurance_plan(post_search_resources) if resource_type == 'InsurancePlan'
 
       get_resource_count = get_search_resources.length
       post_resource_count = post_search_resources.length
@@ -151,26 +117,27 @@ module DaVinciPDEXDrugFormularyTestKit
              "returned #{post_resource_count} resources."
     end
 
-    def filter_devices(resources)
-      codes_to_include = implantable_device_codes&.split(',')&.map(&:strip)
-      return resources if codes_to_include.blank?
-
-      resources.select! do |resource|
-        resource&.type&.coding&.any? { |coding| codes_to_include.include?(coding.code) }
+    def filter_insurance_plan(resources)
+      if metadata.profile_name.include?('Formulary')
+        resources.select! { |resource| formulary_insurance_plan? resource }
+      else
+        resources.select! { |resource| payer_insurance_plan? resource }
       end
     end
 
-    def filter_conditions(resources)
-      # HL7 JIRA FHIR-37917. US Core v5.0.1 does not required patient+category.
-      # In order to distinguish which resources matches the current profile, Inferno has to manually filter
-      # the result of first search, which is searching by patient.
-      resources.select! do |resource|
-        resource.category.any? do |category|
-          category.coding.any? do |coding|
-            metadata.search_definitions[:category][:values].include? coding.code
-          end
-        end
-      end
+    def formulary_insurance_plan?(resource)
+      resource&.type&.first&.coding&.any? { |coding| drugpol_coding? coding }
+    end
+
+    def payer_insurance_plan?(resource)
+      return false if formulary_insurance_plan? resource
+
+      # TODO: Determine how to identify payer insurance plans
+      true
+    end
+
+    def drugpol_coding?(coding)
+      coding&.code == 'DRUGPOL' && coding&.system == 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
     end
 
     def search_and_check_response(params, resource_type = self.resource_type)
@@ -192,7 +159,6 @@ module DaVinciPDEXDrugFormularyTestKit
     def initial_search_variant_test_records
       {}.tap do |records|
         records[:post_variant] = false if test_post_search?
-        records[:medication_inclusion] = false if test_medication_inclusion?
         records[:reference_variants] = false if test_reference_variants?
         records[:token_variants] = false if token_search_params.present?
         records[:comparator_searches] = Set.new if params_with_comparators.present?
@@ -232,13 +198,13 @@ module DaVinciPDEXDrugFormularyTestKit
         .map(&:to_s)
     end
 
-    def perform_comparator_searches(params, patient_id)
+    def perform_comparator_searches(params, _resource_input)
       params_with_comparators.each do |name|
         next if search_variant_test_records[:comparator_searches].include? name
 
         required_comparators(name).each do |comparator|
           paths = search_param_paths(name).first
-          date_element = find_a_value_at(scratch_resources_for_patient(patient_id), paths)
+          date_element = find_a_value_at(scratch_resources_for_group(metadata.profile_url), paths)
           params_with_comparator = params.merge(name => date_comparator_value(comparator, date_element))
 
           search_and_check_response(params_with_comparator)
@@ -263,8 +229,7 @@ module DaVinciPDEXDrugFormularyTestKit
         resource.resourceType == resource_type
       end
 
-      filter_conditions(reference_with_type_resources) if resource_type == 'Condition' && metadata.version == 'v5.0.1'
-      filter_devices(reference_with_type_resources) if resource_type == 'Device'
+      filter_insurance_plan(reference_with_type_resources) if resource_type == 'InsurancePlan'
 
       new_resource_count = reference_with_type_resources.count
 
@@ -276,10 +241,10 @@ module DaVinciPDEXDrugFormularyTestKit
       search_variant_test_records[:reference_variants] = true
     end
 
-    def perform_search_with_system(params, patient_id)
+    def perform_search_with_system(params, resource_input)
       return if search_variant_test_records[:token_variants]
 
-      new_search_params = search_params_with_values(token_search_params, patient_id, include_system: true)
+      new_search_params = search_params_with_values(token_search_params, resource_input, include_system: true)
       return if new_search_params.any? { |_name, value| value.blank? }
 
       search_params = params.merge(new_search_params)
@@ -292,28 +257,6 @@ module DaVinciPDEXDrugFormularyTestKit
       assert resources_returned.present?, 'No resources were returned when searching by `system|code`'
 
       search_variant_test_records[:token_variants] = true
-    end
-
-    def perform_search_with_status(
-      original_params,
-      _patient_id,
-      status_search_values: self.status_search_values,
-      resource_type: self.resource_type
-    )
-      assert resource.is_a?(FHIR::OperationOutcome), 'Server returned a status of 400 without an OperationOutcome'
-      # TODO: warn about documenting status requirements
-      status_search_values.flat_map do |status_value|
-        search_params = original_params.merge("#{status_search_param_name}": status_value)
-
-        search_and_check_response(search_params)
-
-        entries = resource.entry.select { |entry| entry.resource.resourceType == resource_type }
-
-        if entries.present?
-          original_params.merge!("#{status_search_param_name}": status_value)
-          break
-        end
-      end
     end
 
     def status_search_param_name
@@ -335,7 +278,7 @@ module DaVinciPDEXDrugFormularyTestKit
     def perform_multiple_or_search_test
       resolved_one = false
 
-      all_search_params.each do |patient_id, params_list|
+      all_search_params.each do |_resource_input, params_list|
         next unless params_list.present?
 
         search_params = params_list.first
@@ -346,7 +289,7 @@ module DaVinciPDEXDrugFormularyTestKit
           search_value = default_search_values(param_name.to_sym)
           search_params = search_params.merge(param_name.to_s => search_value)
           existing_values[param_name.to_sym] =
-            scratch_resources_for_patient(patient_id).map(&param_name.to_sym).compact.uniq
+            scratch_resources_for_group(metadata.profile_url).map(&param_name.to_sym).compact.uniq
         end
 
         # skip patient without multiple-or values
@@ -371,65 +314,24 @@ module DaVinciPDEXDrugFormularyTestKit
           .join(' and ')
 
         assert missing_value_message.blank?,
-               "Could not find #{missing_value_message} in any of the resources returned for Patient/#{patient_id}"
+               "Could not find #{missing_value_message} in any of the resources returned for #{metadata.profile_name}"
 
         break if resolved_one
       end
-    end
-
-    def test_medication_inclusion(medication_requests, params, patient_id)
-      return if search_variant_test_records[:medication_inclusion]
-
-      scratch[:medication_resources] ||= {}
-      scratch[:medication_resources][:all] ||= []
-      scratch[:medication_resources][patient_id] ||= []
-      scratch[:medication_resources][:contained] ||= []
-
-      requests_with_external_references =
-        medication_requests
-          .select { |request| request&.medicationReference&.present? }
-          .reject { |request| request&.medicationReference&.reference&.start_with? '#' }
-
-      contained_medications =
-        medication_requests
-          .select { |request| request&.medicationReference&.reference&.start_with? '#' }
-          .flat_map(&:contained)
-          .select { |resource| resource.resourceType == 'Medication' }
-
-      scratch[:medication_resources][:all] += contained_medications
-      scratch[:medication_resources][patient_id] += contained_medications
-      scratch[:medication_resources][:contained] += contained_medications
-
-      return if requests_with_external_references.blank?
-
-      search_params = params.merge(_include: 'MedicationRequest:medication')
-
-      search_and_check_response(search_params)
-
-      medications = fetch_all_bundled_resources.select { |resource| resource.resourceType == 'Medication' }
-      assert medications.present?, 'No Medications were included in the search results'
-
-      medications.uniq!(&:id)
-
-      scratch[:medication_resources][:all] += medications
-      scratch[:medication_resources][patient_id] += medications
-
-      search_variant_test_records[:medication_inclusion] = true
     end
 
     def all_scratch_resources
       scratch_resources[:all] ||= []
     end
 
-    def scratch_resources_for_patient(patient_id)
-      return all_scratch_resources if patient_id.nil?
+    def scratch_resources_for_group(resource_value)
+      return all_scratch_resources if resource_value.nil?
 
-      scratch_resources[patient_id] ||= []
+      scratch_resources[resource_value] ||= []
     end
 
-    def references_to_save(resource_type = nil)
-      reference_metadata = resource_type == 'Provenance' ? provenance_metadata : metadata
-      reference_metadata.delayed_references
+    def references_to_save(_resource_type = nil)
+      metadata.delayed_references
     end
 
     def fixed_value_search_param_name
@@ -440,26 +342,26 @@ module DaVinciPDEXDrugFormularyTestKit
       metadata.search_definitions[fixed_value_search_param_name.to_sym][:values]
     end
 
-    def fixed_value_search_params(value, patient_id)
+    def fixed_value_search_params(value, resource_input)
       search_param_names.each_with_object({}) do |name, params|
-        params[name] = patient_id_param?(name) ? patient_id : value
+        params[name] = resource_id_param?(name) ? resource_input : value
       end
     end
 
-    def search_params_with_values(search_param_names, patient_id, include_system: false)
-      resources = scratch_resources_for_patient(patient_id)
+    def search_params_with_values(search_param_names, input_value, include_system: false)
+      resources = scratch_resources_for_group(metadata.profile_url)
 
       if resources.empty?
         return search_param_names.each_with_object({}) do |name, params|
-          value = patient_id_param?(name) ? patient_id : nil
+          # if you get an input value, map that to name {{"_id"=>"StateOfCTLocation"}}
+          value = (input_value if status_param?(name) || resource_id_param?(name))
           params[name] = value
         end
       end
-
       resources.each_with_object({}) do |resource, outer_params|
         results_from_one_resource = search_param_names.each_with_object({}) do |name, params|
-          value = if patient_id_param?(name)
-                    patient_id
+          value = if status_param?(name)
+                    input_value
                   else
                     search_param_value(name, resource,
                                        include_system:)
@@ -474,25 +376,31 @@ module DaVinciPDEXDrugFormularyTestKit
       end
     end
 
-    def patient_id_list
-      return [nil] unless respond_to? :patient_ids
-
-      patient_ids.split(',').map(&:strip)
+    def resource_status
+      ['active']
     end
 
-    def patient_search?
-      search_param_names.any? { |name| patient_id_param? name }
+    def resource_id_list
+      return [] unless respond_to? :input_ids
+
+      input_ids.split(',').map(&:strip)
+      # return [] if input_ids.blank? || !respond_to?(input_ids)
+      # send(input_ids).split(',').map(&:strip)
     end
 
-    def patient_id_param?(name)
-      name == 'patient' || (name == '_id' && resource_type == 'Patient')
+    def resource_id_param?(name)
+      name == '_id'
+      # name == 'patient' || (name == '_id' && resource_type == 'Patient')
+    end
+
+    def status_param?(name)
+      name == 'status'
     end
 
     def search_param_paths(name)
       paths = metadata.search_definitions[name.to_sym][:paths]
       paths[0] = 'local_class' if paths.first == 'class'
-
-      paths
+      paths.map { |path| path.delete_prefix('Resource.') }
     end
 
     def all_search_params_present?(params)
@@ -518,7 +426,7 @@ module DaVinciPDEXDrugFormularyTestKit
         msg.concat(" with the following Device Type Code filter: #{implantable_device_codes}")
       end
 
-      "#{msg}. Please use patients with more information"
+      "#{msg}. Please use resources with more information"
     end
 
     def fetch_all_bundled_resources(
@@ -577,7 +485,6 @@ module DaVinciPDEXDrugFormularyTestKit
       search_value = nil
       paths.each do |path|
         element = find_a_value_at(resource, path) { |element| element_has_valid_value?(element, include_system) }
-
         search_value =
           case element
           when FHIR::Period
@@ -685,7 +592,6 @@ module DaVinciPDEXDrugFormularyTestKit
         # unescape search value
         search_value = escaped_search_value&.gsub('\\,', ',')
         paths = search_param_paths(name)
-
         match_found = false
         values_found = []
 
@@ -700,7 +606,6 @@ module DaVinciPDEXDrugFormularyTestKit
                   value
                 end
               end
-
           match_found =
             case type
             when 'Period', 'date', 'instant', 'dateTime'

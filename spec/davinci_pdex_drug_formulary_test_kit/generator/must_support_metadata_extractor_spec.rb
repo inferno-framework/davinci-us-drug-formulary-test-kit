@@ -1,13 +1,14 @@
 require_relative '../../../lib/davinci_pdex_drug_formulary_test_kit/generator/must_support_metadata_extractor'
 
 RSpec.describe DaVinciPDEXDrugFormularyTestKit::Generator::MustSupportMetadataExtractor do
-  subject { described_class.new([profile_element], profile, 'resourceConstructor', ig_resources) }
+  subject(:metadata_extractor) { described_class.new([profile_element], profile, 'resourceConstructor', ig_resources) }
 
   let(:profile) do
-    profile = double('profile')
+    profile = instance_double(FHIR::StructureDefinition)
     allow(profile).to receive_messages(baseDefinition: 'baseDefinition', name: 'name', type: 'type', version: 'version')
     profile
   end
+
   let(:ig_resources) do
     ig_resources = double
     allow(ig_resources).to receive(:value_set_by_url).and_return(nil)
@@ -43,19 +44,19 @@ RSpec.describe DaVinciPDEXDrugFormularyTestKit::Generator::MustSupportMetadataEx
       element
     end
 
-    it 'returns a path and an original path' do
-      allow(subject).to receive(:type_must_support_extension?).and_return(true)
+    it 'returns a path and an original path when type_must_support_extension is true' do
+      allow(metadata_extractor).to receive(:type_must_support_extension?).and_return(true)
 
-      result = subject.get_type_must_support_metadata(metadata, element)
+      result = metadata_extractor.get_type_must_support_metadata(metadata, element)
 
       expected = [{ original_path: 'path', path: 'pathCode' }]
       expect(result).to eq(expected)
     end
 
-    it 'returns a path and an original path' do
-      allow(subject).to receive(:type_must_support_extension?).and_return(false)
+    it 'returns an empty array when type_must_support_extension is false' do
+      allow(metadata_extractor).to receive(:type_must_support_extension?).and_return(false)
 
-      result = subject.get_type_must_support_metadata(metadata, element)
+      result = metadata_extractor.get_type_must_support_metadata(metadata, element)
 
       expected = []
       expect(result).to eq(expected)

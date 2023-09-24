@@ -37,9 +37,8 @@ module DaVinciPDEXDrugFormularyTestKit
             short_description:,
             interactions:,
             # operations: operations,
-            # searches: searches,
-            searches: []
-            # search_definitions: search_definitions,
+            searches:, # searches: searches,
+            search_definitions: # search_definitions: search_definitions
             # include_params: include_params,
             # revincludes: revincludes,
             # required_concepts: required_concepts,
@@ -51,7 +50,7 @@ module DaVinciPDEXDrugFormularyTestKit
           }
 
         # mark_mandatory_and_must_support_searches
-        # handle_special_cases
+        handle_special_cases
 
         @group_metadata_hash
       end
@@ -125,16 +124,10 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def first_search_params
         @first_search_params ||=
-          if category_first_profile?
-            ['patient', 'category']
-          elsif resource == 'Observation'
-            ['patient', 'code']
-          elsif resource == 'MedicationRequest'
-            ['patient', 'intent']
-          elsif resource == 'CareTeam'
-            ['patient', 'status']
+          if resource == 'Location'
+            ['_id']
           else
-            ['patient']
+            ['status']
           end
       end
 
@@ -173,7 +166,7 @@ module DaVinciPDEXDrugFormularyTestKit
           .split('-')
           .map(&:capitalize)
           .join
-          .gsub('UsCore', "USCore#{ig_metadata.reformatted_version}")
+          .gsub('USDF', "USDF#{ig_metadata.reformatted_version}")
           .concat('Sequence')
       end
 
@@ -199,15 +192,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def title
-        title = profile.title.gsub(/US\s*Core\s*/, '').gsub(/\s*Profile/, '').strip
-
-        if Naming.resources_with_multiple_profiles.include?(resource) &&
-           !title.start_with?(resource) &&
-           version != 'v3.1.1'
-          title = "#{resource} #{title.split(resource).map(&:strip).join(' ')}"
-        end
-
-        title
+        profile.title.gsub(/US\s*Core\s*/, '').gsub(/\s*Profile/, '').strip
       end
 
       def short_description

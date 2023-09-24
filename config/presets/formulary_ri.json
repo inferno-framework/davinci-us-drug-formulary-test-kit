@@ -1,0 +1,28 @@
+{
+  "title": "Preset for US Drug Formulary v2.0.0",
+  "id": null,
+  "test_suite_id": "usdf_v200",
+  "inputs": [
+    {
+      "name": "url",
+      "value": "https://drug-formulary-ri.davinci.hl7.org/fhir",
+      "_title": "FHIR Endpoint",
+      "_description": "URL of the FHIR endpoint",
+      "_type": "text"
+    },
+    {
+      "name": "smart_credentials",
+      "value": null,
+      "_title": "OAuth Credentials",
+      "_type": "oauth_credentials",
+      "_optional": true
+    },
+    {
+      "name": "input_ids",
+      "value": "StateOfCTLocation,UnitedStatesLocation",
+      "_title": "Location IDs",
+      "_description": "Comma separated list of Location IDs that in sum contain all MUST SUPPORT elements",
+      "_type": "text"
+    }
+  ]
+}

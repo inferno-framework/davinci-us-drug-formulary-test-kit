@@ -29,8 +29,102 @@
   :expectation: SHOULD
 - :code: history-type
   :expectation: MAY
-:searches: []
+:searches:
+- :names:
+  - _id
+  :expectation: SHALL
+- :names:
+  - _lastUpdated
+  :expectation: SHALL
+- :names:
+  - address
+  :expectation: SHALL
+- :names:
+  - address-city
+  :expectation: SHALL
+- :names:
+  - address-state
+  :expectation: SHALL
+- :names:
+  - address-postalcode
+  :expectation: SHALL
+:search_definitions:
+  :_id:
+    :paths:
+    - Resource.id
+    :full_paths:
+    - Resource.id
+    :comparators: {}
+    :values: []
+    :type: token
+    :contains_multiple: false
+  :_lastUpdated:
+    :paths:
+    - Resource.meta.lastUpdated
+    :full_paths:
+    - Resource.meta.lastUpdated
+    :comparators:
+      :eq: MAY
+      :ne: MAY
+      :gt: MAY
+      :ge: MAY
+      :lt: MAY
+      :le: MAY
+      :sa: MAY
+      :eb: MAY
+      :ap: MAY
+    :values: []
+    :type: date
+    :contains_multiple: false
+  :address:
+    :paths:
+    - address
+    :full_paths:
+    - Location.address
+    :comparators: {}
+    :values: []
+    :type: Address
+    :contains_multiple: false
+  :address-city:
+    :paths:
+    - address.city
+    :full_paths:
+    - Location.address.city
+    :comparators: {}
+    :values: []
+    :type: string
+    :contains_multiple: false
+  :address-state:
+    :paths:
+    - address.state
+    :full_paths:
+    - Location.address.state
+    :comparators: {}
+    :values: []
+    :type: string
+    :contains_multiple: false
+  :address-postalcode:
+    :paths:
+    - address.postalCode
+    :full_paths:
+    - Location.address.postalCode
+    :comparators: {}
+    :values: []
+    :type: string
+    :contains_multiple: false
 :tests:
+- :id: us_core_v200_location__id_search_test
+  :file_name: location_id_search_test.rb
+- :id: us_core_v200_location__lastUpdated_search_test
+  :file_name: location_lastupdated_search_test.rb
+- :id: us_core_v200_location_address_search_test
+  :file_name: location_address_search_test.rb
+- :id: us_core_v200_location_address_city_search_test
+  :file_name: location_address_city_search_test.rb
+- :id: us_core_v200_location_address_state_search_test
+  :file_name: location_address_state_search_test.rb
+- :id: us_core_v200_location_address_postalcode_search_test
+  :file_name: location_address_postalcode_search_test.rb
 - :id: usdf_v200_location_read_test
   :file_name: location_read_test.rb
 :id: usdf_v200_location

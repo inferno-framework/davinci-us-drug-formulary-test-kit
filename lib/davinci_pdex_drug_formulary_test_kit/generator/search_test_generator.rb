@@ -90,8 +90,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def fixed_value_search?
-        first_search? && search_metadata[:names] != ['patient'] &&
-          !group_metadata.delayed? && resource_type != 'Patient'
+        first_search? && search_metadata[:names] == ['status']
       end
 
       def fixed_value_search_param_name
@@ -102,9 +101,12 @@ module DaVinciPDEXDrugFormularyTestKit
         search_metadata[:names].join(' + ')
       end
 
-      def needs_patient_id?
-        search_metadata[:names].include?('patient') ||
-          (resource_type == 'Patient' && search_metadata[:names].include?('_id'))
+      def needs_id?
+        # resource_type == 'Location'
+        search_metadata[:names].include?('_id') && resource_type == 'Location'
+
+        # search_metadata[:names].include?('patient') ||
+        #   (resource_type == 'Patient' && search_metadata[:names].include?('_id'))
       end
 
       def search_param_names
@@ -132,7 +134,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def optional?
-        conformance_expectation != 'SHALL' || !search_metadata[:must_support_or_mandatory]
+        conformance_expectation != 'SHALL'
       end
 
       def search_definition(name)
@@ -141,11 +143,6 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def saves_delayed_references?
         first_search? && group_metadata.delayed_references.present?
-      end
-
-      def possible_status_search?
-        search_metadata[:names].none? { |name| name.include? 'status' } &&
-          group_metadata.search_definitions.keys.any? { |key| key.to_s.include? 'status' }
       end
 
       def token_search_params
@@ -183,10 +180,6 @@ module DaVinciPDEXDrugFormularyTestKit
         first_search? && search_param_names.include?('patient')
       end
 
-      def test_medication_inclusion?
-        ['MedicationRequest', 'MedicationDispense'].include?(resource_type)
-      end
-
       def test_post_search?
         first_search?
       end
@@ -198,8 +191,6 @@ module DaVinciPDEXDrugFormularyTestKit
           properties[:resource_type] = "'#{resource_type}'"
           properties[:search_param_names] = search_param_names_array
           properties[:saves_delayed_references] = 'true' if saves_delayed_references?
-          properties[:possible_status_search] = 'true' if possible_status_search?
-          properties[:test_medication_inclusion] = 'true' if test_medication_inclusion?
           properties[:token_search_params] = token_search_params_string if token_search_params.present?
           properties[:test_reference_variants] = 'true' if test_reference_variants?
           properties[:params_with_comparators] = required_comparators_string if required_comparators.present?
@@ -241,9 +232,9 @@ module DaVinciPDEXDrugFormularyTestKit
 
         <<~REFERENCE_SEARCH_DESCRIPTION
           This test verifies that the server supports searching by reference using
-          the form `patient=[id]` as well as `patient=Patient/[id]`. The two
-          different forms are expected to return the same number of results. US
-          Core requires that both forms are supported by US Core responders.
+          the form `formulary=[id]` as well as `formulary=Formulary/[id]`. The two
+          different forms are expected to return the same number of results. USDF#{' '}
+          requires that both forms are supported by responders.
         REFERENCE_SEARCH_DESCRIPTION
       end
 
@@ -254,16 +245,6 @@ module DaVinciPDEXDrugFormularyTestKit
           Because this is the first search of the sequence, resources in the
           response will be used for subsequent tests.
         FIRST_SEARCH_DESCRIPTION
-      end
-
-      def medication_inclusion_description
-        return '' unless test_medication_inclusion?
-
-        <<~MEDICATION_INCLUSION_DESCRIPTION
-          If any MedicationRequest resources use external references to
-          Medications, the search will be repeated with
-          `_include=MedicationRequest:medication`.
-        MEDICATION_INCLUSION_DESCRIPTION
       end
 
       def post_search_description
@@ -284,12 +265,10 @@ module DaVinciPDEXDrugFormularyTestKit
           will pass if resources are returned and match the search criteria. If
           none are returned, the test is skipped.
 
-          #{medication_inclusion_description}
-          #{reference_search_description}
           #{first_search_description}
           #{post_search_description}
 
-          [US Core Server CapabilityStatement](http://hl7.org/fhir/us/core/#{url_version}/CapabilityStatement-us-core-server.html)
+          [US Drug Formulary](http://hl7.org/fhir/us/davinci-drug-formulary/#{url_version}/CapabilityStatement-usdf-server.html)
         DESCRIPTION
       end
     end

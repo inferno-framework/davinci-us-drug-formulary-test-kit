@@ -29,8 +29,163 @@
   :expectation: SHOULD
 - :code: history-type
   :expectation: MAY
-:searches: []
+:searches:
+- :names:
+  - status
+  :expectation: SHALL
+- :names:
+  - _id
+  :expectation: SHALL
+- :names:
+  - _lastUpdated
+  :expectation: SHALL
+- :names:
+  - code
+  :expectation: SHALL
+- :names:
+  - subject
+  :expectation: SHALL
+- :names:
+  - period
+  :expectation: SHALL
+- :names:
+  - formulary
+  :expectation: SHALL
+- :names:
+  - pharmacy-benefit-type
+  :expectation: SHALL
+- :names:
+  - drug-tier
+  :expectation: SHALL
+:search_definitions:
+  :_id:
+    :paths:
+    - Resource.id
+    :full_paths:
+    - Resource.id
+    :comparators: {}
+    :values: []
+    :type: token
+    :contains_multiple: false
+  :_lastUpdated:
+    :paths:
+    - Resource.meta.lastUpdated
+    :full_paths:
+    - Resource.meta.lastUpdated
+    :comparators:
+      :eq: MAY
+      :ne: MAY
+      :gt: MAY
+      :ge: MAY
+      :lt: MAY
+      :le: MAY
+      :sa: MAY
+      :eb: MAY
+      :ap: MAY
+    :values: []
+    :type: date
+    :contains_multiple: false
+  :code:
+    :paths:
+    - code
+    :full_paths:
+    - Basic.code
+    :comparators: {}
+    :values:
+    - formulary-item
+    :type: CodeableConcept
+    :contains_multiple: false
+    :multiple_or: true
+  :subject:
+    :paths:
+    - subject
+    :full_paths:
+    - Basic.subject
+    :comparators: {}
+    :values: []
+    :type: Reference
+    :contains_multiple: false
+    :multiple_or: true
+  :status:
+    :paths:
+    - extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityStatus-extension').value
+    :full_paths:
+    - Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityStatus-extension').value
+    :comparators: {}
+    :values:
+    - draft
+    - active
+    - retired
+    - unknown
+    :type: code
+    :contains_multiple: false
+    :multiple_or: true
+  :period:
+    :paths:
+    - extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityPeriod-extension').value
+    :full_paths:
+    - Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityPeriod-extension').value
+    :comparators:
+      :eq: MAY
+      :lt: MAY
+      :le: MAY
+      :gt: MAY
+      :ge: MAY
+      :sa: MAY
+      :eb: MAY
+    :values: []
+    :type: Period
+    :contains_multiple: false
+    :multiple_or: true
+  :formulary:
+    :paths:
+    - extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').value
+    :full_paths:
+    - Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').value
+    :comparators: {}
+    :values: []
+    :type: Reference
+    :contains_multiple: false
+    :multiple_or: true
+  :pharmacy-benefit-type:
+    :paths:
+    - extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PharmacyBenefitType-extension').value
+    :full_paths:
+    - Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PharmacyBenefitType-extension').value
+    :comparators: {}
+    :values: []
+    :type: CodeableConcept
+    :contains_multiple: true
+    :multiple_or: true
+  :drug-tier:
+    :paths:
+    - extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-DrugTierID-extension').value
+    :full_paths:
+    - Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-DrugTierID-extension').value
+    :comparators: {}
+    :values: []
+    :type: CodeableConcept
+    :contains_multiple: false
+    :multiple_or: true
 :tests:
+- :id: us_core_v200_basic_status_search_test
+  :file_name: basic_status_search_test.rb
+- :id: us_core_v200_basic__id_search_test
+  :file_name: basic_id_search_test.rb
+- :id: us_core_v200_basic__lastUpdated_search_test
+  :file_name: basic_lastupdated_search_test.rb
+- :id: us_core_v200_basic_code_search_test
+  :file_name: basic_code_search_test.rb
+- :id: us_core_v200_basic_subject_search_test
+  :file_name: basic_subject_search_test.rb
+- :id: us_core_v200_basic_period_search_test
+  :file_name: basic_period_search_test.rb
+- :id: us_core_v200_basic_formulary_search_test
+  :file_name: basic_formulary_search_test.rb
+- :id: us_core_v200_basic_pharmacy_benefit_type_search_test
+  :file_name: basic_pharmacy_benefit_type_search_test.rb
+- :id: us_core_v200_basic_drug_tier_search_test
+  :file_name: basic_drug_tier_search_test.rb
 - :id: usdf_v200_basic_read_test
   :file_name: basic_read_test.rb
 :id: usdf_v200_basic

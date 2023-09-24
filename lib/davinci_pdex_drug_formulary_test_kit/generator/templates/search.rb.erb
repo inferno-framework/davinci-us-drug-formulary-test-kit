@@ -13,16 +13,11 @@ module DaVinciPDEXDrugFormularyTestKit
 
       id :<%= test_id %><% if optional? %>
       optional
-  <% end %><% if needs_patient_id? %>
-      input :patient_ids,
-        title: 'Patient IDs',
-        description: 'Comma separated list of patient IDs that in sum contain all MUST SUPPORT elements'
-  <% end %><% if resource_type == 'Device' %>
-      input :implantable_device_codes,
-        title: 'Implantable Device Type Code',
-        description: 'Enter the code for an Implantable Device type, or multiple codes separated by commas. '\
-                    'If blank, Inferno will validate all Device resources against the Implantable Device profile',
-        optional: true
+  <% end %>
+  <% if needs_id? %>
+      input :input_ids,
+        title: '<%= resource_type %> IDs',
+        description: 'Comma separated list of <%= resource_type %> IDs that in sum contain all MUST SUPPORT elements'
   <% end %>
       def self.properties
         @properties ||= SearchTestProperties.new(
@@ -39,7 +34,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       run do
-        run_search_test
+        run_search_test 
       end
     end
   end

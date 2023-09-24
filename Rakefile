@@ -17,7 +17,7 @@ namespace :db do
   end
 end
 
-namespace :us_core do
+namespace :usdf do
   desc 'Generate tests'
   task :generate do
     require_relative 'lib/davinci_pdex_drug_formulary_test_kit/generator'

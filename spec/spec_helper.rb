@@ -7,6 +7,13 @@ require 'database_cleaner/sequel'
 require 'pry'
 require 'pry-byebug'
 
+require 'simplecov'
+SimpleCov.start do
+  enable_coverage :branch
+  add_filter '/spec/'
+  add_filter '/lib/davinci_pdex_drug_formulary_test_kit/generated'
+end
+
 require 'webmock/rspec'
 WebMock.disable_net_connect!
 

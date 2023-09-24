@@ -54,19 +54,20 @@ module DaVinciPDEXDrugFormularyTestKit
       def load_standalone_resources
         ig_directory = ig_file_name.chomp('.tgz')
 
-        return ig_resources unless File.exist? ig_directory
-
         Dir.glob(File.join(ig_directory, '*.json')).each do |file_path|
-          begin
-            resource = FHIR.from_contents(File.read(file_path))
-            next if resource.nil?
-          rescue StandardError
-            file_name = file_path.split('/').last
-            puts "#{file_name} does not appear to be a FHIR resource."
-            next
-          end
+          resource = FHIR.from_contents(File.read(file_path))
+          next if resource.nil?
 
-          ig_resources.add(resource)
+          if resource.resourceType == 'Bundle' && !resource.entry.nil?
+            resource_arr = resource.entry
+            resource_arr.each do |entry|
+              ig_resources.add(entry.resource)
+            end
+          end
+        rescue StandardError
+          file_name = file_path.split('/').last
+          puts "#{file_name} does not appear to be a FHIR resource."
+          next
         end
 
         ig_resources

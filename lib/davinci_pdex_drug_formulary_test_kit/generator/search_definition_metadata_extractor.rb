@@ -157,10 +157,20 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def multiple_or_expectation
-        param_hash['_multipleOr']['extension'].first['valueCode']
+        param_hash['multipleOr']
+      end
+
+      def basic_status_search?
+        resource == 'Basic' && name == 'status'
+      end
+
+      def basic_status_values
+        ['draft', 'active', 'retired', 'unknown']
       end
 
       def values
+        return basic_status_values if basic_status_search?
+
         value_extractor.values_from_slicing(profile_element, type).presence ||
           value_extractor.values_from_required_binding(profile_element).presence ||
           value_extractor.values_from_value_set_binding(profile_element).presence ||
@@ -169,7 +179,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def values_from_resource_metadata(paths)
-        if multiple_or_expectation == 'SHALL' || paths.any? { |path| path.downcase.include?('status') }
+        if multiple_or_expectation || paths.any? { |path| path.downcase.include?('status') }
           value_extractor.values_from_resource_metadata(paths)
         else
           []

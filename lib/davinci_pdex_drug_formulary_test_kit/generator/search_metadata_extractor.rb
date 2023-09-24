@@ -45,18 +45,21 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def combo_searches
-        return [] if search_extensions.blank?
-
-        search_extensions
-          .select { |extension| extension.url == COMBO_EXTENSION_URL }
-          .select { |extension| ['SHALL', 'SHOULD'].include? conformance_expectation(extension) }
-          .map do |extension|
-            names = extension.extension.select { |param| param.valueString.present? }.map(&:valueString)
-            {
-              expectation: conformance_expectation(extension),
-              names:
-            }
-          end
+        []
+        # pair_combinations = basic_searches.combination(2).to_a
+        # pair_combinations.map do |combo|
+        #   if combo[0][:expectation] == 'SHALL' && combo[1][:expectation] == 'SHALL'
+        #     {
+        #       names: [combo[0][:names][0], combo[1][:names][0]],
+        #       expectation: combo[0][:expectation]
+        #     }
+        #   else
+        #     {
+        #       names: [combo[0][:names][0], combo[1][:names][0]],
+        #       expectation: 'SHOULD'
+        #     }
+        #   end
+        # end
       end
 
       def search_param_names

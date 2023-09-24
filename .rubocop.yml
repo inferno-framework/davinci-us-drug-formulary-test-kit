@@ -68,6 +68,10 @@ RSpec/DescribeClass:
 RSpec/ExampleLength:
   Enabled: false
 
+RSpec/FilePath:
+  CustomTransform:
+    DaVinciPDEXDrugFormularyTestKit: davinci_pdex_drug_formulary_test_kit
+
 RSpec/MultipleExpectations:
   Enabled: false
 
@@ -79,6 +83,9 @@ RSpec/NestedGroups:
 
 RSpec/NotToNot:
   EnforcedStyle: to_not
+
+RSpec/SubjectStub:
+  Enabled: false
 
 Gemspec/RequireMFA:
   Enabled: false

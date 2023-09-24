@@ -1,3 +1,9 @@
+require_relative 'location/location_id_search_test'
+require_relative 'location/location_lastupdated_search_test'
+require_relative 'location/location_address_search_test'
+require_relative 'location/location_address_city_search_test'
+require_relative 'location/location_address_state_search_test'
+require_relative 'location/location_address_postalcode_search_test'
 require_relative 'location/location_read_test'
 
 module DaVinciPDEXDrugFormularyTestKit
@@ -6,15 +12,37 @@ module DaVinciPDEXDrugFormularyTestKit
       title 'Insurance Plan Location Tests'
       short_description 'Verify support for the server capabilities required by the Insurance Plan Location.'
       description %(
-  # Background
+# Background
 
 The USDF Insurance Plan Location sequence verifies that the system under test is
 able to provide correct responses for Location queries. These queries
 must contain resources conforming to the Insurance Plan Location as
-specified in the US Drug Formulary v2.0.0 Implementation
-Guide.
+specified in the USDF v2.0.0 Implementation Guide.
 
 # Testing Methodology
+## Searching
+This test sequence will first perform each required search associated
+with this resource. This sequence will perform searches with the
+following parameters:
+
+* _id
+* _lastUpdated
+* address
+* address-city
+* address-state
+* address-postalcode
+
+### Search Parameters
+The first search uses the selected resources from the prior launch
+sequence. Any subsequent searches will look for its parameter values
+from the results of the first search. If a value cannot be found this way, the search is skipped.
+
+### Search Validation
+Inferno will retrieve up to the first 20 bundle pages of the reply for
+Location resources and save them for subsequent tests. Each of
+these resources is then checked to see if it matches the searched
+parameters in accordance with [FHIR search
+guidelines](https://www.hl7.org/fhir/search.html).
 
 
 ## Must Support
@@ -48,6 +76,12 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'location', 'metadata.yml'), aliases: true))
       end
   
+      test from: :us_core_v200_location__id_search_test
+      test from: :us_core_v200_location__lastUpdated_search_test
+      test from: :us_core_v200_location_address_search_test
+      test from: :us_core_v200_location_address_city_search_test
+      test from: :us_core_v200_location_address_state_search_test
+      test from: :us_core_v200_location_address_postalcode_search_test
       test from: :usdf_v200_location_read_test
     end
   end

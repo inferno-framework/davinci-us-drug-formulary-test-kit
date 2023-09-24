@@ -12,7 +12,7 @@ module DaVinciPDEXDrugFormularyTestKit
     class USDFTestSuite < Inferno::TestSuite
       title 'US Drug Formulary v2.0.0'
       description %(
-        The US Core Test Kit tests systems for their conformance to the [US Core
+        The US Drug Formulary Kit tests systems for their conformance to the [US Drug Formulary
         Implementation Guide](https://hl7.org/fhir/us/davinci-drug-formulary/STU2/).
 
         HL7® FHIR® resources are validated with the Java validator using

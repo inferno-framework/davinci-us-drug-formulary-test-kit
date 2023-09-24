@@ -30,11 +30,10 @@ module DaVinciPDEXDrugFormularyTestKit
     end
 
     def generate
-      puts "Generating tests for IG #{File.basename(ig_file_name)}"
       load_ig_package
       extract_metadata
       # generate_resource_list
-      # generate_search_tests
+      generate_search_tests
       generate_read_tests
       # # TODO: generate_vread_tests
       # # TODO: generate_history_tests
