@@ -404,7 +404,7 @@
     :expectation: MAY
   :searches:
   - :names:
-    - status
+    - code
     :expectation: SHALL
   - :names:
     - _id
@@ -413,10 +413,10 @@
     - _lastUpdated
     :expectation: SHALL
   - :names:
-    - code
+    - subject
     :expectation: SHALL
   - :names:
-    - subject
+    - status
     :expectation: SHALL
   - :names:
     - period

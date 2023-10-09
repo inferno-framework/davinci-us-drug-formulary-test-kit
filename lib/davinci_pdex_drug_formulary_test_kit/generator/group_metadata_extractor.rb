@@ -126,6 +126,8 @@ module DaVinciPDEXDrugFormularyTestKit
         @first_search_params ||=
           if resource == 'Location'
             ['_id']
+          elsif resource == 'Basic'
+            ['code']
           else
             ['status']
           end

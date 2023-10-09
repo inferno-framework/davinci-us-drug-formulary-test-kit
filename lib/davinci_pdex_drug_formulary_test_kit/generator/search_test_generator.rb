@@ -90,7 +90,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def fixed_value_search?
-        first_search? && search_metadata[:names] == ['status']
+        first_search? && (search_metadata[:names] == ['status'] || search_metadata[:names] == ['code'])
       end
 
       def fixed_value_search_param_name

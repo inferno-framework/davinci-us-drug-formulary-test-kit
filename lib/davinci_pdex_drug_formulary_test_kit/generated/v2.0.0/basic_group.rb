@@ -1,8 +1,8 @@
-require_relative 'basic/basic_status_search_test'
+require_relative 'basic/basic_code_search_test'
 require_relative 'basic/basic_id_search_test'
 require_relative 'basic/basic_lastupdated_search_test'
-require_relative 'basic/basic_code_search_test'
 require_relative 'basic/basic_subject_search_test'
+require_relative 'basic/basic_status_search_test'
 require_relative 'basic/basic_period_search_test'
 require_relative 'basic/basic_formulary_search_test'
 require_relative 'basic/basic_pharmacy_benefit_type_search_test'
@@ -28,11 +28,11 @@ This test sequence will first perform each required search associated
 with this resource. This sequence will perform searches with the
 following parameters:
 
-* status
+* code
 * _id
 * _lastUpdated
-* code
 * subject
+* status
 * period
 * formulary
 * pharmacy-benefit-type
@@ -82,11 +82,11 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'basic', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v200_basic_status_search_test
+      test from: :us_core_v200_basic_code_search_test
       test from: :us_core_v200_basic__id_search_test
       test from: :us_core_v200_basic__lastUpdated_search_test
-      test from: :us_core_v200_basic_code_search_test
       test from: :us_core_v200_basic_subject_search_test
+      test from: :us_core_v200_basic_status_search_test
       test from: :us_core_v200_basic_period_search_test
       test from: :us_core_v200_basic_formulary_search_test
       test from: :us_core_v200_basic_pharmacy_benefit_type_search_test
