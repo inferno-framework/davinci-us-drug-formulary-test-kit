@@ -5,6 +5,7 @@ require_relative 'location/location_address_city_search_test'
 require_relative 'location/location_address_state_search_test'
 require_relative 'location/location_address_postalcode_search_test'
 require_relative 'location/location_read_test'
+require_relative 'location/location_must_support_test'
 
 module DaVinciPDEXDrugFormularyTestKit
   module USDFV200
@@ -83,6 +84,7 @@ read succeeds.
       test from: :us_core_v200_location_address_state_search_test
       test from: :us_core_v200_location_address_postalcode_search_test
       test from: :usdf_v200_location_read_test
+      test from: :us_core_v200_location_must_support_test
     end
   end
 end

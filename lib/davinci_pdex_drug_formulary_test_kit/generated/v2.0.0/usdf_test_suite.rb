@@ -17,6 +17,16 @@ module DaVinciPDEXDrugFormularyTestKit
 
         HL7® FHIR® resources are validated with the Java validator using
         `tx.fhir.org` as the terminology server.
+
+        **Known Issues**
+        
+        - MS Checks are not performed for all elements of Formulary Drug resources due to the use of an intensional value set for slicing
+        `MedicationKnowledge.code.coding` elements. Additional work is needed to allow for checks of MS elements sliced by
+        codes in the intensional value set. 
+        
+        - MS elements elements under MS slices also need to be independently checked when those slices
+        are present. Metadata should reflect this, with MS elements within slices being put under "slices" rather than "elements," as they 
+        currently are. 
       )
       version VERSION
 

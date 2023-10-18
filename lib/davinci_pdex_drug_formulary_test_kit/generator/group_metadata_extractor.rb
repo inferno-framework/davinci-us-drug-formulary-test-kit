@@ -38,11 +38,11 @@ module DaVinciPDEXDrugFormularyTestKit
             interactions:,
             # operations: operations,
             searches:, # searches: searches,
-            search_definitions: # search_definitions: search_definitions
+            search_definitions:, # search_definitions: search_definitions
             # include_params: include_params,
             # revincludes: revincludes,
             # required_concepts: required_concepts,
-            # must_supports: must_supports,
+            must_supports:
             # mandatory_elements: mandatory_elements,
             # bindings: bindings,
             # references: references
@@ -135,6 +135,8 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def handle_special_cases
         set_first_search
+        filter_drug_values
+        add_must_support_choices
       end
 
       def set_first_search
@@ -143,6 +145,26 @@ module DaVinciPDEXDrugFormularyTestKit
 
         searches.delete(search)
         searches.unshift(search)
+      end
+
+      def filter_drug_values
+        search_definitions[:doseform][:values] = [] unless search_definitions[:doseform].nil?
+
+        return if search_definitions[:code].nil?
+        return unless search_definitions[:code][:full_paths] == ['MedicationKnowledge.code']
+
+        search_definitions[:code][:values] = []
+      end
+
+      def add_must_support_choices
+        choices = []
+        case profile.type
+        when 'Location'
+          choices << { paths: ['address'],
+                       extension_ids: ['Location.extension:region'] }
+        end
+
+        must_supports[:choices] = choices if choices.present?
       end
 
       ### END SPECIAL CASES ###

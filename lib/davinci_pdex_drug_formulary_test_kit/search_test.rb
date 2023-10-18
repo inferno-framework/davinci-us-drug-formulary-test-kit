@@ -132,7 +132,6 @@ module DaVinciPDEXDrugFormularyTestKit
     def payer_insurance_plan?(resource)
       return false if formulary_insurance_plan? resource
 
-      # TODO: Determine how to identify payer insurance plans
       true
     end
 

@@ -1,28 +1,29 @@
 require_relative '../../../must_support_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module <%= module_name %>
-    class <%= class_name %> < Inferno::Test
+  module USCoreV200
+    class FormularyMustSupportTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::MustSupportTest
 
-      title 'All must support elements are provided in the <%= resource_type %> resources returned'
+      title 'All must support elements are provided in the InsurancePlan resources returned'
       description %(
         US Drug Formulary Responders SHALL be capable of populating all data elements as
         part of the query results as specified by the US Drug Formulary Capability
-        Statement. This test will look through the <%= resource_type %> resources
+        Statement. This test will look through the InsurancePlan resources
         found previously for the following must support elements:
 
-<%= must_support_list_string %><% if uscdi_list_string.present? %>
-
-        For ONC USCDI requirements, each <%= resource_type %> must support the following additional elements:
-
-<%= uscdi_list_string %><% end %>
+        * InsurancePlan.identifier
+        * InsurancePlan.meta.lastUpdated
+        * InsurancePlan.name
+        * InsurancePlan.period
+        * InsurancePlan.status
+        * InsurancePlan.type.coding.code
       )
 
-      id :<%= test_id %>
+      id :us_core_v200_formulary_must_support_test
 
       def resource_type
-        '<%= resource_type %>'
+        'InsurancePlan'
       end
 
       def self.metadata
@@ -30,11 +31,11 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def scratch_resources
-        scratch[:<%= profile_identifier %>_resources] ||= {}
+        scratch[:formulary_resources] ||= {}
       end
 
       run do
-        perform_must_support_test(<%= resource_collection_string %>)
+        perform_must_support_test(all_scratch_resources)
       end
     end
   end

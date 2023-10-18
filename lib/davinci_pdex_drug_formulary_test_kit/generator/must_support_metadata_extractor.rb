@@ -1,8 +1,4 @@
 require_relative 'value_extractor'
-require_relative 'must_support_metadata_extractor_us_core_3'
-require_relative 'must_support_metadata_extractor_us_core_4'
-require_relative 'must_support_metadata_extractor_us_core_5'
-require_relative 'must_support_metadata_extractor_us_core_6'
 
 module DaVinciPDEXDrugFormularyTestKit
   class Generator
@@ -22,8 +18,7 @@ module DaVinciPDEXDrugFormularyTestKit
           slices: must_support_slices,
           elements: must_support_elements
         }
-
-        handle_special_cases
+        # handle_special_cases
 
         @must_supports
       end
@@ -40,14 +35,17 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def must_support_extension_elements
-        all_must_support_elements.select { |element| element.path.end_with? 'extension' }
+        all_must_support_elements.select do |element|
+          (element.path.end_with? 'extension') && !element&.type&.first&.profile&.first.nil?
+        end
       end
 
       def must_support_extensions
         must_support_extension_elements.map do |element|
           {
             id: element.id,
-            url: element.type.first.profile.first
+            url: element.type.first.profile.first,
+            path: element.path.gsub("#{resource}.", '')
           }.tap do |metadata|
             metadata[:uscdi_only] = true if is_uscdi_requirement_element?(element)
           end
@@ -60,9 +58,30 @@ module DaVinciPDEXDrugFormularyTestKit
         end
       end
 
+      # TODO: fi-2241 (see known issues) - MS elements within MS slices need to be under
+      # "slices" in the metadata, rather than "elements"
+
+      # def slice_sub_elements
+      #   must_support_slice_elements.flat_map do |slice|
+      #     profile_elements.select do |element|
+      #       element.id != slice.id && element.id.start_with?(slice.id) && element.mustSupport
+      #     end
+      #   end
+      # end
+
+      # def slice_sub_elements_content
+      #   slice_sub_elements.map do |x|
+      #     {
+      #       name: x.id,
+      #       path: x.path
+      #     }
+      #   end
+      # end
+
       def sliced_element(slice)
         profile_elements.find do |element|
-          element.id == slice.path || element.id == slice.id.sub(":#{slice.sliceName}", '')
+          (element.id == slice.path && element.slicing.present?) || element.id == slice.id.sub(":#{slice.sliceName}",
+                                                                                               '')
         end
       end
 
@@ -184,15 +203,21 @@ module DaVinciPDEXDrugFormularyTestKit
             }
           }.tap do |metadata|
             metadata[:discriminator][:values] = discriminators(sliced_element(current_element)).map do |discriminator|
-              fixed_element = profile_elements.find do |element|
-                element.id.starts_with?(current_element.id) &&
-                  element.path == "#{current_element.path}.#{discriminator.path}"
+              if discriminator.path == '$this'
+                {
+                  path: discriminator.path,
+                  value: current_element.path
+                }
+              else
+                fixed_element = profile_elements.find do |element|
+                  element.id.starts_with?(current_element.id) &&
+                    element.path == "#{current_element.path}.#{discriminator.path}"
+                end
+                {
+                  path: discriminator.path,
+                  value: fixed_element.fixedUri || fixed_element.fixedCode
+                }
               end
-
-              {
-                path: discriminator.path,
-                value: fixed_element.fixedUri || fixed_element.fixedCode
-              }
             end
 
             metadata[:uscdi_only] = true if is_uscdi_requirement_element?(current_element)
@@ -202,10 +227,14 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def must_support_slices
         pattern_slices + type_slices + value_slices
+        # TODO: for fi-2241
+        # pattern_slices + type_slices + value_slices + slice_sub_elements_content
       end
 
       def plain_must_support_elements
         all_must_support_elements - must_support_extension_elements - must_support_slice_elements
+        # TODO: for fi-2241
+        # all_must_support_elements - must_support_extension_elements - must_support_slice_elements - slice_sub_elements
       end
 
       def handle_fixed_values(metadata, element)
@@ -313,54 +342,12 @@ module DaVinciPDEXDrugFormularyTestKit
 
       #### SPECIAL CASE ####
 
-      def handle_special_cases
-        remove_vital_sign_component
-        remove_blood_pressure_value
-        remove_observation_data_absent_reason
+      # def handle_special_cases
 
-        case profile.version
-        when '3.1.1'
-          MustSupportMetadataExtractorUsCore3.new(profile, @must_supports).handle_special_cases
-        when '4.0.0'
-          MustSupportMetadataExtractorUsCore4.new(profile, @must_supports).handle_special_cases
-        when '5.0.1'
-          MustSupportMetadataExtractorUsCore5.new(profile, @must_supports).handle_special_cases
-        when '6.1.0'
-          MustSupportMetadataExtractorUsCore6.new(profile, @must_supports).handle_special_cases
-        end
-      end
+      #   add_must_support_choices
+      #   remove_observation_data_absent_reason
 
-      def is_vital_sign?
-        [
-          'http://hl7.org/fhir/StructureDefinition/vitalsigns',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-vital-signs'
-        ].include?(profile.baseDefinition)
-      end
-
-      def is_blood_pressure?
-        ['observation-bp', 'USCoreBloodPressureProfile'].include?(profile.name)
-      end
-
-      # Exclude Observation.component from vital sign profiles except observation-bp and observation-pulse-ox
-      def remove_vital_sign_component
-        return unless is_vital_sign? && !is_blood_pressure? && profile.name != 'USCorePulseOximetryProfile'
-
-        @must_supports[:elements].delete_if do |element|
-          element[:path].start_with?('component')
-        end
-      end
-
-      # Exclude Observation.value[x] from observation-bp
-      def remove_blood_pressure_value
-        return unless is_blood_pressure?
-
-        @must_supports[:elements].delete_if do |element|
-          element[:path].start_with?('value[x]') || element[:original_path]&.start_with?('value[x]')
-        end
-        @must_supports[:slices].delete_if do |slice|
-          slice[:path].start_with?('value[x]')
-        end
-      end
+      # end
 
       # ONC and US Core 4.0.0 both clarified that health IT developers that
       # always provide HL7 FHIR "observation" values are not required to
@@ -369,13 +356,13 @@ module DaVinciPDEXDrugFormularyTestKit
       # vital sign profiles and observation lab profile Smoking status profile
       # does not have MS on dataAbsentReason. It is safe to use profile.type ==
       # 'Observation'
-      def remove_observation_data_absent_reason
-        return unless profile.type == 'Observation'
+      # def remove_observation_data_absent_reason
+      #   return unless profile.type == 'Observation'
 
-        @must_supports[:elements].delete_if do |element|
-          ['dataAbsentReason', 'component.dataAbsentReason'].include?(element[:path])
-        end
-      end
+      #   @must_supports[:elements].delete_if do |element|
+      #     ['dataAbsentReason', 'component.dataAbsentReason'].include?(element[:path])
+      #   end
+      # end
     end
   end
 end

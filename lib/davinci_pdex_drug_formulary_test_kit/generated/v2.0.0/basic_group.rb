@@ -8,6 +8,7 @@ require_relative 'basic/basic_formulary_search_test'
 require_relative 'basic/basic_pharmacy_benefit_type_search_test'
 require_relative 'basic/basic_drug_tier_search_test'
 require_relative 'basic/basic_read_test'
+require_relative 'basic/basic_must_support_test'
 
 module DaVinciPDEXDrugFormularyTestKit
   module USDFV200
@@ -92,6 +93,7 @@ read succeeds.
       test from: :us_core_v200_basic_pharmacy_benefit_type_search_test
       test from: :us_core_v200_basic_drug_tier_search_test
       test from: :usdf_v200_basic_read_test
+      test from: :us_core_v200_basic_must_support_test
     end
   end
 end

@@ -179,6 +179,17 @@
     :type: Reference
     :contains_multiple: true
     :multiple_or: true
+:must_supports:
+  :extensions: []
+  :slices: []
+  :elements:
+  - :path: meta.lastUpdated
+  - :path: identifier
+  - :path: status
+  - :path: type.coding.code
+    :fixed_value: DRUGPOL
+  - :path: name
+  - :path: period
 :tests:
 - :id: us_core_v200_formulary_status_search_test
   :file_name: formulary_status_search_test.rb
@@ -202,5 +213,7 @@
   :file_name: formulary_coverage_area_search_test.rb
 - :id: usdf_v200_formulary_read_test
   :file_name: formulary_read_test.rb
+- :id: us_core_v200_formulary_must_support_test
+  :file_name: formulary_must_support_test.rb
 :id: usdf_v200_formulary
 :file_name: formulary_group.rb

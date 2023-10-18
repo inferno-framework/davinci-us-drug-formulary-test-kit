@@ -112,6 +112,19 @@
     :values: []
     :type: string
     :contains_multiple: false
+:must_supports:
+  :extensions:
+  - :id: Location.extension:region
+    :url: http://hl7.org/fhir/StructureDefinition/location-boundary-geojson
+    :path: extension
+  :slices: []
+  :elements:
+  - :path: address
+  :choices:
+  - :paths:
+    - address
+    :extension_ids:
+    - Location.extension:region
 :tests:
 - :id: us_core_v200_location__id_search_test
   :file_name: location_id_search_test.rb
@@ -127,5 +140,7 @@
   :file_name: location_address_postalcode_search_test.rb
 - :id: usdf_v200_location_read_test
   :file_name: location_read_test.rb
+- :id: us_core_v200_location_must_support_test
+  :file_name: location_must_support_test.rb
 :id: usdf_v200_location
 :file_name: location_group.rb

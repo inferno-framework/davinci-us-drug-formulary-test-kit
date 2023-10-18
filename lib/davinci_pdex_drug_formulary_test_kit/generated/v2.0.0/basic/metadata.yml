@@ -167,6 +167,38 @@
     :type: CodeableConcept
     :contains_multiple: false
     :multiple_or: true
+:must_supports:
+  :extensions:
+  - :id: Basic.extension:usdf-FormularyReference-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension
+    :path: extension
+  - :id: Basic.extension:usdf-AvailabilityStatus-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityStatus-extension
+    :path: extension
+  - :id: Basic.extension:usdf-AvailabilityPeriod-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityPeriod-extension
+    :path: extension
+  - :id: Basic.extension:usdf-PharmacyBenefitType-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PharmacyBenefitType-extension
+    :path: extension
+  - :id: Basic.extension:usdf-DrugTierID-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-DrugTierID-extension
+    :path: extension
+  - :id: Basic.extension:usdf-PriorAuthorization-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PriorAuthorization-extension
+    :path: extension
+  - :id: Basic.extension:usdf-StepTherapyLimit-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-StepTherapyLimit-extension
+    :path: extension
+  - :id: Basic.extension:usdf-QuantityLimit-extension
+    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-QuantityLimit-extension
+    :path: extension
+  :slices: []
+  :elements:
+  - :path: meta.lastUpdated
+  - :path: subject
+    :types:
+    - Reference
 :tests:
 - :id: us_core_v200_basic_code_search_test
   :file_name: basic_code_search_test.rb
@@ -188,5 +220,7 @@
   :file_name: basic_drug_tier_search_test.rb
 - :id: usdf_v200_basic_read_test
   :file_name: basic_read_test.rb
+- :id: us_core_v200_basic_must_support_test
+  :file_name: basic_must_support_test.rb
 :id: usdf_v200_basic
 :file_name: basic_group.rb

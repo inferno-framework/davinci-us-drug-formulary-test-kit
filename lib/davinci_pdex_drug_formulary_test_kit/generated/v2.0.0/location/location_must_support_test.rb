@@ -1,28 +1,24 @@
 require_relative '../../../must_support_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module <%= module_name %>
-    class <%= class_name %> < Inferno::Test
+  module USCoreV200
+    class LocationMustSupportTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::MustSupportTest
 
-      title 'All must support elements are provided in the <%= resource_type %> resources returned'
+      title 'All must support elements are provided in the Location resources returned'
       description %(
         US Drug Formulary Responders SHALL be capable of populating all data elements as
         part of the query results as specified by the US Drug Formulary Capability
-        Statement. This test will look through the <%= resource_type %> resources
+        Statement. This test will look through the Location resources
         found previously for the following must support elements:
 
-<%= must_support_list_string %><% if uscdi_list_string.present? %>
-
-        For ONC USCDI requirements, each <%= resource_type %> must support the following additional elements:
-
-<%= uscdi_list_string %><% end %>
+        * Location.address or Location.extension:region
       )
 
-      id :<%= test_id %>
+      id :us_core_v200_location_must_support_test
 
       def resource_type
-        '<%= resource_type %>'
+        'Location'
       end
 
       def self.metadata
@@ -30,11 +26,11 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def scratch_resources
-        scratch[:<%= profile_identifier %>_resources] ||= {}
+        scratch[:location_resources] ||= {}
       end
 
       run do
-        perform_must_support_test(<%= resource_collection_string %>)
+        perform_must_support_test(all_scratch_resources)
       end
     end
   end

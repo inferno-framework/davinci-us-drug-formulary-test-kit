@@ -92,7 +92,12 @@ module DaVinciPDEXDrugFormularyTestKit
           next unless choice[:uscdi_only].presence == uscdi_only.presence && choice.key?(:paths)
 
           choice[:paths].each { |path| element_names.delete("#{resource_type}.#{path}") }
-          element_names << choice[:paths].map { |path| "#{resource_type}.#{path}" }.join(' or ')
+          choice[:extension_ids].each { |id| extension_names.delete(id.to_s) } if choice[:extension_ids].present?
+
+          element_paths = choice[:paths].map { |path| "#{resource_type}.#{path}" }.join(' or ')
+          extension_ids = choice[:extension_ids].map(&:to_s).join(' or ')
+
+          element_names << ("#{element_paths} or #{extension_ids}")
         end
 
         (slice_names + element_names + extension_names)

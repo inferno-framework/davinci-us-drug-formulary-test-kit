@@ -15,12 +15,17 @@ module DaVinciPDEXDrugFormularyTestKit
       skip_if resources.blank?, "No #{resource_type} resources were found"
 
       missing_elements(resources)
-      missing_slices(resources)
       missing_extensions(resources)
-
       handle_must_support_choices if metadata.must_supports[:choices].present?
-
-      pass if (missing_elements + missing_slices + missing_extensions).empty?
+      # TODO: long term fix = allow intensional VS to be used for slicing in formulary drug
+      # ticket fi-2099
+      if resource_type == 'MedicationKnowledge'
+        # skip slice check for drugs
+        pass if (missing_elements + missing_extensions).empty?
+      else
+        missing_slices(resources)
+        pass if (missing_elements + missing_slices + missing_extensions).empty?
+      end
 
       skip "Could not find #{missing_must_support_strings.join(', ')} in the #{resources.length} " \
            "provided #{resource_type} resource(s)"
@@ -86,7 +91,13 @@ module DaVinciPDEXDrugFormularyTestKit
       @missing_extensions ||=
         must_support_extensions.select do |extension_definition|
           resources.none? do |resource|
-            resource.extension.any? { |extension| extension.url == extension_definition[:url] }
+            if resource&.extension&.empty?
+              path = extension_definition[:path]
+              value = find_a_value_at(resource, path)
+              value.url == extension_definition[:url]
+            else
+              resource.extension.any? { |extension| extension.url == extension_definition[:url] }
+            end
           end
         end
     end
@@ -138,6 +149,9 @@ module DaVinciPDEXDrugFormularyTestKit
         end
     end
 
+    # TODO: correctly check for MS elements within opn slicing MS slices
+    # ticket fi-2099 generated MS tests and metadata that added MS elements unique to slices to "slices"
+    # rather than just "elements" - a separate ticket is needed to rework how these are checked
     def find_slice(resource, path, discriminator)
       find_a_value_at(resource, path) do |element|
         case discriminator[:type]
@@ -190,11 +204,9 @@ module DaVinciPDEXDrugFormularyTestKit
             value_definitions
               .select { |value_definition| value_definition[:path].first == path_prefix }
               .each { |value_definition| value_definition[:path].shift }
-
           find_a_value_at(el, path_prefix) do |el_found|
             child_element_value_definitions, current_element_value_definitions =
               value_definitions_for_path.partition { |value_definition| value_definition[:path].present? }
-
             current_element_values_match =
               current_element_value_definitions
                 .all? { |value_definition| value_definition[:value] == el_found }
@@ -205,7 +217,6 @@ module DaVinciPDEXDrugFormularyTestKit
               else
                 true
               end
-
             current_element_values_match && child_element_values_match
           end
         end
