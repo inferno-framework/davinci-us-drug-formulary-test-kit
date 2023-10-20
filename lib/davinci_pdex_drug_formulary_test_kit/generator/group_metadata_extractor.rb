@@ -42,14 +42,14 @@ module DaVinciPDEXDrugFormularyTestKit
             # include_params: include_params,
             # revincludes: revincludes,
             # required_concepts: required_concepts,
-            must_supports:,
-            mandatory_elements:
+            must_supports:
+            # mandatory_elements: mandatory_elements,
             # bindings: bindings,
             # references: references
             # tests: []
           }
 
-        mark_mandatory_and_must_support_searches
+        # mark_mandatory_and_must_support_searches
         handle_special_cases
 
         @group_metadata_hash
@@ -62,7 +62,6 @@ module DaVinciPDEXDrugFormularyTestKit
             any_must_support_elements = must_supports[:elements].any? do |element|
               full_must_support_paths = ["#{resource}.#{element[:original_path]}", "#{resource}.#{element[:path]}"]
 
-              binding.pry if name == 'coverage-type' && profile_url == 'http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary'
               full_paths.any? do |path|
                 # allow for non-choice, choice types, and _id
                 name == '_id' ||
@@ -85,20 +84,11 @@ module DaVinciPDEXDrugFormularyTestKit
               end
             end
 
-            any_must_support_extensions = must_supports[:extensions].any? do |extension|
-              full_must_support_paths = ["#{resource}.#{extension[:path]}.where(url='#{extension[:url]}').value"]
-
-              full_paths.any? { |path| full_must_support_paths.include?(path) }
-            end
-
             any_mandatory_elements = mandatory_elements.any? do |element|
               full_paths.include?(element)
             end
 
-            any_must_support_elements ||
-              any_must_support_slices ||
-              any_must_support_extensions ||
-              any_mandatory_elements
+            any_must_support_elements || any_must_support_slices || any_mandatory_elements
           end
 
           search[:must_support_or_mandatory] = search[:names_not_must_support_or_mandatory].empty?

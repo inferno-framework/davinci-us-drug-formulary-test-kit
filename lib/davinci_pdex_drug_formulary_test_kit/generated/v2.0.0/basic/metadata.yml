@@ -33,49 +33,30 @@
 - :names:
   - code
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 - :names:
   - _id
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - _lastUpdated
-  :must_support_or_mandatory: false
 - :names:
   - subject
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 - :names:
   - status
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 - :names:
   - period
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 - :names:
   - formulary
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 - :names:
   - pharmacy-benefit-type
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 - :names:
   - drug-tier
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
 :search_definitions:
   :_id:
     :paths:
@@ -218,11 +199,6 @@
   - :path: subject
     :types:
     - Reference
-:mandatory_elements:
-- Basic.meta.lastUpdated
-- Basic.extension
-- Basic.code
-- Basic.subject
 :tests:
 - :id: us_core_v200_basic_code_search_test
   :file_name: basic_code_search_test.rb

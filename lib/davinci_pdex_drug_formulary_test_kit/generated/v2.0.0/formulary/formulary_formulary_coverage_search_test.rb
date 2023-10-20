@@ -18,8 +18,6 @@ none are returned, the test is skipped.
       )
 
       id :us_core_v200_formulary_formulary_coverage_search_test
-      optional
-  
   
       def self.properties
         @properties ||= SearchTestProperties.new(

@@ -18,8 +18,6 @@ none are returned, the test is skipped.
       )
 
       id :us_core_v200_payer_insurance_plan__lastUpdated_search_test
-      optional
-  
   
       def self.properties
         @properties ||= SearchTestProperties.new(
