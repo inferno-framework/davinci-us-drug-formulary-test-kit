@@ -32,33 +32,56 @@
 - :names:
   - status
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _id
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _lastUpdated
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - _lastUpdated
+  :must_support_or_mandatory: false
 - :names:
   - identifier
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - period
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - type
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - name
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - coverage-type
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - formulary-coverage
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - formulary-coverage
+  :must_support_or_mandatory: false
 - :names:
   - coverage-area
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - coverage-area
+  :must_support_or_mandatory: false
 :search_definitions:
   :_id:
     :paths:
@@ -190,6 +213,18 @@
     :fixed_value: DRUGPOL
   - :path: name
   - :path: period
+:mandatory_elements:
+- InsurancePlan.meta.lastUpdated
+- InsurancePlan.identifier
+- InsurancePlan.status
+- InsurancePlan.type
+- InsurancePlan.coverage.type
+- InsurancePlan.coverage.benefit
+- InsurancePlan.coverage.benefit.type
+- InsurancePlan.plan.type
+- InsurancePlan.plan.specificCost.category
+- InsurancePlan.plan.specificCost.benefit.type
+- InsurancePlan.plan.specificCost.benefit.cost.type
 :tests:
 - :id: us_core_v200_formulary_status_search_test
   :file_name: formulary_status_search_test.rb

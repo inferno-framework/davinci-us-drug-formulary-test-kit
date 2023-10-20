@@ -33,21 +33,37 @@
 - :names:
   - _id
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _lastUpdated
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - _lastUpdated
+  :must_support_or_mandatory: false
 - :names:
   - address
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - address-city
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - address-city
+  :must_support_or_mandatory: false
 - :names:
   - address-state
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - address-state
+  :must_support_or_mandatory: false
 - :names:
   - address-postalcode
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - address-postalcode
+  :must_support_or_mandatory: false
 :search_definitions:
   :_id:
     :paths:
@@ -125,6 +141,10 @@
     - address
     :extension_ids:
     - Location.extension:region
+:mandatory_elements:
+- Location.meta.lastUpdated
+- Location.position.longitude
+- Location.position.latitude
 :tests:
 - :id: us_core_v200_location__id_search_test
   :file_name: location_id_search_test.rb

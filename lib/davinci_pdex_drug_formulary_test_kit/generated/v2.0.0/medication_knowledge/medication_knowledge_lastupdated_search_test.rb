@@ -18,6 +18,8 @@ none are returned, the test is skipped.
       )
 
       id :us_core_v200_medication_knowledge__lastUpdated_search_test
+      optional
+  
   
       def self.properties
         @properties ||= SearchTestProperties.new(

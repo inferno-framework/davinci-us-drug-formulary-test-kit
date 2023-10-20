@@ -33,21 +33,35 @@
 - :names:
   - status
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _id
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _lastUpdated
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - _lastUpdated
+  :must_support_or_mandatory: false
 - :names:
   - code
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - drug-name
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - drug-name
+  :must_support_or_mandatory: false
 - :names:
   - doseform
   :expectation: SHOULD
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :_id:
     :paths:
@@ -146,6 +160,27 @@
   - :path: code.coding.code
   - :path: status
   - :path: doseForm
+:mandatory_elements:
+- MedicationKnowledge.meta.lastUpdated
+- MedicationKnowledge.code
+- MedicationKnowledge.code.coding
+- MedicationKnowledge.code.coding.system
+- MedicationKnowledge.code.coding.code
+- MedicationKnowledge.status
+- MedicationKnowledge.relatedMedicationKnowledge.type
+- MedicationKnowledge.relatedMedicationKnowledge.reference
+- MedicationKnowledge.ingredient.item[x]
+- MedicationKnowledge.cost.type
+- MedicationKnowledge.cost.cost
+- MedicationKnowledge.administrationGuidelines.dosage.type
+- MedicationKnowledge.administrationGuidelines.dosage.dosage
+- MedicationKnowledge.administrationGuidelines.patientCharacteristics.characteristic[x]
+- MedicationKnowledge.medicineClassification.type
+- MedicationKnowledge.regulatory.regulatoryAuthority
+- MedicationKnowledge.regulatory.substitution.type
+- MedicationKnowledge.regulatory.substitution.allowed
+- MedicationKnowledge.regulatory.schedule.schedule
+- MedicationKnowledge.regulatory.maxDispense.quantity
 :tests:
 - :id: us_core_v200_medication_knowledge_status_search_test
   :file_name: medication_knowledge_status_search_test.rb
