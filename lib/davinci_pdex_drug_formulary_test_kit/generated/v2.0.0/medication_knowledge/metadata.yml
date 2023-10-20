@@ -101,8 +101,8 @@
     :multiple_or: true
   :drug-name:
     :paths:
-    - 'code.coding.display '
-    - " synonym"
+    - code.coding.display
+    - synonym
     :full_paths:
     - 'MedicationKnowledge.code.coding.display '
     - " synonym"

@@ -63,7 +63,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def paths
-        @paths ||= full_paths.map { |a_path| a_path.gsub("#{resource}.", '') }
+        @paths ||= full_paths.map { |a_path| a_path.gsub("#{resource}.", '').strip }
       end
 
       def extensions

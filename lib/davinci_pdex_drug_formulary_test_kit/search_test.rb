@@ -50,6 +50,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
     def run_search_test
       # TODO: skip if not supported?
+
       skip_if !any_valid_search_params?(all_search_params), unable_to_resolve_params_message
       resources_returned =
         all_search_params.flat_map do |resource_input, params_list|
