@@ -35,33 +35,53 @@
   - :names:
     - status
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _id
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _lastUpdated
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - identifier
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - period
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - type
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - name
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - coverage-type
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - formulary-coverage
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - coverage-area
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :_id:
       :paths:
@@ -260,6 +280,18 @@
     - :path: plan.specificCost.benefit.cost.qualifiers
     - :path: plan.specificCost.benefit.cost.value
     - :path: plan.specificCost.benefit.cost.value.value
+  :mandatory_elements:
+  - InsurancePlan.identifier
+  - InsurancePlan.status
+  - InsurancePlan.type
+  - InsurancePlan.coverage
+  - InsurancePlan.coverage.type
+  - InsurancePlan.coverage.benefit
+  - InsurancePlan.coverage.benefit.type
+  - InsurancePlan.coverage.extension
+  - InsurancePlan.plan
+  - InsurancePlan.plan.type
+  - InsurancePlan.plan.specificCost
 - :name: usdf_Formulary
   :class_name: UsdfFormularySequence
   :version: v2.0.0
@@ -293,33 +325,56 @@
   - :names:
     - status
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _id
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _lastUpdated
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - identifier
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - period
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - type
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - name
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - coverage-type
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - coverage-type
+    :must_support_or_mandatory: false
   - :names:
     - formulary-coverage
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - formulary-coverage
+    :must_support_or_mandatory: false
   - :names:
     - coverage-area
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - coverage-area
+    :must_support_or_mandatory: false
   :search_definitions:
     :_id:
       :paths:
@@ -451,6 +506,10 @@
       :fixed_value: DRUGPOL
     - :path: name
     - :path: period
+  :mandatory_elements:
+  - InsurancePlan.identifier
+  - InsurancePlan.status
+  - InsurancePlan.type
 - :name: usdf_FormularyItem
   :class_name: UsdfFormularyitemSequence
   :version: v2.0.0
@@ -485,30 +544,48 @@
   - :names:
     - code
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _id
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _lastUpdated
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - subject
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - status
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - period
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - formulary
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - pharmacy-benefit-type
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - drug-tier
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :_id:
       :paths:
@@ -651,6 +728,10 @@
     - :path: subject
       :types:
       - Reference
+  :mandatory_elements:
+  - Basic.extension
+  - Basic.code
+  - Basic.subject
 - :name: usdf_FormularyDrug
   :class_name: UsdfFormularydrugSequence
   :version: v2.0.0
@@ -685,21 +766,34 @@
   - :names:
     - status
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _id
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _lastUpdated
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - code
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - drug-name
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - drug-name
+    :must_support_or_mandatory: false
   - :names:
     - doseform
     :expectation: SHOULD
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :_id:
       :paths:
@@ -798,6 +892,12 @@
     - :path: code.coding.code
     - :path: status
     - :path: doseForm
+  :mandatory_elements:
+  - MedicationKnowledge.code
+  - MedicationKnowledge.code.coding
+  - MedicationKnowledge.code.coding.system
+  - MedicationKnowledge.code.coding.code
+  - MedicationKnowledge.status
 - :name: usdf_InsurancePlanLocation
   :class_name: UsdfInsuranceplanlocationSequence
   :version: v2.0.0
@@ -832,21 +932,37 @@
   - :names:
     - _id
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _lastUpdated
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   - :names:
     - address
     :expectation: SHALL
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - address-city
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - address-city
+    :must_support_or_mandatory: false
   - :names:
     - address-state
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - address-state
+    :must_support_or_mandatory: false
   - :names:
     - address-postalcode
     :expectation: SHALL
+    :names_not_must_support_or_mandatory:
+    - address-postalcode
+    :must_support_or_mandatory: false
   :search_definitions:
     :_id:
       :paths:
@@ -924,3 +1040,4 @@
       - address
       :extension_ids:
       - Location.extension:region
+  :mandatory_elements: []

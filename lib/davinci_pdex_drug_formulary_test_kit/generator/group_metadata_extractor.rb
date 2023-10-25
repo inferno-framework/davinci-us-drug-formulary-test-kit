@@ -42,14 +42,14 @@ module DaVinciPDEXDrugFormularyTestKit
             # include_params: include_params,
             # revincludes: revincludes,
             # required_concepts: required_concepts,
-            must_supports:
-            # mandatory_elements: mandatory_elements,
+            must_supports:,
+            mandatory_elements:
             # bindings: bindings,
             # references: references
             # tests: []
           }
 
-        # mark_mandatory_and_must_support_searches
+        mark_mandatory_and_must_support_searches
         handle_special_cases
 
         @group_metadata_hash
@@ -58,7 +58,10 @@ module DaVinciPDEXDrugFormularyTestKit
       def mark_mandatory_and_must_support_searches
         searches.each do |search|
           search[:names_not_must_support_or_mandatory] = search[:names].reject do |name|
-            full_paths = search_definitions[name.to_sym][:full_paths]
+            full_paths =
+              search_definitions[name.to_sym][:full_paths]
+                .map { |path| path.gsub(/\AResource\./, "#{resource}.")} # Fix for Resource.meta.*
+
             any_must_support_elements = must_supports[:elements].any? do |element|
               full_must_support_paths = ["#{resource}.#{element[:original_path]}", "#{resource}.#{element[:path]}"]
 
@@ -84,11 +87,20 @@ module DaVinciPDEXDrugFormularyTestKit
               end
             end
 
+            any_must_support_extensions = must_supports[:extensions].any? do |extension|
+              full_must_support_paths = ["#{resource}.#{extension[:path]}.where(url='#{extension[:url]}').value"]
+
+              full_paths.any? { |path| full_must_support_paths.include?(path) }
+            end
+
             any_mandatory_elements = mandatory_elements.any? do |element|
               full_paths.include?(element)
             end
 
-            any_must_support_elements || any_must_support_slices || any_mandatory_elements
+            any_must_support_elements ||
+              any_must_support_slices ||
+              any_must_support_extensions ||
+              any_mandatory_elements
           end
 
           search[:must_support_or_mandatory] = search[:names_not_must_support_or_mandatory].empty?
@@ -299,9 +311,18 @@ module DaVinciPDEXDrugFormularyTestKit
       def mandatory_elements
         @mandatory_elements ||=
           profile_elements
-            .select { |element| element.min.positive? }
+            .select { |element| element.min.positive? && parents_are_mandatory?(element) }
             .map(&:path)
             .uniq
+      end
+
+      def parents_are_mandatory?(element)
+        return true if element.path.count('.') < 2
+
+        parent_path = element.path.split('.')[0..-2].join('.')
+        parent_element = profile_elements.find { |profile_element| profile_element.path == parent_path }
+
+        parent_element&.min&.positive? && parents_are_mandatory?(parent_element)
       end
 
       def references

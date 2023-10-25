@@ -33,33 +33,53 @@
 - :names:
   - status
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _id
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _lastUpdated
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - identifier
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - period
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - type
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - name
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - coverage-type
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - formulary-coverage
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - coverage-area
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :_id:
     :paths:
@@ -258,6 +278,18 @@
   - :path: plan.specificCost.benefit.cost.qualifiers
   - :path: plan.specificCost.benefit.cost.value
   - :path: plan.specificCost.benefit.cost.value.value
+:mandatory_elements:
+- InsurancePlan.identifier
+- InsurancePlan.status
+- InsurancePlan.type
+- InsurancePlan.coverage
+- InsurancePlan.coverage.type
+- InsurancePlan.coverage.benefit
+- InsurancePlan.coverage.benefit.type
+- InsurancePlan.coverage.extension
+- InsurancePlan.plan
+- InsurancePlan.plan.type
+- InsurancePlan.plan.specificCost
 :tests:
 - :id: us_core_v200_payer_insurance_plan_status_search_test
   :file_name: payer_insurance_plan_status_search_test.rb
