@@ -20,6 +20,7 @@ module DaVinciPDEXDrugFormularyTestKit
             comparators:,
             values:,
             type:,
+            target:,
             contains_multiple: contains_multiple?,
             multiple_or: multiple_or_expectation,
             chain:
@@ -122,6 +123,13 @@ module DaVinciPDEXDrugFormularyTestKit
           # in profile def is Condition.onset[x]
           param.type
         end
+      end
+
+      def target
+        # The search param definition for FormularyItem.subject doesn't have a target for some reason
+        return 'MedicationKnowledge' if param.url == 'http://hl7.org/fhir/us/davinci-drug-formulary/SearchParameter/Basic-subject'
+
+        param.target.first
       end
 
       def contains_multiple?

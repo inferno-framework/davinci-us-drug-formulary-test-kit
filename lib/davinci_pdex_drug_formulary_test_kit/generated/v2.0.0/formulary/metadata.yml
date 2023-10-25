@@ -190,6 +190,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: InsurancePlan
     :contains_multiple: false
     :multiple_or: true
   :coverage-area:
@@ -200,8 +201,11 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Location
     :contains_multiple: true
     :multiple_or: true
+:include_params:
+- formulary-coverage
 :must_supports:
   :extensions: []
   :slices: []

@@ -200,6 +200,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: InsurancePlan
       :contains_multiple: true
       :multiple_or: true
     :coverage-area:
@@ -210,8 +211,11 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: true
+  :include_params: &1
+  - formulary-coverage
   :must_supports:
     :extensions:
     - :id: InsurancePlan.coverage:drug-coverage.extension:usdf-FormularyReference-extension
@@ -483,6 +487,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: InsurancePlan
       :contains_multiple: false
       :multiple_or: true
     :coverage-area:
@@ -493,8 +498,10 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: true
+  :include_params: *1
   :must_supports:
     :extensions: []
     :slices: []
@@ -633,6 +640,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: MedicationKnowledge
       :contains_multiple: false
       :multiple_or: true
     :status:
@@ -674,6 +682,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: InsurancePlan
       :contains_multiple: false
       :multiple_or: true
     :pharmacy-benefit-type:
@@ -696,6 +705,9 @@
       :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: true
+  :include_params:
+  - subject
+  - formulary
   :must_supports:
     :extensions:
     - :id: Basic.extension:usdf-FormularyReference-extension
@@ -867,6 +879,7 @@
       :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: true
+  :include_params: []
   :must_supports:
     :extensions: []
     :slices:
@@ -1027,6 +1040,7 @@
       :values: []
       :type: string
       :contains_multiple: false
+  :include_params: []
   :must_supports:
     :extensions:
     - :id: Location.extension:region

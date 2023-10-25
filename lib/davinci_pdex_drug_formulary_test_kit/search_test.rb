@@ -12,6 +12,7 @@ module DaVinciPDEXDrugFormularyTestKit
     def_delegators 'properties',
                    :resource_type,
                    :search_param_names,
+                   :include_param,
                    :saves_delayed_references?,
                    :first_search?,
                    :fixed_value_search?,
@@ -44,6 +45,15 @@ module DaVinciPDEXDrugFormularyTestKit
         end
     end
 
+    def all_include_search_params
+      @all_include_search_params ||=
+        search_param_names.each_with_object({}) do |value, params|
+          params[value] ||= fixed_value_search_param_values.filter_map do |fixed_value|
+            fixed_value_search_params(fixed_value, value).merge('_include' => include_param)
+          end
+        end
+    end
+
     def any_valid_search_params?(search_params)
       search_params.any? { |_resource_id, params| params.present? }
     end
@@ -60,6 +70,57 @@ module DaVinciPDEXDrugFormularyTestKit
       skip_if resources_returned.empty?, no_resources_skip_message
 
       perform_multiple_or_search_test if multiple_or_search_params.present?
+    end
+
+    def run_include_search_test
+      any_include_references = false
+
+      all_include_search_params.each_value do |params_list|
+        params_list.each do |params|
+          fhir_search(resource_type, params:)
+          check_search_response
+
+          page_count = 1
+          bundle = resource
+
+          until bundle.nil? || page_count == 20
+            matched_resources = bundle&.entry&.filter_map do |entry|
+              entry&.resource if entry&.search&.mode == 'match' && entry&.resource&.resourceType == resource_type
+            end
+
+            included_resources = bundle&.entry&.filter_map { |entry| entry.resource if entry.search&.mode == 'include' }
+
+            # For resources in the bundle with the relevant reference, check the bundle for the referenced resource
+            matched_resources&.each do |match|
+              search_param_paths(include_param).each do |include_ref_path|
+                include_ref = resolve_path(match, include_ref_path).first
+                next unless include_ref.present?
+
+                any_include_references = true
+                include_ref_id = include_ref.reference_id
+                include_target_present = included_resources.any? { |resource| resource.id == include_ref_id }
+
+                assert(include_target_present,
+                       "#{include_ref.type}/#{include_ref_id} referenced by #{resource_type}/#{match.id} " \
+                       'was not included in the bundle')
+              end
+            end
+
+            # Fetch the next bundle page
+            next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
+            break if next_bundle_link.blank?
+
+            reply = fhir_client.raw_read_url(next_bundle_link)
+            store_request('outgoing') { reply }
+
+            bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
+            page_count += 1
+          end
+        end
+      end
+
+      skip_if !any_include_references,
+              "Could not find any resources with a reference matching the include param #{include_param}"
     end
 
     def perform_search(params, resource_input)

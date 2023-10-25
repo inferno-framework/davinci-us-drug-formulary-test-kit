@@ -2,7 +2,7 @@ require_relative '../../../search_test'
 require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module DaVinciPDEXDrugFormularyV200
     class PayerInsurancePlanStatusSearchTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::SearchTest
 
@@ -30,10 +30,10 @@ requirement of US Core v2.0.0.
       def self.properties
         @properties ||= SearchTestProperties.new(
           first_search: true,
-        fixed_value_search: true,
-        resource_type: 'InsurancePlan',
-        search_param_names: ['status'],
-        test_post_search: true
+          fixed_value_search: true,
+          resource_type: 'InsurancePlan',
+          search_param_names: ['status'],
+          test_post_search: true
         )
       end
 

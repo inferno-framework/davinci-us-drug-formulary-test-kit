@@ -64,7 +64,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXDrugFormulary#{group_metadata.reformatted_version.upcase}"
       end
 
       def resource_type
@@ -213,7 +213,7 @@ module DaVinciPDEXDrugFormularyTestKit
 
       def search_test_properties_string
         search_properties
-          .map { |key, value| "#{' ' * 8}#{key}: #{value}" }
+          .map { |key, value| "#{' ' * 10}#{key}: #{value}" }
           .join(",\n")
       end
 

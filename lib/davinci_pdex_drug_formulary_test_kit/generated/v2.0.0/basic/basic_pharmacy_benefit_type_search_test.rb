@@ -2,7 +2,7 @@ require_relative '../../../search_test'
 require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module DaVinciPDEXDrugFormularyV200
     class BasicPharmacyBenefitTypeSearchTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::SearchTest
 
@@ -22,8 +22,8 @@ none are returned, the test is skipped.
       def self.properties
         @properties ||= SearchTestProperties.new(
           resource_type: 'Basic',
-        search_param_names: ['pharmacy-benefit-type'],
-        token_search_params: ['pharmacy-benefit-type']
+          search_param_names: ['pharmacy-benefit-type'],
+          token_search_params: ['pharmacy-benefit-type']
         )
       end
 

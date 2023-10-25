@@ -198,6 +198,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: InsurancePlan
     :contains_multiple: true
     :multiple_or: true
   :coverage-area:
@@ -208,8 +209,11 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Location
     :contains_multiple: true
     :multiple_or: true
+:include_params:
+- formulary-coverage
 :must_supports:
   :extensions:
   - :id: InsurancePlan.coverage:drug-coverage.extension:usdf-FormularyReference-extension
@@ -313,6 +317,8 @@
   :file_name: payer_insurance_plan_coverage_area_search_test.rb
 - :id: usdf_v200_payer_insurance_plan_read_test
   :file_name: payer_insurance_plan_read_test.rb
+- :id: usdf_v200_payer_insurance_plan_formulary_coverage_include_search_test
+  :file_name: payer_insurance_plan_formulary_coverage_include_search_test.rb
 - :id: us_core_v200_payer_insurance_plan_must_support_test
   :file_name: payer_insurance_plan_must_support_test.rb
 :id: usdf_v200_payer_insurance_plan

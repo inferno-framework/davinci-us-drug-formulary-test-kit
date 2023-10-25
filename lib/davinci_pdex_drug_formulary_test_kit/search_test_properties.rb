@@ -3,6 +3,7 @@ module DaVinciPDEXDrugFormularyTestKit
     ATTRIBUTES = [
       :resource_type,
       :search_param_names,
+      :include_param,
       :input_ids,
       :first_search,
       :fixed_value_search,

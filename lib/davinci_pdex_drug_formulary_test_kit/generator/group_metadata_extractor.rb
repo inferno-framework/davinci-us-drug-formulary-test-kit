@@ -39,7 +39,7 @@ module DaVinciPDEXDrugFormularyTestKit
             # operations: operations,
             searches:, # searches: searches,
             search_definitions:, # search_definitions: search_definitions
-            # include_params: include_params,
+            include_params:,
             # revincludes: revincludes,
             # required_concepts: required_concepts,
             must_supports:,

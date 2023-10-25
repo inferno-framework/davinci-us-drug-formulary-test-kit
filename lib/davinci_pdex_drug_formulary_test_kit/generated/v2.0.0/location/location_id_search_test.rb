@@ -2,7 +2,7 @@ require_relative '../../../search_test'
 require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module USCoreV200
+  module DaVinciPDEXDrugFormularyV200
     class LocationIdSearchTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::SearchTest
 
@@ -34,9 +34,9 @@ requirement of US Core v2.0.0.
       def self.properties
         @properties ||= SearchTestProperties.new(
           first_search: true,
-        resource_type: 'Location',
-        search_param_names: ['_id'],
-        test_post_search: true
+          resource_type: 'Location',
+          search_param_names: ['_id'],
+          test_post_search: true
         )
       end
 
