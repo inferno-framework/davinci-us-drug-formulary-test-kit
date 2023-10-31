@@ -5,6 +5,7 @@ require_relative 'medication_knowledge/medication_knowledge_code_search_test'
 require_relative 'medication_knowledge/medication_knowledge_drug_name_search_test'
 require_relative 'medication_knowledge/medication_knowledge_doseform_search_test'
 require_relative 'medication_knowledge/medication_knowledge_read_test'
+require_relative 'medication_knowledge/medication_knowledge_validation_test'
 require_relative 'medication_knowledge/medication_knowledge_must_support_test'
 
 module DaVinciPDEXDrugFormularyTestKit
@@ -83,6 +84,7 @@ read succeeds.
       test from: :us_core_v200_medication_knowledge_drug_name_search_test
       test from: :us_core_v200_medication_knowledge_doseform_search_test
       test from: :usdf_v200_medication_knowledge_read_test
+      test from: :usdf_v200_medication_knowledge_validation_test
       test from: :us_core_v200_medication_knowledge_must_support_test
     end
   end

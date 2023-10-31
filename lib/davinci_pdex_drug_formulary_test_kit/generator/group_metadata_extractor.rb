@@ -60,7 +60,7 @@ module DaVinciPDEXDrugFormularyTestKit
           search[:names_not_must_support_or_mandatory] = search[:names].reject do |name|
             full_paths =
               search_definitions[name.to_sym][:full_paths]
-                .map { |path| path.gsub(/\AResource\./, "#{resource}.")} # Fix for Resource.meta.*
+                .map { |path| path.gsub(/\AResource\./, "#{resource}.") } # Fix for Resource.meta.*
 
             any_must_support_elements = must_supports[:elements].any? do |element|
               full_must_support_paths = ["#{resource}.#{element[:original_path]}", "#{resource}.#{element[:path]}"]

@@ -244,6 +244,8 @@
   :file_name: formulary_coverage_area_search_test.rb
 - :id: usdf_v200_formulary_read_test
   :file_name: formulary_read_test.rb
+- :id: usdf_v200_formulary_validation_test
+  :file_name: formulary_validation_test.rb
 - :id: us_core_v200_formulary_must_support_test
   :file_name: formulary_must_support_test.rb
 :id: usdf_v200_formulary

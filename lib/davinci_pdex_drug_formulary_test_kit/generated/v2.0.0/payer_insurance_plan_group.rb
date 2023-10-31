@@ -10,6 +10,7 @@ require_relative 'payer_insurance_plan/payer_insurance_plan_formulary_coverage_s
 require_relative 'payer_insurance_plan/payer_insurance_plan_coverage_area_search_test'
 require_relative 'payer_insurance_plan/payer_insurance_plan_read_test'
 require_relative 'payer_insurance_plan/payer_insurance_plan_formulary_coverage_include_search_test'
+require_relative 'payer_insurance_plan/payer_insurance_plan_validation_test'
 require_relative 'payer_insurance_plan/payer_insurance_plan_must_support_test'
 
 module DaVinciPDEXDrugFormularyTestKit
@@ -98,6 +99,7 @@ read succeeds.
       test from: :us_core_v200_payer_insurance_plan_coverage_area_search_test
       test from: :usdf_v200_payer_insurance_plan_read_test
       test from: :usdf_v200_payer_insurance_plan_formulary_coverage_include_search_test
+      test from: :usdf_v200_payer_insurance_plan_validation_test
       test from: :us_core_v200_payer_insurance_plan_must_support_test
     end
   end

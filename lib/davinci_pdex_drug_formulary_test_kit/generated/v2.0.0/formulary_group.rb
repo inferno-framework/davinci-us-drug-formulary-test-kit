@@ -9,6 +9,7 @@ require_relative 'formulary/formulary_coverage_type_search_test'
 require_relative 'formulary/formulary_formulary_coverage_search_test'
 require_relative 'formulary/formulary_coverage_area_search_test'
 require_relative 'formulary/formulary_read_test'
+require_relative 'formulary/formulary_validation_test'
 require_relative 'formulary/formulary_must_support_test'
 
 module DaVinciPDEXDrugFormularyTestKit
@@ -96,6 +97,7 @@ read succeeds.
       test from: :us_core_v200_formulary_formulary_coverage_search_test
       test from: :us_core_v200_formulary_coverage_area_search_test
       test from: :usdf_v200_formulary_read_test
+      test from: :usdf_v200_formulary_validation_test
       test from: :us_core_v200_formulary_must_support_test
     end
   end

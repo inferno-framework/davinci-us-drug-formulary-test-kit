@@ -158,6 +158,8 @@
   :file_name: location_address_postalcode_search_test.rb
 - :id: usdf_v200_location_read_test
   :file_name: location_read_test.rb
+- :id: usdf_v200_location_validation_test
+  :file_name: location_validation_test.rb
 - :id: us_core_v200_location_must_support_test
   :file_name: location_must_support_test.rb
 :id: usdf_v200_location

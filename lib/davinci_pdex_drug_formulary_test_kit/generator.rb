@@ -38,7 +38,7 @@ module DaVinciPDEXDrugFormularyTestKit
       # # TODO: generate_history_tests
       generate_include_search_tests
       # generate_provenance_revinclude_search_tests
-      # generate_validation_tests
+      generate_validation_tests
       generate_must_support_tests
       # generate_reference_resolution_tests
 

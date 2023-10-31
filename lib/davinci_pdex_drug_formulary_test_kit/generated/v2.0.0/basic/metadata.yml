@@ -251,6 +251,8 @@
   :file_name: basic_subject_include_search_test.rb
 - :id: usdf_v200_basic_formulary_include_search_test
   :file_name: basic_formulary_include_search_test.rb
+- :id: usdf_v200_basic_validation_test
+  :file_name: basic_validation_test.rb
 - :id: us_core_v200_basic_must_support_test
   :file_name: basic_must_support_test.rb
 :id: usdf_v200_basic

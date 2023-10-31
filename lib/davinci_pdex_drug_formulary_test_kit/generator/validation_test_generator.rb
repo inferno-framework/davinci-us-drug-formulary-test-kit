@@ -8,23 +8,14 @@ module DaVinciPDEXDrugFormularyTestKit
         def generate(ig_metadata, base_output_dir)
           ig_metadata.groups
             .reject { |group| SpecialCases.exclude_group? group }
-            .each do |group|
-              new(group, base_output_dir:).generate
-              next unless group.resource == 'MedicationRequest'
-
-              # The Medication validation test lives in the MedicationRequest
-              # group, so we need to pass in that group's metadata
-              medication_group_metadata = ig_metadata.groups.find { |group| group.resource == 'Medication' }
-              new(medication_group_metadata, group, base_output_dir:).generate
-            end
+            .each { |group| new(group, base_output_dir:).generate }
         end
       end
 
-      attr_accessor :group_metadata, :medication_request_metadata, :base_output_dir
+      attr_accessor :group_metadata, :base_output_dir
 
-      def initialize(group_metadata, medication_request_metadata = nil, base_output_dir:)
+      def initialize(group_metadata, base_output_dir:)
         self.group_metadata = group_metadata
-        self.medication_request_metadata = medication_request_metadata
         self.base_output_dir = base_output_dir
       end
 
@@ -49,7 +40,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def directory_name
-        Naming.snake_case_for_profile(medication_request_metadata || group_metadata)
+        Naming.snake_case_for_profile(group_metadata)
       end
 
       def profile_identifier
@@ -69,7 +60,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def test_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}_validation_test"
+        "usdf_#{group_metadata.reformatted_version}_#{profile_identifier}_validation_test"
       end
 
       def class_name
@@ -77,21 +68,11 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXDrugFormulary#{group_metadata.reformatted_version.upcase}"
       end
 
       def resource_type
         group_metadata.resource
-      end
-
-      def conformance_expectation
-        read_interaction[:expectation]
-      end
-
-      def skip_if_empty
-        # Return true if a system must demonstrate at least one example of the resource type.
-        # This drives omit vs. skip result statuses in this test.
-        resource_type != 'Medication'
       end
 
       def generate
@@ -103,37 +84,7 @@ module DaVinciPDEXDrugFormularyTestKit
           file_name: base_output_file_name
         }
 
-        if resource_type == 'Medication'
-          medication_request_metadata.add_test(**test_metadata)
-        else
-          group_metadata.add_test(**test_metadata)
-        end
-      end
-
-      def description
-        <<~DESCRIPTION
-          #{description_intro}
-          It verifies the presence of mandatory elements and that elements with
-          required bindings contain appropriate values. CodeableConcept element
-          bindings will fail if none of their codings have a code/system belonging
-          to the bound ValueSet. Quantity, Coding, and code element bindings will
-          fail if their code/system are not found in the valueset.
-        DESCRIPTION
-      end
-
-      def description_intro
-        if resource_type == 'Medication'
-          <<~MEDICATION_INTRO
-            This test verifies resources returned from previous tests conform to
-            the [#{profile_name}](#{profile_url}).
-          MEDICATION_INTRO
-        else
-          <<~GENERIC_INTRO
-            This test verifies resources returned from the first search conform to
-            the [#{profile_name}](#{profile_url}).
-            Systems must demonstrate at least one valid example in order to pass this test.
-          GENERIC_INTRO
-        end
+        group_metadata.add_test(**test_metadata)
       end
     end
   end

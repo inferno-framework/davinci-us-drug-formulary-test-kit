@@ -1,15 +1,15 @@
 require_relative '../../../validation_test'
 
 module DaVinciPDEXDrugFormularyTestKit
-  module <%= module_name %>
-    class <%= class_name %> < Inferno::Test
+  module DaVinciPDEXDrugFormularyV200
+    class MedicationKnowledgeValidationTest < Inferno::Test
       include DaVinciPDEXDrugFormularyTestKit::ValidationTest
 
-      id :<%= test_id %>
-      title '<%= resource_type %> resources returned during previous tests conform to the <%= profile_name %> profile'
+      id :usdf_v200_medication_knowledge_validation_test
+      title 'MedicationKnowledge resources returned during previous tests conform to the Formulary Drug profile'
       description %(
         This test verifies resources returned from the first search conform to
-        the [<%= profile_name %>](<%= profile_url %>).
+        the [Formulary Drug](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug).
         Systems must demonstrate at least one valid example in order to pass this test.
         It verifies the presence of mandatory elements and that elements with
         required bindings contain appropriate values. CodeableConcept element
@@ -20,17 +20,17 @@ module DaVinciPDEXDrugFormularyTestKit
       output :dar_code_found, :dar_extension_found
 
       def resource_type
-        '<%= resource_type %>'
+        'MedicationKnowledge'
       end
 
       def scratch_resources
-        scratch[:<%= profile_identifier %>_resources] ||= {}
+        scratch[:medication_knowledge_resources] ||= {}
       end
 
       run do
         perform_validation_test(scratch_resources[:all] || [],
-                                '<%= profile_url %>',
-                                '<%= profile_version %>')
+                                'http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug',
+                                '2.0.0')
       end
     end
   end
