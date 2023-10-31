@@ -160,12 +160,33 @@
   - :path: code.coding.code
   - :path: status
   - :path: doseForm
+  :references: []
 :mandatory_elements:
 - MedicationKnowledge.code
 - MedicationKnowledge.code.coding
 - MedicationKnowledge.code.coding.system
 - MedicationKnowledge.code.coding.code
 - MedicationKnowledge.status
+:references:
+- :path: MedicationKnowledge.manufacturer
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: MedicationKnowledge.relatedMedicationKnowledge.reference
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/MedicationKnowledge
+- :path: MedicationKnowledge.associatedMedication
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Medication
+- :path: MedicationKnowledge.monograph.source
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/DocumentReference
+  - http://hl7.org/fhir/StructureDefinition/Media
+- :path: MedicationKnowledge.contraindication
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/DetectedIssue
+- :path: MedicationKnowledge.regulatory.regulatoryAuthority
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
 :tests:
 - :id: us_core_v200_medication_knowledge_status_search_test
   :file_name: medication_knowledge_status_search_test.rb

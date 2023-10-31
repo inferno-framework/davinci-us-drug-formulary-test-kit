@@ -222,10 +222,29 @@
   - :path: subject
     :types:
     - Reference
+  :references:
+  - :path: subject
+    :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug
+  - :path: extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').valueReference
+    :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary
 :mandatory_elements:
 - Basic.extension
 - Basic.code
 - Basic.subject
+:references:
+- :path: Basic.subject
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug
+- :path: Basic.author
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Practitioner
+  - http://hl7.org/fhir/StructureDefinition/PractitionerRole
+  - http://hl7.org/fhir/StructureDefinition/Patient
+  - http://hl7.org/fhir/StructureDefinition/RelatedPerson
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').valueReference
+  :target_profiles:
+  - http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary
 :tests:
 - :id: us_core_v200_basic_code_search_test
   :file_name: basic_code_search_test.rb
@@ -255,5 +274,7 @@
   :file_name: basic_validation_test.rb
 - :id: us_core_v200_basic_must_support_test
   :file_name: basic_must_support_test.rb
+- :id: usdf_v200_basic_reference_resolution_test
+  :file_name: basic_reference_resolution_test.rb
 :id: usdf_v200_basic
 :file_name: basic_group.rb

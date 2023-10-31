@@ -44,7 +44,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def test_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}_reference_resolution_test"
+        "usdf_#{group_metadata.reformatted_version}_#{profile_identifier}_reference_resolution_test"
       end
 
       def class_name
@@ -52,7 +52,7 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXDrugFormulary#{group_metadata.reformatted_version.upcase}"
       end
 
       def resource_type
@@ -64,16 +64,17 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def must_support_references
-        group_metadata.must_supports[:elements]
-          .select { |element| element[:types]&.include?('Reference') }
+        group_metadata.must_supports[:references]
       end
 
       def must_support_reference_list_string
         must_support_references
           .map { |element| "#{' ' * 8}* #{resource_type}.#{element[:path]}" }
-          .uniq
-          .sort
-          .join("\n")
+          .map do |string|
+            string
+              .gsub(".where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/", ':')
+              .gsub("')", '')
+          end.uniq.sort.join("\n")
       end
 
       def generate

@@ -217,10 +217,36 @@
     :fixed_value: DRUGPOL
   - :path: name
   - :path: period
+  :references: []
 :mandatory_elements:
 - InsurancePlan.identifier
 - InsurancePlan.status
 - InsurancePlan.type
+:references:
+- :path: InsurancePlan.ownedBy
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: InsurancePlan.administeredBy
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: InsurancePlan.coverageArea
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Location
+- :path: InsurancePlan.endpoint
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Endpoint
+- :path: InsurancePlan.network
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: InsurancePlan.coverage.network
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: InsurancePlan.plan.coverageArea
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Location
+- :path: InsurancePlan.plan.network
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
 :tests:
 - :id: us_core_v200_formulary_status_search_test
   :file_name: formulary_status_search_test.rb

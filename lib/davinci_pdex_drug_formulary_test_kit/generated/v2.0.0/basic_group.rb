@@ -12,6 +12,7 @@ require_relative 'basic/basic_subject_include_search_test'
 require_relative 'basic/basic_formulary_include_search_test'
 require_relative 'basic/basic_validation_test'
 require_relative 'basic/basic_must_support_test'
+require_relative 'basic/basic_reference_resolution_test'
 
 module DaVinciPDEXDrugFormularyTestKit
   module USDFV200
@@ -100,6 +101,7 @@ read succeeds.
       test from: :usdf_v200_basic_formulary_include_search_test
       test from: :usdf_v200_basic_validation_test
       test from: :us_core_v200_basic_must_support_test
+      test from: :usdf_v200_basic_reference_resolution_test
     end
   end
 end

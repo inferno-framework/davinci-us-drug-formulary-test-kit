@@ -12,6 +12,7 @@ require_relative 'payer_insurance_plan/payer_insurance_plan_read_test'
 require_relative 'payer_insurance_plan/payer_insurance_plan_formulary_coverage_include_search_test'
 require_relative 'payer_insurance_plan/payer_insurance_plan_validation_test'
 require_relative 'payer_insurance_plan/payer_insurance_plan_must_support_test'
+require_relative 'payer_insurance_plan/payer_insurance_plan_reference_resolution_test'
 
 module DaVinciPDEXDrugFormularyTestKit
   module USDFV200
@@ -101,6 +102,7 @@ read succeeds.
       test from: :usdf_v200_payer_insurance_plan_formulary_coverage_include_search_test
       test from: :usdf_v200_payer_insurance_plan_validation_test
       test from: :us_core_v200_payer_insurance_plan_must_support_test
+      test from: :usdf_v200_payer_insurance_plan_reference_resolution_test
     end
   end
 end

@@ -16,7 +16,8 @@ module DaVinciPDEXDrugFormularyTestKit
         @must_supports = {
           extensions: must_support_extensions,
           slices: must_support_slices,
-          elements: must_support_elements
+          elements: must_support_elements,
+          references: must_support_references
         }
         # handle_special_cases
 
@@ -340,6 +341,60 @@ module DaVinciPDEXDrugFormularyTestKit
         end.uniq
       end
 
+      def must_support_references
+        (must_support_reference_elements + must_support_reference_extensions)
+      end
+
+      def must_support_reference_elements
+        must_support_elements
+          .select { |element_definition| element_definition[:types]&.include?('Reference') }
+          .flat_map do |element_definition|
+            profile_element = profile_elements.find do |element|
+              element.path == "#{resource}.#{element_definition[:path]}"
+            end
+            (
+              element_definition[:target_profiles] ||
+              profile_element&.type&.first&.targetProfile ||
+              []
+            ).map do |target_profile|
+              {
+                path: element_definition[:path],
+                target_profile:
+              }
+            end
+          end
+      end
+
+      def must_support_reference_extensions
+        profile_elements
+          .select { |element| element.type.any? { |type| type.code == 'Extension' && type.profile.present? } }
+          .flat_map do |element|
+            extension_url = element.type.first.profile.first
+
+            next unless must_support_extensions.any? { |extension| extension[:url] == extension_url }
+
+            profiles =
+              ig_resources
+                .profile_by_url(extension_url)
+                &.snapshot
+                &.element
+                &.find { |profile_element| profile_element.id == 'Extension.value[x]:valueReference' }
+                &.type
+                &.first
+                &.targetProfile
+
+            next if profiles.blank?
+
+            path = element.path.delete_prefix("#{resource}.")
+
+            profiles.map do |target_profile|
+              {
+                path: "#{path}.where(url='#{extension_url}').valueReference",
+                target_profile:
+              }
+            end
+          end.compact
+      end
       #### SPECIAL CASE ####
 
       # def handle_special_cases

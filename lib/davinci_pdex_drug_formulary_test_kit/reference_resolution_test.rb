@@ -62,26 +62,12 @@ module DaVinciPDEXDrugFormularyTestKit
     end
 
     def must_support_references
-      metadata.must_supports[:elements].select do |element_definition|
-        element_definition[:types]&.include?('Reference')
-      end
-    end
-
-    def must_support_references_with_target_profile
-      # mapping array of target_profiles to array of {path, target_profile} pair
-      must_support_references.map do |element_definition|
-        (element_definition[:target_profiles] || ['']).map do |target_profile|
-          {
-            path: element_definition[:path],
-            target_profile:
-          }
-        end
-      end.flatten
+      metadata.must_supports[:references]
     end
 
     def unresolved_references(resources = [])
       @unresolved_references ||=
-        must_support_references_with_target_profile.select do |reference_path_profile_pair|
+        must_support_references.select do |reference_path_profile_pair|
           path = reference_path_profile_pair[:path]
           target_profile = reference_path_profile_pair[:target_profile]
 

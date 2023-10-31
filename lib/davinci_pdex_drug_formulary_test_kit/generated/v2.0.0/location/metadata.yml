@@ -137,12 +137,23 @@
   :slices: []
   :elements:
   - :path: address
+  :references: []
   :choices:
   - :paths:
     - address
     :extension_ids:
     - Location.extension:region
 :mandatory_elements: []
+:references:
+- :path: Location.managingOrganization
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: Location.partOf
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Location
+- :path: Location.endpoint
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Endpoint
 :tests:
 - :id: us_core_v200_location__id_search_test
   :file_name: location_id_search_test.rb

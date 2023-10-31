@@ -43,9 +43,9 @@ module DaVinciPDEXDrugFormularyTestKit
             # revincludes: revincludes,
             # required_concepts: required_concepts,
             must_supports:,
-            mandatory_elements:
+            mandatory_elements:,
             # bindings: bindings,
-            # references: references
+            references:
             # tests: []
           }
 
@@ -326,15 +326,43 @@ module DaVinciPDEXDrugFormularyTestKit
       end
 
       def references
-        @references ||=
-          profile_elements
-            .select { |element| element.type&.first&.code == 'Reference' }
-            .map do |reference_definition|
-              {
-                path: reference_definition.path,
-                profiles: reference_definition.type.first.targetProfile
-              }
-            end
+        @references ||= element_references + extension_references
+      end
+
+      def element_references
+        profile_elements
+          .select { |element| element.type&.first&.code == 'Reference' }
+          .map do |reference_definition|
+          {
+            path: reference_definition.path,
+            profiles: reference_definition.type.first.targetProfile
+          }
+        end
+      end
+
+      def extension_references
+        profile_elements
+          .select { |element| element.type.any? { |type| type.code == 'Extension' && type.profile.present? } }
+          .map do |element|
+          extension_url = element.type.first.profile.first
+
+          target_profiles =
+            ig_resources
+              .profile_by_url(extension_url)
+              &.snapshot
+              &.element
+              &.find { |profile_element| profile_element.id == 'Extension.value[x]:valueReference' }
+              &.type
+              &.first
+              &.targetProfile
+
+          next if target_profiles.blank?
+
+          {
+            path: "#{element.path}.where(url='#{extension_url}').valueReference",
+            target_profiles:
+          }
+        end.compact
       end
     end
   end

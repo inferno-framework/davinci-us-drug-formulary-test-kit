@@ -284,6 +284,11 @@
     - :path: plan.specificCost.benefit.cost.qualifiers
     - :path: plan.specificCost.benefit.cost.value
     - :path: plan.specificCost.benefit.cost.value.value
+    :references:
+    - :path: coverageArea
+      :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-InsurancePlanLocation
+    - :path: coverage.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').valueReference
+      :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary
   :mandatory_elements:
   - InsurancePlan.identifier
   - InsurancePlan.status
@@ -296,6 +301,43 @@
   - InsurancePlan.plan
   - InsurancePlan.plan.type
   - InsurancePlan.plan.specificCost
+  :references:
+  - :path: InsurancePlan.ownedBy
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.administeredBy
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.coverageArea
+    :profiles:
+    - http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-InsurancePlanLocation
+  - :path: InsurancePlan.endpoint
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Endpoint
+  - :path: InsurancePlan.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.coverage.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.coverage.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.plan.coverageArea
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Location
+  - :path: InsurancePlan.plan.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.plan.coverageArea
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Location
+  - :path: InsurancePlan.plan.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.coverage.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').valueReference
+    :target_profiles: &2
+    - http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary
 - :name: usdf_Formulary
   :class_name: UsdfFormularySequence
   :version: v2.0.0
@@ -513,10 +555,36 @@
       :fixed_value: DRUGPOL
     - :path: name
     - :path: period
+    :references: []
   :mandatory_elements:
   - InsurancePlan.identifier
   - InsurancePlan.status
   - InsurancePlan.type
+  :references:
+  - :path: InsurancePlan.ownedBy
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.administeredBy
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.coverageArea
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Location
+  - :path: InsurancePlan.endpoint
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Endpoint
+  - :path: InsurancePlan.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.coverage.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: InsurancePlan.plan.coverageArea
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Location
+  - :path: InsurancePlan.plan.network
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
 - :name: usdf_FormularyItem
   :class_name: UsdfFormularyitemSequence
   :version: v2.0.0
@@ -740,10 +808,28 @@
     - :path: subject
       :types:
       - Reference
+    :references:
+    - :path: subject
+      :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug
+    - :path: extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').valueReference
+      :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary
   :mandatory_elements:
   - Basic.extension
   - Basic.code
   - Basic.subject
+  :references:
+  - :path: Basic.subject
+    :profiles:
+    - http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug
+  - :path: Basic.author
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Practitioner
+    - http://hl7.org/fhir/StructureDefinition/PractitionerRole
+    - http://hl7.org/fhir/StructureDefinition/Patient
+    - http://hl7.org/fhir/StructureDefinition/RelatedPerson
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').valueReference
+    :target_profiles: *2
 - :name: usdf_FormularyDrug
   :class_name: UsdfFormularydrugSequence
   :version: v2.0.0
@@ -905,12 +991,33 @@
     - :path: code.coding.code
     - :path: status
     - :path: doseForm
+    :references: []
   :mandatory_elements:
   - MedicationKnowledge.code
   - MedicationKnowledge.code.coding
   - MedicationKnowledge.code.coding.system
   - MedicationKnowledge.code.coding.code
   - MedicationKnowledge.status
+  :references:
+  - :path: MedicationKnowledge.manufacturer
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: MedicationKnowledge.relatedMedicationKnowledge.reference
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/MedicationKnowledge
+  - :path: MedicationKnowledge.associatedMedication
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Medication
+  - :path: MedicationKnowledge.monograph.source
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/DocumentReference
+    - http://hl7.org/fhir/StructureDefinition/Media
+  - :path: MedicationKnowledge.contraindication
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/DetectedIssue
+  - :path: MedicationKnowledge.regulatory.regulatoryAuthority
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
 - :name: usdf_InsurancePlanLocation
   :class_name: UsdfInsuranceplanlocationSequence
   :version: v2.0.0
@@ -1049,9 +1156,20 @@
     :slices: []
     :elements:
     - :path: address
+    :references: []
     :choices:
     - :paths:
       - address
       :extension_ids:
       - Location.extension:region
   :mandatory_elements: []
+  :references:
+  - :path: Location.managingOrganization
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Organization
+  - :path: Location.partOf
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Location
+  - :path: Location.endpoint
+    :profiles:
+    - http://hl7.org/fhir/StructureDefinition/Endpoint
