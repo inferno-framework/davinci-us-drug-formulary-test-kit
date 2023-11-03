@@ -9,7 +9,7 @@ AllCops:
   TargetRubyVersion: 3.1
   Exclude:
     - 'Gemfile'
-    - 'lib/davinci_pdex_drug_formulary_test_kit/generated/**/*'
+    - 'lib/davinci_us_drug_formulary_test_kit/generated/**/*'
 
 Layout/LineLength:
   Max: 120
@@ -70,7 +70,7 @@ RSpec/ExampleLength:
 
 RSpec/FilePath:
   CustomTransform:
-    DaVinciPDEXDrugFormularyTestKit: davinci_pdex_drug_formulary_test_kit
+    DaVinciUSDrugFormularyTestKit: davinci_us_drug_formulary_test_kit
 
 RSpec/MultipleExpectations:
   Enabled: false

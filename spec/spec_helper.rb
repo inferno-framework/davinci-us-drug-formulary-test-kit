@@ -11,7 +11,7 @@ require 'simplecov'
 SimpleCov.start do
   enable_coverage :branch
   add_filter '/spec/'
-  add_filter '/lib/davinci_pdex_drug_formulary_test_kit/generated'
+  add_filter '/lib/davinci_us_drug_formulary_test_kit/generated'
 end
 
 require 'webmock/rspec'

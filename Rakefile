@@ -20,8 +20,8 @@ end
 namespace :usdf do
   desc 'Generate tests'
   task :generate do
-    require_relative 'lib/davinci_pdex_drug_formulary_test_kit/generator'
+    require_relative 'lib/davinci_us_drug_formulary_test_kit/generator'
 
-    DaVinciPDEXDrugFormularyTestKit::Generator.generate
+    DaVinciUSDrugFormularyTestKit::Generator.generate
   end
 end

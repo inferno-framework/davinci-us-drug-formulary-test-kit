@@ -1,0 +1,100 @@
+require 'inferno/dsl/oauth_credentials'
+require_relative '../../version'
+require_relative '<%= capability_statement_file_name %>'
+<% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
+<% end %>
+module DaVinciUSDrugFormularyTestKit
+  module <%= module_name %>
+    class <%= class_name %> < Inferno::TestSuite
+      title '<%= title %>'
+      short_title '<%= short_title %>'
+      description %(
+        The Da Vinci US Drug Formulary Test Kit tests systems for their
+        conformance to the [US Drug Formulary Implementation Guide](<%=ig_link
+        %>).
+
+        ## Instructions
+        In order to run the tests, provide the base URL of the FHIR server to
+        test, along with the IDs of Insurance Plan Location resources.
+        Credentials may optionally be provided if testing against a system which
+        requires authorization.
+
+        ## Scope
+        These tests check the following behaviors as defined in the IG:
+        - FHIR Interactions
+          - Conformance
+          - Read
+          - Search
+            - Individual search parameters
+            - _include searches
+        - FHIR Data
+          - Validation against IG profiles
+          - Presence of all Must Support fields
+            - Resolution of Must Support references
+
+        **Known Issues**
+        - Must Support checks are not performed for all elements of Formulary
+          Drug resources due to the use of an intensional value set for slicing
+          `MedicationKnowledge.code.coding` elements.
+        - Must Support elements under nested Must Support slices are not
+          currently being checked. This is an issue for the
+          `InsurancePlan.plan:drug-plan.specificCost.benefit.cost:copay` and
+          `InsurancePlan.plan:drug-plan.specificCost.benefit.cost:coinsurance`
+          nested slices.
+        - The following search features are not tested
+          - Combination searches
+          - Multiple Or
+          - Multiple And
+          - Comparators
+      )
+      version VERSION
+
+      VALIDATION_MESSAGE_FILTERS = [
+        %r{Sub-extension url 'introspect' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
+        %r{Sub-extension url 'revoke' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
+        /Observation\.effective\.ofType\(Period\): .*vs-1:/ # Invalid invariant in FHIR v4.0.1
+      ].freeze
+
+      VERSION_SPECIFIC_MESSAGE_FILTERS = <%=version_specific_message_filters%>.freeze
+
+      def self.metadata
+        @metadata ||= YAML.load_file(File.join(__dir__, 'metadata.yml'), aliases: true)[:groups].map do |raw_metadata|
+            Generator::GroupMetadata.new(raw_metadata)
+          end
+      end
+
+      validator do
+        url ENV.fetch('<%= validator_env_name %>', 'http://validator_service:4567')
+        message_filters = VALIDATION_MESSAGE_FILTERS + VERSION_SPECIFIC_MESSAGE_FILTERS
+
+        exclude_message do |message|
+
+          message_filters.any? { |filter| filter.match? message.message }
+        end
+
+        perform_additional_validation do |resource, profile_url|
+          ProvenanceValidator.validate(resource) if resource.instance_of?(FHIR::Provenance)
+        end
+      end
+
+      id :<%= suite_id %>
+
+      input :url,
+        title: 'FHIR Endpoint',
+        description: 'URL of the FHIR endpoint'
+      input :smart_credentials,
+        title: 'OAuth Credentials',
+        type: :oauth_credentials,
+        optional: true
+
+      fhir_client do
+        url :url
+        oauth_credentials :smart_credentials
+      end
+
+      group from: :<%= capability_statement_group_id %>
+  <% group_id_list.each do |id| %>
+      group from: :<%= id %><% end %>
+    end
+  end
+end

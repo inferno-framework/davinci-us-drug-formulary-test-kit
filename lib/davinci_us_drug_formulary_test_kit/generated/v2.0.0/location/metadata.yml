@@ -1,0 +1,177 @@
+---
+:name: usdf_InsurancePlanLocation
+:class_name: UsdfInsuranceplanlocationSequence
+:version: v2.0.0
+:reformatted_version: v200
+:resource: Location
+:profile_url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-InsurancePlanLocation
+:profile_name: Insurance Plan Location
+:profile_version: 2.0.0
+:title: Insurance Plan Location
+:short_description: Verify support for the server capabilities required by the Insurance
+  Plan Location.
+:interactions:
+- :code: create
+  :expectation: MAY
+- :code: search-type
+  :expectation: SHALL
+- :code: read
+  :expectation: SHALL
+- :code: vread
+  :expectation: SHOULD
+- :code: update
+  :expectation: MAY
+- :code: patch
+  :expectation: MAY
+- :code: delete
+  :expectation: MAY
+- :code: history-instance
+  :expectation: SHOULD
+- :code: history-type
+  :expectation: MAY
+:searches:
+- :names:
+  - _id
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+- :names:
+  - _lastUpdated
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - _lastUpdated
+  :must_support_or_mandatory: false
+- :names:
+  - address
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+- :names:
+  - address-city
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - address-city
+  :must_support_or_mandatory: false
+- :names:
+  - address-state
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - address-state
+  :must_support_or_mandatory: false
+- :names:
+  - address-postalcode
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - address-postalcode
+  :must_support_or_mandatory: false
+:search_definitions:
+  :_id:
+    :paths:
+    - Resource.id
+    :full_paths:
+    - Resource.id
+    :comparators: {}
+    :values: []
+    :type: token
+    :contains_multiple: false
+  :_lastUpdated:
+    :paths:
+    - Resource.meta.lastUpdated
+    :full_paths:
+    - Resource.meta.lastUpdated
+    :comparators:
+      :eq: MAY
+      :ne: MAY
+      :gt: MAY
+      :ge: MAY
+      :lt: MAY
+      :le: MAY
+      :sa: MAY
+      :eb: MAY
+      :ap: MAY
+    :values: []
+    :type: date
+    :contains_multiple: false
+  :address:
+    :paths:
+    - address
+    :full_paths:
+    - Location.address
+    :comparators: {}
+    :values: []
+    :type: Address
+    :contains_multiple: false
+  :address-city:
+    :paths:
+    - address.city
+    :full_paths:
+    - Location.address.city
+    :comparators: {}
+    :values: []
+    :type: string
+    :contains_multiple: false
+  :address-state:
+    :paths:
+    - address.state
+    :full_paths:
+    - Location.address.state
+    :comparators: {}
+    :values: []
+    :type: string
+    :contains_multiple: false
+  :address-postalcode:
+    :paths:
+    - address.postalCode
+    :full_paths:
+    - Location.address.postalCode
+    :comparators: {}
+    :values: []
+    :type: string
+    :contains_multiple: false
+:include_params: []
+:must_supports:
+  :extensions:
+  - :id: Location.extension:region
+    :url: http://hl7.org/fhir/StructureDefinition/location-boundary-geojson
+    :path: extension
+  :slices: []
+  :elements:
+  - :path: address
+  :references: []
+  :choices:
+  - :paths:
+    - address
+    :extension_ids:
+    - Location.extension:region
+:mandatory_elements: []
+:references:
+- :path: Location.managingOrganization
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: Location.partOf
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Location
+- :path: Location.endpoint
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Endpoint
+:tests:
+- :id: usdf_v200_location__id_search_test
+  :file_name: location_id_search_test.rb
+- :id: usdf_v200_location__lastUpdated_search_test
+  :file_name: location_lastupdated_search_test.rb
+- :id: usdf_v200_location_address_search_test
+  :file_name: location_address_search_test.rb
+- :id: usdf_v200_location_address_city_search_test
+  :file_name: location_address_city_search_test.rb
+- :id: usdf_v200_location_address_state_search_test
+  :file_name: location_address_state_search_test.rb
+- :id: usdf_v200_location_address_postalcode_search_test
+  :file_name: location_address_postalcode_search_test.rb
+- :id: usdf_v200_location_read_test
+  :file_name: location_read_test.rb
+- :id: usdf_v200_location_validation_test
+  :file_name: location_validation_test.rb
+- :id: usdf_v200_location_must_support_test
+  :file_name: location_must_support_test.rb
+:id: usdf_v200_location
+:file_name: location_group.rb

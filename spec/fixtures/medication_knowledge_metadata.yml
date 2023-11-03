@@ -33,21 +33,34 @@
 - :names:
   - status
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _id
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _lastUpdated
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - code
   :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - drug-name
   :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - drug-name
+  :must_support_or_mandatory: false
 - :names:
   - doseform
   :expectation: SHOULD
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :_id:
     :paths:
@@ -88,6 +101,7 @@
     - entered-in-error
     :type: code
     :contains_multiple: false
+    :multiple_or: true
   :code:
     :paths:
     - code
@@ -97,10 +111,11 @@
     :values: []
     :type: CodeableConcept
     :contains_multiple: false
+    :multiple_or: true
   :drug-name:
     :paths:
-    - 'code.coding.display '
-    - " synonym"
+    - code.coding.display
+    - synonym
     :full_paths:
     - 'MedicationKnowledge.code.coding.display '
     - " synonym"
@@ -108,6 +123,7 @@
     :values: []
     :type: string
     :contains_multiple: false
+    :multiple_or: true
   :doseform:
     :paths:
     - doseForm
@@ -117,20 +133,55 @@
     :values: []
     :type: CodeableConcept
     :contains_multiple: false
+    :multiple_or: true
+:include_params: []
+:must_supports:
+  :extensions: []
+  :slices:
+  - :name: MedicationKnowledge.code.coding:semantic-drug
+    :path: code.coding
+    :discriminator:
+      :type: value
+      :values:
+      - :path: "$this"
+        :value: MedicationKnowledge.code.coding
+  - :name: MedicationKnowledge.code.coding:semantic-drug-form-group
+    :path: code.coding
+    :discriminator:
+      :type: value
+      :values:
+      - :path: "$this"
+        :value: MedicationKnowledge.code.coding
+  :elements:
+  - :path: meta.lastUpdated
+  - :path: code
+  - :path: code.coding
+  - :path: code.coding.system
+  - :path: code.coding.code
+  - :path: status
+  - :path: doseForm
+:mandatory_elements:
+- MedicationKnowledge.code
+- MedicationKnowledge.code.coding
+- MedicationKnowledge.code.coding.system
+- MedicationKnowledge.code.coding.code
+- MedicationKnowledge.status
 :tests:
-- :id: us_core_v200_medication_knowledge_status_search_test
+- :id: usdf_v200_medication_knowledge_status_search_test
   :file_name: medication_knowledge_status_search_test.rb
-- :id: us_core_v200_medication_knowledge__id_search_test
+- :id: usdf_v200_medication_knowledge__id_search_test
   :file_name: medication_knowledge_id_search_test.rb
-- :id: us_core_v200_medication_knowledge__lastUpdated_search_test
+- :id: usdf_v200_medication_knowledge__lastUpdated_search_test
   :file_name: medication_knowledge_lastupdated_search_test.rb
-- :id: us_core_v200_medication_knowledge_code_search_test
+- :id: usdf_v200_medication_knowledge_code_search_test
   :file_name: medication_knowledge_code_search_test.rb
-- :id: us_core_v200_medication_knowledge_drug_name_search_test
+- :id: usdf_v200_medication_knowledge_drug_name_search_test
   :file_name: medication_knowledge_drug_name_search_test.rb
-- :id: us_core_v200_medication_knowledge_doseform_search_test
+- :id: usdf_v200_medication_knowledge_doseform_search_test
   :file_name: medication_knowledge_doseform_search_test.rb
 - :id: usdf_v200_medication_knowledge_read_test
   :file_name: medication_knowledge_read_test.rb
+- :id: usdf_v200_medication_knowledge_must_support_test
+  :file_name: medication_knowledge_must_support_test.rb
 :id: usdf_v200_medication_knowledge
 :file_name: medication_knowledge_group.rb
