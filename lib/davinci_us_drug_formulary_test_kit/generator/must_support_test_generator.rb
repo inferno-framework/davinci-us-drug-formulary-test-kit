@@ -76,8 +76,7 @@ module DaVinciUSDrugFormularyTestKit
       def build_must_support_list_string(uscdi_only)
         slice_names = group_metadata.must_supports[:slices]
           .select { |slice| slice[:uscdi_only].presence == uscdi_only.presence }
-          .map { |slice| slice[:name] }
-
+          .map { |slice| slice[:slice_id] }
         element_names = group_metadata.must_supports[:elements]
           .select { |element| element[:uscdi_only].presence == uscdi_only.presence }
           .map { |element| "#{resource_type}.#{element[:path]}" }
@@ -97,7 +96,6 @@ module DaVinciUSDrugFormularyTestKit
 
           element_names << ("#{element_paths} or #{extension_ids}")
         end
-
         (slice_names + element_names + extension_names)
           .uniq
           .sort

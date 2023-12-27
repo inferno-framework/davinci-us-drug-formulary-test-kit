@@ -18,6 +18,8 @@ none are returned, the test is skipped.
       )
 
       id :usdf_v200_payer_insurance_plan_formulary_coverage_search_test
+      optional
+  
   
       def self.properties
         @properties ||= SearchTestProperties.new(

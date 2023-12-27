@@ -15,7 +15,6 @@ module DaVinciUSDrugFormularyTestKit
 
         Elements which may provide external references include:
 
-        * InsurancePlan.coverage.extension:usdf-FormularyReference-extension.valueReference
         * InsurancePlan.coverageArea
       )
 

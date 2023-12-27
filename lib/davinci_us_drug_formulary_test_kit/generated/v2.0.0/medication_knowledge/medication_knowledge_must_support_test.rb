@@ -14,10 +14,12 @@ module DaVinciUSDrugFormularyTestKit
 
         * MedicationKnowledge.code
         * MedicationKnowledge.code.coding
-        * MedicationKnowledge.code.coding.code
-        * MedicationKnowledge.code.coding.system
         * MedicationKnowledge.code.coding:semantic-drug
         * MedicationKnowledge.code.coding:semantic-drug-form-group
+        * MedicationKnowledge.code.coding:semantic-drug-form-group.code
+        * MedicationKnowledge.code.coding:semantic-drug-form-group.system
+        * MedicationKnowledge.code.coding:semantic-drug.code
+        * MedicationKnowledge.code.coding:semantic-drug.system
         * MedicationKnowledge.doseForm
         * MedicationKnowledge.meta.lastUpdated
         * MedicationKnowledge.status

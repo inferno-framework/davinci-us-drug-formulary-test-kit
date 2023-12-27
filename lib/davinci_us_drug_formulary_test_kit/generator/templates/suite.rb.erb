@@ -36,11 +36,6 @@ module DaVinciUSDrugFormularyTestKit
         - Must Support checks are not performed for all elements of Formulary
           Drug resources due to the use of an intensional value set for slicing
           `MedicationKnowledge.code.coding` elements.
-        - Must Support elements under nested Must Support slices are not
-          currently being checked. This is an issue for the
-          `InsurancePlan.plan:drug-plan.specificCost.benefit.cost:copay` and
-          `InsurancePlan.plan:drug-plan.specificCost.benefit.cost:coinsurance`
-          nested slices.
         - The following search features are not tested
           - Combination searches
           - Multiple Or

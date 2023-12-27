@@ -73,8 +73,9 @@
 - :names:
   - formulary-coverage
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
+  :names_not_must_support_or_mandatory:
+  - formulary-coverage
+  :must_support_or_mandatory: false
 - :names:
   - coverage-area
   :expectation: SHALL
@@ -215,40 +216,42 @@
 :include_params:
 - formulary-coverage
 :must_supports:
-  :extensions:
-  - :id: InsurancePlan.coverage:drug-coverage.extension:usdf-FormularyReference-extension
-    :url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension
-    :path: coverage.extension
+  :extensions: []
   :slices:
-  - :name: InsurancePlan.coverage:drug-coverage
+  - :slice_id: InsurancePlan.coverage:drug-coverage
+    :slice_name: drug-coverage
     :path: coverage
     :discriminator:
       :type: patternCodeableConcept
       :path: type
       :code: DRUGPOL
       :system: http://terminology.hl7.org/CodeSystem/v3-ActCode
-  - :name: InsurancePlan.coverage:drug-coverage.benefit:drug-plan
+  - :slice_id: InsurancePlan.coverage:drug-coverage.benefit:drug-plan
+    :slice_name: drug-plan
     :path: coverage.benefit
     :discriminator:
       :type: patternCodeableConcept
       :path: type
-      :code: Drug
+      :code: drug
       :system: http://terminology.hl7.org/CodeSystem/insurance-plan-type
-  - :name: InsurancePlan.plan:drug-plan
+  - :slice_id: InsurancePlan.plan:drug-plan
+    :slice_name: drug-plan
     :path: plan
     :discriminator:
       :type: patternCodeableConcept
       :path: type
-      :code: Drug
+      :code: drug
       :system: http://terminology.hl7.org/CodeSystem/insurance-plan-type
-  - :name: InsurancePlan.plan:drug-plan.specificCost.benefit.cost:copay
+  - :slice_id: InsurancePlan.plan:drug-plan.specificCost.benefit.cost:copay
+    :slice_name: copay
     :path: plan.specificCost.benefit.cost
     :discriminator:
       :type: patternCodeableConcept
       :path: type
       :code: copay
       :system: http://hl7.org/fhir/us/davinci-drug-formulary/CodeSystem/usdf-BenefitCostTypeCS-TEMPORARY-TRIAL-USE
-  - :name: InsurancePlan.plan:drug-plan.specificCost.benefit.cost:coinsurance
+  - :slice_id: InsurancePlan.plan:drug-plan.specificCost.benefit.cost:coinsurance
+    :slice_name: coinsurance
     :path: plan.specificCost.benefit.cost
     :discriminator:
       :type: patternCodeableConcept
@@ -272,21 +275,19 @@
   - :path: contact.telecom.value
   - :path: coverage
   - :path: coverage.type
-  - :path: coverage.extension
+  - :path: coverage:drug-coverage.extension
   - :path: plan
-  - :path: plan.specificCost
-  - :path: plan.specificCost.category
-  - :path: plan.specificCost.benefit
-  - :path: plan.specificCost.benefit.type
-  - :path: plan.specificCost.benefit.cost
-  - :path: plan.specificCost.benefit.cost.qualifiers
-  - :path: plan.specificCost.benefit.cost.value
-  - :path: plan.specificCost.benefit.cost.value.value
+  - :path: plan:drug-plan.specificCost
+  - :path: plan:drug-plan.specificCost.category
+  - :path: plan:drug-plan.specificCost.benefit
+  - :path: plan:drug-plan.specificCost.benefit.type
+  - :path: plan:drug-plan.specificCost.benefit.cost
+  - :path: plan:drug-plan.specificCost.benefit.cost.qualifiers
+  - :path: plan:drug-plan.specificCost.benefit.cost.value
+  - :path: plan:drug-plan.specificCost.benefit.cost:copay.value.value
   :references:
   - :path: coverageArea
     :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-InsurancePlanLocation
-  - :path: coverage.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyReference-extension').valueReference
-    :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-Formulary
 :mandatory_elements:
 - InsurancePlan.identifier
 - InsurancePlan.status

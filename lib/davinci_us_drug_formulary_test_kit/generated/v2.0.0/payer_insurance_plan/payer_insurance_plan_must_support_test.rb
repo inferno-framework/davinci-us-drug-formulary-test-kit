@@ -18,28 +18,27 @@ module DaVinciUSDrugFormularyTestKit
         * InsurancePlan.contact.telecom.system
         * InsurancePlan.contact.telecom.value
         * InsurancePlan.coverage
-        * InsurancePlan.coverage.extension
         * InsurancePlan.coverage.type
         * InsurancePlan.coverage:drug-coverage
         * InsurancePlan.coverage:drug-coverage.benefit:drug-plan
-        * InsurancePlan.coverage:drug-coverage.extension:usdf-FormularyReference-extension
+        * InsurancePlan.coverage:drug-coverage.extension
         * InsurancePlan.coverageArea
         * InsurancePlan.identifier
         * InsurancePlan.meta.lastUpdated
         * InsurancePlan.name
         * InsurancePlan.period
         * InsurancePlan.plan
-        * InsurancePlan.plan.specificCost
-        * InsurancePlan.plan.specificCost.benefit
-        * InsurancePlan.plan.specificCost.benefit.cost
-        * InsurancePlan.plan.specificCost.benefit.cost.qualifiers
-        * InsurancePlan.plan.specificCost.benefit.cost.value
-        * InsurancePlan.plan.specificCost.benefit.cost.value.value
-        * InsurancePlan.plan.specificCost.benefit.type
-        * InsurancePlan.plan.specificCost.category
         * InsurancePlan.plan:drug-plan
+        * InsurancePlan.plan:drug-plan.specificCost
+        * InsurancePlan.plan:drug-plan.specificCost.benefit
+        * InsurancePlan.plan:drug-plan.specificCost.benefit.cost
+        * InsurancePlan.plan:drug-plan.specificCost.benefit.cost.qualifiers
+        * InsurancePlan.plan:drug-plan.specificCost.benefit.cost.value
         * InsurancePlan.plan:drug-plan.specificCost.benefit.cost:coinsurance
         * InsurancePlan.plan:drug-plan.specificCost.benefit.cost:copay
+        * InsurancePlan.plan:drug-plan.specificCost.benefit.cost:copay.value.value
+        * InsurancePlan.plan:drug-plan.specificCost.benefit.type
+        * InsurancePlan.plan:drug-plan.specificCost.category
         * InsurancePlan.status
         * InsurancePlan.type
       )

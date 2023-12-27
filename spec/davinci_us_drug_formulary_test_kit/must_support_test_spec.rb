@@ -217,7 +217,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
       expect(result.result).to eq('pass')
     end
 
-    it 'fails if server does not suport one MS extensions' do
+    it 'fails if server does not support one MS extensions' do
       formulary_item.extension.delete_at(0)
 
       allow_any_instance_of(formulary_item_must_support_test)
@@ -375,7 +375,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
                     coding: [
                       {
                         system: 'http://terminology.hl7.org/CodeSystem/insurance-plan-type',
-                        code: 'Drug',
+                        code: 'drug',
                         display: 'Drug'
                       }
                     ]
@@ -390,7 +390,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
                 coding: [
                   {
                     system: 'http://terminology.hl7.org/CodeSystem/insurance-plan-type',
-                    code: 'Drug',
+                    code: 'drug',
                     display: 'Drug'
                   }
                 ]
@@ -483,7 +483,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
         )
       end
 
-      it 'passes if server suports all MS slices' do
+      it 'passes if server suports all MS slices (payer plan)' do
         allow_any_instance_of(payer_insurance_plan_must_support_test)
           .to receive(:scratch_resources).and_return(
             {
@@ -495,7 +495,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
         expect(result.result).to eq('pass')
       end
 
-      it 'fails if server does not support one MS extensions' do
+      it 'passes if server does not support one MS slice (payer plan)' do
         payer_insurance_plan.plan.first.type.coding.first.code = nil
         allow_any_instance_of(payer_insurance_plan_must_support_test)
           .to receive(:scratch_resources).and_return(
@@ -508,6 +508,20 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
 
         expect(result.result).to eq('skip')
         expect(result.result_message).to include('InsurancePlan.plan:drug-plan')
+      end
+
+      it 'passes if sub-elements of missing slice are displayed' do
+        payer_insurance_plan.plan.first.type.coding.first.code = nil
+        allow_any_instance_of(payer_insurance_plan_must_support_test)
+          .to receive(:scratch_resources).and_return(
+            {
+              all: [payer_insurance_plan]
+            }
+          )
+
+        result = run(payer_insurance_plan_must_support_test)
+        expect(result.result).to eq('skip')
+        expect(result.result_message).to include('plan:drug-plan.specificCost')
       end
     end
 
@@ -635,7 +649,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
         )
       end
 
-      it 'passes if server suports all MS slices' do
+      it 'passes if server suports all MS slices (formulary item)' do
         allow_any_instance_of(basic_must_support_test)
           .to receive(:scratch_resources).and_return(
             {
@@ -647,7 +661,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
         expect(result.result).to eq('pass')
       end
 
-      it 'fails if server does not support one MS extensions' do
+      it 'fails if server does not support one MS extensions (formulary item)' do
         formulary_item.extension.shift
         allow_any_instance_of(basic_must_support_test)
           .to receive(:scratch_resources).and_return(

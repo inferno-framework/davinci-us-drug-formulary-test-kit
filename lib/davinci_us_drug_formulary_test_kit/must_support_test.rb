@@ -15,12 +15,15 @@ module DaVinciUSDrugFormularyTestKit
       skip_if resources.blank?, "No #{resource_type} resources were found"
 
       missing_elements(resources)
+      missing_slices(resources)
       missing_extensions(resources)
+
       handle_must_support_choices if metadata.must_supports[:choices].present?
       # TODO: long term fix = allow intensional VS to be used for slicing in formulary drug
       # ticket fi-2099
       if resource_type == 'MedicationKnowledge'
         # skip slice check for drugs
+        missing_elements.delete_if { |element| element[:path].include?('coding:') }
         pass if (missing_elements + missing_extensions).empty?
       else
         missing_slices(resources)
@@ -43,7 +46,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       missing_slices.delete_if do |slice|
-        choices = metadata.must_supports[:choices].find { |choice| choice[:slice_names]&.include?(slice[:name]) }
+        choices = metadata.must_supports[:choices].find { |choice| choice[:slice_names]&.include?(slice[:slice_id]) }
         is_any_choice_supported?(choices)
       end
     end
@@ -57,13 +60,13 @@ module DaVinciUSDrugFormularyTestKit
               extension[:id] == extension_id
             end
           end ||
-          choices[:slice_names]&.any? { |slice_name| missing_slices.none? { |slice| slice[:name] == slice_name } }
+          choices[:slice_names]&.any? { |slice_name| missing_slices.none? { |slice| slice[:slice_id] == slice_name } }
         )
     end
 
     def missing_must_support_strings
       missing_elements.map { |element_definition| missing_element_string(element_definition) } +
-        missing_slices.map { |slice_definition| slice_definition[:name] } +
+        missing_slices.map { |slice_definition| slice_definition[:slice_id] } +
         missing_extensions.map { |extension_definition| extension_definition[:id] }
     end
 
@@ -91,13 +94,7 @@ module DaVinciUSDrugFormularyTestKit
       @missing_extensions ||=
         must_support_extensions.select do |extension_definition|
           resources.none? do |resource|
-            if resource&.extension&.empty?
-              path = extension_definition[:path]
-              value = find_a_value_at(resource, path)
-              value.url == extension_definition[:url]
-            else
-              resource.extension.any? { |extension| extension.url == extension_definition[:url] }
-            end
+            resource.extension.any? { |extension| extension.url == extension_definition[:url] }
           end
         end
     end
@@ -122,12 +119,10 @@ module DaVinciUSDrugFormularyTestKit
               (value_without_extensions.present? || value_without_extensions == false) &&
                 (element_definition[:fixed_value].blank? || value == element_definition[:fixed_value])
             end
-
             # Note that false.present? => false, which is why we need to add this extra check
             value_found.present? || value_found == false
           end
         end
-
       @missing_elements
     end
 
@@ -149,9 +144,6 @@ module DaVinciUSDrugFormularyTestKit
         end
     end
 
-    # TODO: correctly check for MS elements within opn slicing MS slices
-    # ticket fi-2099 generated MS tests and metadata that added MS elements unique to slices to "slices"
-    # rather than just "elements" - a separate ticket is needed to rework how these are checked
     def find_slice(resource, path, discriminator)
       find_a_value_at(resource, path) do |element|
         case discriminator[:type]
@@ -217,6 +209,7 @@ module DaVinciUSDrugFormularyTestKit
               else
                 true
               end
+
             current_element_values_match && child_element_values_match
           end
         end

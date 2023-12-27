@@ -355,7 +355,7 @@ module DaVinciUSDrugFormularyTestKit
     def perform_multiple_or_search_test
       resolved_one = false
 
-      all_search_params.each do |_resource_input, params_list|
+      all_search_params.each_value do |params_list|
         next unless params_list.present?
 
         search_params = params_list.first

@@ -35,7 +35,8 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def must_support_extensions
-        must_support_extension_elements.map do |element|
+        non_slice_extensions = must_support_extension_elements - slice_sub_elements
+        non_slice_extensions.map do |element|
           {
             id: element.id,
             url: element.type.first.profile.first,
@@ -50,25 +51,13 @@ module DaVinciUSDrugFormularyTestKit
         end
       end
 
-      # TODO: fi-2241 (see known issues) - MS elements within MS slices need to be under
-      # "slices" in the metadata, rather than "elements"
-
-      # def slice_sub_elements
-      #   must_support_slice_elements.flat_map do |slice|
-      #     profile_elements.select do |element|
-      #       element.id != slice.id && element.id.start_with?(slice.id) && element.mustSupport
-      #     end
-      #   end
-      # end
-
-      # def slice_sub_elements_content
-      #   slice_sub_elements.map do |x|
-      #     {
-      #       name: x.id,
-      #       path: x.path
-      #     }
-      #   end
-      # end
+      def slice_sub_elements
+        must_support_slice_elements.flat_map do |slice|
+          profile_elements.select do |element|
+            element.id != slice.id && element.id.start_with?(slice.id) && element.mustSupport
+          end
+        end
+      end
 
       def sliced_element(slice)
         profile_elements.find do |element|
@@ -90,7 +79,8 @@ module DaVinciUSDrugFormularyTestKit
       def pattern_slices
         must_support_pattern_slice_elements.map do |current_element|
           {
-            name: current_element.id,
+            slice_id: current_element.id,
+            slice_name: current_element.sliceName,
             path: current_element.path.gsub("#{resource}.", '')
           }.tap do |metadata|
             discriminator = discriminators(sliced_element(current_element)).first
@@ -105,6 +95,10 @@ module DaVinciUSDrugFormularyTestKit
 
             metadata[:discriminator] =
               if pattern_element.patternCodeableConcept.present?
+                # special case for 2.0.0 error
+                if pattern_element.patternCodeableConcept.coding.first.code == 'Drug'
+                  pattern_element.patternCodeableConcept.coding.first.code = 'drug'
+                end
                 {
                   type: 'patternCodeableConcept',
                   path: discriminator_path,
@@ -165,7 +159,8 @@ module DaVinciUSDrugFormularyTestKit
           type_code = type_element.type.first.code
 
           {
-            name: current_element.id,
+            slice_id: current_element.id,
+            slice_name: current_element.sliceName,
             path: current_element.path.gsub("#{resource}.", ''),
             discriminator: {
               type: 'type',
@@ -184,7 +179,8 @@ module DaVinciUSDrugFormularyTestKit
       def value_slices
         must_support_value_slice_elements.map do |current_element|
           {
-            name: current_element.id,
+            slice_id: current_element.id,
+            slice_name: current_element.sliceName,
             path: current_element.path.gsub("#{resource}.", ''),
             discriminator: {
               type: 'value'
@@ -192,9 +188,13 @@ module DaVinciUSDrugFormularyTestKit
           }.tap do |metadata|
             metadata[:discriminator][:values] = discriminators(sliced_element(current_element)).map do |discriminator|
               if discriminator.path == '$this'
+                fixed_element = profile_elements.find do |element|
+                  element.id.starts_with?(current_element.id) &&
+                    element.path == current_element.path.to_s
+                end
                 {
-                  path: discriminator.path,
-                  value: current_element.path
+                  path: fixed_element.path.gsub("#{resource}.", ''),
+                  value: fixed_element.binding.valueSet
                 }
               else
                 fixed_element = profile_elements.find do |element|
@@ -213,25 +213,25 @@ module DaVinciUSDrugFormularyTestKit
 
       def must_support_slices
         pattern_slices + type_slices + value_slices
-        # TODO: for fi-2241
-        # pattern_slices + type_slices + value_slices + slice_sub_elements_content
       end
 
       def plain_must_support_elements
         all_must_support_elements - must_support_extension_elements - must_support_slice_elements
-        # TODO: for fi-2241
-        # all_must_support_elements - must_support_extension_elements - must_support_slice_elements - slice_sub_elements
+      end
+
+      def element_part_of_slice_discrimination?(element)
+        must_support_slice_elements.any? { |ms_slice| element.id.include?(ms_slice.id) }
       end
 
       def handle_fixed_values(metadata, element)
         if element.fixedUri.present?
           metadata[:fixed_value] = element.fixedUri
-        elsif element.patternCodeableConcept.present?
+        elsif element.patternCodeableConcept.present? && !element_part_of_slice_discrimination?(element)
           metadata[:fixed_value] = element.patternCodeableConcept.coding.first.code
           metadata[:path] += '.coding.code'
         elsif element.fixedCode.present?
           metadata[:fixed_value] = element.fixedCode
-        elsif element.patternIdentifier.present?
+        elsif element.patternIdentifier.present? && !element_part_of_slice_discrimination?(element)
           metadata[:fixed_value] = element.patternIdentifier.system
           metadata[:path] += '.system'
         end
@@ -295,7 +295,7 @@ module DaVinciUSDrugFormularyTestKit
       def must_support_elements
         plain_must_support_elements.each_with_object([]) do |current_element, must_support_elements_metadata|
           {
-            path: current_element.path.gsub("#{resource}.", '')
+            path: current_element.id.gsub("#{resource}.", '')
           }.tap do |current_metadata|
             type_must_support_metadata = get_type_must_support_metadata(current_metadata, current_element)
 

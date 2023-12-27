@@ -138,26 +138,30 @@
 :must_supports:
   :extensions: []
   :slices:
-  - :name: MedicationKnowledge.code.coding:semantic-drug
+  - :slice_id: MedicationKnowledge.code.coding:semantic-drug
+    :slice_name: semantic-drug
     :path: code.coding
     :discriminator:
       :type: value
       :values:
-      - :path: "$this"
-        :value: MedicationKnowledge.code.coding
-  - :name: MedicationKnowledge.code.coding:semantic-drug-form-group
+      - :path: code.coding
+        :value: http://hl7.org/fhir/us/davinci-drug-formulary/ValueSet/SemanticDrugVS
+  - :slice_id: MedicationKnowledge.code.coding:semantic-drug-form-group
+    :slice_name: semantic-drug-form-group
     :path: code.coding
     :discriminator:
       :type: value
       :values:
-      - :path: "$this"
-        :value: MedicationKnowledge.code.coding
+      - :path: code.coding
+        :value: http://hl7.org/fhir/us/davinci-drug-formulary/ValueSet/SemanticDrugFormGroupVS
   :elements:
   - :path: meta.lastUpdated
   - :path: code
   - :path: code.coding
-  - :path: code.coding.system
-  - :path: code.coding.code
+  - :path: code.coding:semantic-drug.system
+  - :path: code.coding:semantic-drug.code
+  - :path: code.coding:semantic-drug-form-group.system
+  - :path: code.coding:semantic-drug-form-group.code
   - :path: status
   - :path: doseForm
   :references: []
