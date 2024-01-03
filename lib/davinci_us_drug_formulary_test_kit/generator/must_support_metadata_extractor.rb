@@ -35,8 +35,8 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def must_support_extensions
-        non_slice_extensions = must_support_extension_elements - slice_sub_elements
-        non_slice_extensions.map do |element|
+        # non_slice_extensions = must_support_extension_elements - slice_sub_elements
+        must_support_extension_elements.map do |element|
           {
             id: element.id,
             url: element.type.first.profile.first,
@@ -51,13 +51,13 @@ module DaVinciUSDrugFormularyTestKit
         end
       end
 
-      def slice_sub_elements
-        must_support_slice_elements.flat_map do |slice|
-          profile_elements.select do |element|
-            element.id != slice.id && element.id.start_with?(slice.id) && element.mustSupport
-          end
-        end
-      end
+      # def slice_sub_elements
+      #   must_support_slice_elements.flat_map do |slice|
+      #     profile_elements.select do |element|
+      #       element.id != slice.id && element.id.start_with?(slice.id) && element.mustSupport
+      #     end
+      #   end
+      # end
 
       def sliced_element(slice)
         profile_elements.find do |element|
@@ -95,10 +95,6 @@ module DaVinciUSDrugFormularyTestKit
 
             metadata[:discriminator] =
               if pattern_element.patternCodeableConcept.present?
-                # special case for 2.0.0 error
-                if pattern_element.patternCodeableConcept.coding.first.code == 'Drug'
-                  pattern_element.patternCodeableConcept.coding.first.code = 'drug'
-                end
                 {
                   type: 'patternCodeableConcept',
                   path: discriminator_path,

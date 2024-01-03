@@ -216,7 +216,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::ReferenceResolutionTest do
   end
 
   describe '#perform_reference_resolution_test' do
-    let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v200') }
+    let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v201') }
     let(:session_data_repo) { Inferno::Repositories::SessionData.new }
     let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
     let(:url) { 'http://example.com/fhir' }
@@ -224,7 +224,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::ReferenceResolutionTest do
 
     describe 'reference validation with target profiles' do
       let(:test_class) do
-        Class.new(DaVinciUSDrugFormularyTestKit::DaVinciUSDrugFormularyV200::PayerInsurancePlanReferenceResolutionTest) do # rubocop:disable Layout/LineLength
+        Class.new(DaVinciUSDrugFormularyTestKit::DaVinciUSDrugFormularyV201::PayerInsurancePlanReferenceResolutionTest) do # rubocop:disable Layout/LineLength
           fhir_client { url :url }
           input :url
         end

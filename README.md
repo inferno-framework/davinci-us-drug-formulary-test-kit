@@ -1,7 +1,7 @@
 # Da Vinci US Drug Formulary Test Kit
 
 This is an [Inferno](https://inferno-framework.github.io/inferno-core/) test kit
-for the [Da Vinci Payer Data Exchange (PDex) US Drug Formulary Implementation Guide v2.0.0](http://hl7.org/fhir/us/davinci-drug-formulary/STU2).
+for the [Da Vinci Payer Data Exchange (PDex) US Drug Formulary Implementation Guide v2.0.1](http://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1).
 
 ## Instructions
 

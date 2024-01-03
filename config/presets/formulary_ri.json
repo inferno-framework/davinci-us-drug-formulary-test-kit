@@ -1,7 +1,7 @@
 {
   "title": "Drug Formulary Reference Implementation",
   "id": "drug-formulary-ri",
-  "test_suite_id": "usdf_v200",
+  "test_suite_id": "usdf_v201",
   "inputs": [
     {
       "name": "url",

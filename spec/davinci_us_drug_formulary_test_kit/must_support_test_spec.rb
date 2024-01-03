@@ -1,7 +1,7 @@
 require_relative '../../lib/davinci_us_drug_formulary_test_kit/must_support_test'
 
 RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v200') }
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v201') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
   # let(:patient_ref) { 'Patient/85' }
@@ -22,7 +22,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
 
   describe 'must support test for MedicationKnowledge elements' do
     let(:medication_must_support_test) do
-      Inferno::Repositories::Tests.new.find('usdf_v200_medication_knowledge_must_support_test')
+      Inferno::Repositories::Tests.new.find('usdf_v201_medication_knowledge_must_support_test')
     end
     let(:medication1) do
       FHIR::MedicationKnowledge.new(
@@ -82,7 +82,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
 
   describe 'must support test for extensions' do
     let(:formulary_item_must_support_test) do
-      Inferno::Repositories::Tests.new.find('usdf_v200_basic_must_support_test')
+      Inferno::Repositories::Tests.new.find('usdf_v201_basic_must_support_test')
     end
     let(:formulary_item) do
       FHIR::Basic.new(
@@ -238,7 +238,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
   describe 'must support test for slices' do
     context 'when slicing with pattern' do
       let(:payer_insurance_plan_must_support_test) do
-        Inferno::Repositories::Tests.new.find('usdf_v200_payer_insurance_plan_must_support_test')
+        Inferno::Repositories::Tests.new.find('usdf_v201_payer_insurance_plan_must_support_test')
       end
       let(:payer_insurance_plan) do
         FHIR::InsurancePlan.new(
@@ -527,7 +527,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
 
     context 'when slicing with value / list of extensions' do
       let(:basic_must_support_test) do
-        Inferno::Repositories::Tests.new.find('usdf_v200_basic_must_support_test')
+        Inferno::Repositories::Tests.new.find('usdf_v201_basic_must_support_test')
       end
       let(:formulary_item) do
         FHIR::Basic.new(

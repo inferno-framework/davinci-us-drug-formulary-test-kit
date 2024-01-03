@@ -1,7 +1,7 @@
 require_relative '../../lib/davinci_us_drug_formulary_test_kit/search_test'
 
 RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v200') }
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v201') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
   let(:url) { 'http://example.com/fhir' }

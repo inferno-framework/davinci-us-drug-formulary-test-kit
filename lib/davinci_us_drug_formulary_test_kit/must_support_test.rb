@@ -17,7 +17,6 @@ module DaVinciUSDrugFormularyTestKit
       missing_elements(resources)
       missing_slices(resources)
       missing_extensions(resources)
-
       handle_must_support_choices if metadata.must_supports[:choices].present?
       # TODO: long term fix = allow intensional VS to be used for slicing in formulary drug
       # ticket fi-2099
@@ -94,7 +93,13 @@ module DaVinciUSDrugFormularyTestKit
       @missing_extensions ||=
         must_support_extensions.select do |extension_definition|
           resources.none? do |resource|
-            resource.extension.any? { |extension| extension.url == extension_definition[:url] }
+            path = extension_definition[:path]
+            if extension_definition[:path] != "extension" 
+              extension = find_a_value_at(resource, path)
+              extension&.url == extension_definition[:url]
+            else
+              resource.extension.any? { |extension| extension.url == extension_definition[:url] }
+            end
           end
         end
     end
