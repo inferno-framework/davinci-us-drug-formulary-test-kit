@@ -14,7 +14,7 @@ module DaVinciUSDrugFormularyTestKit
       short_title 'US Drug Formulary v2.0.1'
       description %(
         The Da Vinci US Drug Formulary Test Kit tests systems for their
-        conformance to the [US Drug Formulary Implementation Guide](https://hl7.org/fhir/us/davinci-drug-formulary/STU2/).
+        conformance to the [US Drug Formulary Implementation Guide](https://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1/).
 
         ## Instructions
         In order to run the tests, provide the base URL of the FHIR server to
@@ -39,7 +39,7 @@ module DaVinciUSDrugFormularyTestKit
         - Must Support checks are not performed for all elements of Formulary
           Drug resources due to the use of an intensional value set for slicing
           `MedicationKnowledge.code.coding` elements.
-        - The following search features are not tested
+        - The following search features are not tested:
           - Combination searches
           - Multiple Or
           - Multiple And
@@ -74,6 +74,18 @@ module DaVinciUSDrugFormularyTestKit
           ProvenanceValidator.validate(resource) if resource.instance_of?(FHIR::Provenance)
         end
       end
+
+      links [
+        {
+          label: 'Report Issue',
+          url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/issues'
+        },
+        {
+          label: 'Source Code',
+          url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit'
+        }
+      ]
+
 
       id :usdf_v201
 

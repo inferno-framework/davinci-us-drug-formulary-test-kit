@@ -28,7 +28,7 @@ The following areas of the IG are not fully tested:
 - Must Support checks are not performed for all elements of Formulary Drug
   resources due to the use of an intensional value set for slicing
   `MedicationKnowledge.code.coding` elements.
-- The following search features are not tested
+- The following search features are not tested:
   - Combination searches
   - Multiple Or
   - Multiple And

@@ -61,7 +61,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def ig_link
-        'https://hl7.org/fhir/us/davinci-drug-formulary/STU2/'
+        'https://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1/'
       end
 
       def generate

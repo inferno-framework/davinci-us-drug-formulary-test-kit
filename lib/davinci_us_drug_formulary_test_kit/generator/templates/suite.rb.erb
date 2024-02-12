@@ -36,7 +36,7 @@ module DaVinciUSDrugFormularyTestKit
         - Must Support checks are not performed for all elements of Formulary
           Drug resources due to the use of an intensional value set for slicing
           `MedicationKnowledge.code.coding` elements.
-        - The following search features are not tested
+        - The following search features are not tested:
           - Combination searches
           - Multiple Or
           - Multiple And
@@ -71,6 +71,18 @@ module DaVinciUSDrugFormularyTestKit
           ProvenanceValidator.validate(resource) if resource.instance_of?(FHIR::Provenance)
         end
       end
+
+      links [
+        {
+          label: 'Report Issue',
+          url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/issues'
+        },
+        {
+          label: 'Source Code',
+          url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit'
+        }
+      ]
+
 
       id :<%= suite_id %>
 
