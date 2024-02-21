@@ -87,7 +87,7 @@ module DaVinciUSDrugFormularyTestKit
       ]
 
 
-      id :usdf_v201
+      id :davinci_us_drug_formulary_v201
 
       input :url,
         title: 'FHIR Endpoint',

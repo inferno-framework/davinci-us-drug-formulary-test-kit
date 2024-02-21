@@ -45,7 +45,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def suite_id
-        "usdf_#{ig_metadata.reformatted_version}"
+        "davinci_us_drug_formulary_#{ig_metadata.reformatted_version}"
       end
 
       def title
