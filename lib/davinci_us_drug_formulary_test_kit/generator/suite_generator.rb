@@ -49,7 +49,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def title
-        "Da Vinci US Drug Formulary #{ig_metadata.ig_version}"
+        "DaVinci US Drug Formulary #{ig_metadata.ig_version}"
       end
 
       def short_title

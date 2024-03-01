@@ -10,10 +10,10 @@ require_relative 'location_group'
 module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class USDFTestSuite < Inferno::TestSuite
-      title 'Da Vinci US Drug Formulary v2.0.1'
+      title 'DaVinci US Drug Formulary v2.0.1'
       short_title 'US Drug Formulary v2.0.1'
       description %(
-        The Da Vinci US Drug Formulary Test Kit tests systems for their
+        The DaVinci US Drug Formulary Test Kit tests systems for their
         conformance to the [US Drug Formulary Implementation Guide](https://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1/).
 
         ## Instructions
@@ -83,6 +83,10 @@ module DaVinciUSDrugFormularyTestKit
         {
           label: 'Source Code',
           url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit'
+        },
+        {
+          label: 'Implementation Guide',
+          url: 'https://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1/'
         }
       ]
 
