@@ -216,7 +216,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::ReferenceResolutionTest do
   end
 
   describe '#perform_reference_resolution_test' do
-    let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v201') }
+    let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_us_drug_formulary_v201') }
     let(:session_data_repo) { Inferno::Repositories::SessionData.new }
     let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
     let(:url) { 'http://example.com/fhir' }
