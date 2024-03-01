@@ -1,7 +1,7 @@
 require_relative '../../lib/davinci_us_drug_formulary_test_kit/must_support_test'
 
 RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('usdf_v201') }
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_us_drug_formulary_v201') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
   # let(:patient_ref) { 'Patient/85' }
