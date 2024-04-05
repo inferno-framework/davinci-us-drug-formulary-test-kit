@@ -69,8 +69,7 @@ RSpec/ExampleLength:
   Enabled: false
 
 RSpec/FilePath:
-  CustomTransform:
-    DaVinciUSDrugFormularyTestKit: davinci_us_drug_formulary_test_kit
+  Enabled: false
 
 RSpec/MultipleExpectations:
   Enabled: false
@@ -83,6 +82,10 @@ RSpec/NestedGroups:
 
 RSpec/NotToNot:
   EnforcedStyle: to_not
+
+RSpec/SpecFilePathFormat:
+  CustomTransform:
+    DaVinciUSDrugFormularyTestKit: davinci_us_drug_formulary_test_kit
 
 RSpec/SubjectStub:
   Enabled: false

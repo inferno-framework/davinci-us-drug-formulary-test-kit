@@ -102,13 +102,13 @@ module DaVinciUSDrugFormularyTestKit
             when 'Date'
               begin
                 Date.parse(slice)
-              rescue ArgumentError
+              rescue ArgumentError # rubocop:disable Metrics/BlockNesting
                 false
               end
             when 'DateTime'
               begin
                 DateTime.parse(slice)
-              rescue ArgumentError
+              rescue ArgumentError # rubocop:disable Metrics/BlockNesting
                 false
               end
             when 'String'
@@ -121,8 +121,9 @@ module DaVinciUSDrugFormularyTestKit
             slice_value { |coding| discriminator[:values].include?(coding.code) }
           end
         end
-      else
-        # TODO: Error handling for if this file doesn't have access to metadata for some reason (begin/rescue with StandardError?)
+      else # rubocop:disable Style/EmptyElse
+        # TODO: Error handling for if this file doesn't have access to metadata
+        # for some reason (begin/rescue with StandardError?)
       end
     end
 
