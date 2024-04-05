@@ -94,11 +94,11 @@ module DaVinciUSDrugFormularyTestKit
         must_support_extensions.select do |extension_definition|
           resources.none? do |resource|
             path = extension_definition[:path]
-            if extension_definition[:path] != "extension" 
+            if extension_definition[:path] == 'extension'
+              resource.extension.any? { |extension| extension.url == extension_definition[:url] }
+            else
               extension = find_a_value_at(resource, path)
               extension&.url == extension_definition[:url]
-            else
-              resource.extension.any? { |extension| extension.url == extension_definition[:url] }
             end
           end
         end
