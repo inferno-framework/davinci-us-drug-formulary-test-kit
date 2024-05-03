@@ -47,10 +47,13 @@ module DaVinciUSDrugFormularyTestKit
       )
       version VERSION
 
+      id :davinci_us_drug_formulary_v201
+
       VALIDATION_MESSAGE_FILTERS = [
         %r{Sub-extension url 'introspect' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
         %r{Sub-extension url 'revoke' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
-        /Observation\.effective\.ofType\(Period\): .*vs-1:/ # Invalid invariant in FHIR v4.0.1
+        /Observation\.effective\.ofType\(Period\): .*vs-1:/, # Invalid invariant in FHIR v4.0.1
+        /\A\S+: \S+: URL value '.*' does not resolve/,
       ].freeze
 
       VERSION_SPECIFIC_MESSAGE_FILTERS = [].freeze
@@ -61,8 +64,9 @@ module DaVinciUSDrugFormularyTestKit
           end
       end
 
-      validator do
-        url ENV.fetch('V201_VALIDATOR_URL', 'http://validator_service:4567')
+      fhir_resource_validator do
+        igs 'hl7.fhir.us.davinci-drug-formulary#2.0.1'
+
         message_filters = VALIDATION_MESSAGE_FILTERS + VERSION_SPECIFIC_MESSAGE_FILTERS
 
         exclude_message do |message|
@@ -89,9 +93,6 @@ module DaVinciUSDrugFormularyTestKit
           url: 'https://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1/'
         }
       ]
-
-
-      id :davinci_us_drug_formulary_v201
 
       input :url,
         title: 'FHIR Endpoint',
