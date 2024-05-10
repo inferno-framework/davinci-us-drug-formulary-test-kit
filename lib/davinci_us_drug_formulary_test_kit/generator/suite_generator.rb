@@ -56,8 +56,9 @@ module DaVinciUSDrugFormularyTestKit
         "US Drug Formulary #{ig_metadata.ig_version}"
       end
 
-      def validator_env_name
-        "#{ig_metadata.reformatted_version.upcase}_VALIDATOR_URL"
+      def ig_identifier
+        version = ig_metadata.ig_version[1..] # Remove leading 'v'
+        "hl7.fhir.us.davinci-drug-formulary##{version}"
       end
 
       def ig_link
