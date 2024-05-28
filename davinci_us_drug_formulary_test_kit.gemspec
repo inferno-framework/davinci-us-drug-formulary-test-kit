@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'DaVinci US Drug Formulary Test Kit'
   spec.homepage      = 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit'
   spec.license       = 'Apache-2.0'
-  spec.add_runtime_dependency 'inferno_core', '>= 0.4.2'
+  spec.add_runtime_dependency 'inferno_core', '>= 0.4.37'
   spec.add_runtime_dependency 'tls_test_kit', '~> 0.2.0'
   spec.add_development_dependency 'database_cleaner-sequel', '~> 1.8'
   spec.add_development_dependency 'factory_bot', '~> 6.1'
