@@ -205,8 +205,8 @@
     :contains_multiple: false
     :multiple_or: true
 :include_params:
-- subject
-- formulary
+- Basic:subject
+- Basic:formulary
 :must_supports:
   :extensions:
   - :id: Basic.extension:usdf-FormularyReference-extension
@@ -278,10 +278,10 @@
   :file_name: basic_drug_tier_search_test.rb
 - :id: usdf_v201_basic_read_test
   :file_name: basic_read_test.rb
-- :id: usdf_v201_basic_subject_include_search_test
-  :file_name: basic_subject_include_search_test.rb
-- :id: usdf_v201_basic_formulary_include_search_test
-  :file_name: basic_formulary_include_search_test.rb
+- :id: usdf_v201_basic_basic_subject_include_search_test
+  :file_name: basic_basic_subject_include_search_test.rb
+- :id: usdf_v201_basic_basic_formulary_include_search_test
+  :file_name: basic_basic_formulary_include_search_test.rb
 - :id: usdf_v201_basic_validation_test
   :file_name: basic_validation_test.rb
 - :id: usdf_v201_basic_must_support_test

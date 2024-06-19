@@ -213,7 +213,7 @@
     :contains_multiple: true
     :multiple_or: true
 :include_params:
-- formulary-coverage
+- InsurancePlan:formulary-coverage
 :must_supports:
   :extensions:
   - :id: InsurancePlan.coverage:drug-coverage.extension:usdf-FormularyReference-extension
@@ -359,8 +359,8 @@
   :file_name: payer_insurance_plan_coverage_area_search_test.rb
 - :id: usdf_v201_payer_insurance_plan_read_test
   :file_name: payer_insurance_plan_read_test.rb
-- :id: usdf_v201_payer_insurance_plan_formulary_coverage_include_search_test
-  :file_name: payer_insurance_plan_formulary_coverage_include_search_test.rb
+- :id: usdf_v201_payer_insurance_plan_insurance_plan_formulary_coverage_include_search_test
+  :file_name: payer_insurance_plan_insurance_plan_formulary_coverage_include_search_test.rb
 - :id: usdf_v201_payer_insurance_plan_validation_test
   :file_name: payer_insurance_plan_validation_test.rb
 - :id: usdf_v201_payer_insurance_plan_must_support_test

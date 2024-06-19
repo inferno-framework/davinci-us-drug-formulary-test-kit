@@ -1,4 +1,6 @@
 require_relative 'naming'
+require_relative 'special_cases'
+require 'pry'
 
 module DaVinciUSDrugFormularyTestKit
   class Generator
@@ -39,7 +41,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def search_identifier
-        include_param.gsub(/[-:]/, '_').underscore
+        include_param.gsub(/[-:]/, '_').underscore 
       end
 
       def class_name
@@ -59,8 +61,8 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def include_param_resource
-        res_type = group_metadata.search_definitions[:"#{include_param}"][:type]
-        res_type = group_metadata.search_definitions[:"#{include_param}"][:target] if res_type == 'Reference'
+        res_type = group_metadata.search_definitions[:"#{SpecialCases.search_param(include_param)}"][:type]
+        res_type = group_metadata.search_definitions[:"#{SpecialCases.search_param(include_param)}"][:target] if res_type == 'Reference'
         res_type
       end
     end

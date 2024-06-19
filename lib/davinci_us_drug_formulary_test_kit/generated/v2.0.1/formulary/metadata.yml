@@ -205,7 +205,7 @@
     :contains_multiple: true
     :multiple_or: true
 :include_params:
-- formulary-coverage
+- InsurancePlan:formulary-coverage
 :must_supports:
   :extensions: []
   :slices: []

@@ -6,7 +6,7 @@
 :resource: Basic
 :profile_url: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyItem
 :profile_name: Formulary Item
-:profile_version: 2.0.0
+:profile_version: 2.0.1
 :title: Formulary Item
 :short_description: Verify support for the server capabilities required by the Formulary
   Item.
@@ -113,7 +113,6 @@
     - formulary-item
     :type: CodeableConcept
     :contains_multiple: false
-    :multiple_or: true
   :subject:
     :paths:
     - subject
@@ -122,9 +121,8 @@
     :comparators: {}
     :values: []
     :type: Reference
-    :target: MedicationKnowledge
+    :target: Account
     :contains_multiple: false
-    :multiple_or: true
   :status:
     :paths:
     - extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityStatus-extension').value
@@ -173,7 +171,15 @@
     :full_paths:
     - Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-PharmacyBenefitType-extension').value
     :comparators: {}
-    :values: []
+    :values:
+    - 1-month-in-retail
+    - 1-month-out-retail
+    - 1-month-in-mail
+    - 1-month-out-mail
+    - 3-month-in-retail
+    - 3-month-out-retail
+    - 3-month-in-mail
+    - 3-month-out-mail
     :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: true
@@ -183,13 +189,22 @@
     :full_paths:
     - Basic.extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-DrugTierID-extension').value
     :comparators: {}
-    :values: []
+    :values:
+    - generic
+    - preferred-generic
+    - non-preferred-generic
+    - specialty
+    - brand
+    - preferred-brand
+    - non-preferred-brand
+    - zero-cost-share-preventative
+    - medical-service
     :type: CodeableConcept
     :contains_multiple: false
     :multiple_or: true
 :include_params:
-- subject
-- formulary
+- Basic:subject
+- Basic:formulary
 :must_supports:
   :extensions:
   - :id: Basic.extension:usdf-FormularyReference-extension
@@ -222,10 +237,24 @@
   - :path: subject
     :types:
     - Reference
+  :references:
+  - :path: subject
+    :target_profile: http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug
 :mandatory_elements:
 - Basic.extension
 - Basic.code
 - Basic.subject
+:references:
+- :path: Basic.subject
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug
+- :path: Basic.author
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Practitioner
+  - http://hl7.org/fhir/StructureDefinition/PractitionerRole
+  - http://hl7.org/fhir/StructureDefinition/Patient
+  - http://hl7.org/fhir/StructureDefinition/RelatedPerson
+  - http://hl7.org/fhir/StructureDefinition/Organization
 :tests:
 - :id: usdf_v201_basic_code_search_test
   :file_name: basic_code_search_test.rb
@@ -247,11 +276,15 @@
   :file_name: basic_drug_tier_search_test.rb
 - :id: usdf_v201_basic_read_test
   :file_name: basic_read_test.rb
-- :id: usdf_v201_basic_subject_include_search_test
-  :file_name: basic_subject_include_search_test.rb
-- :id: usdf_v201_basic_formulary_include_search_test
-  :file_name: basic_formulary_include_search_test.rb
+- :id: usdf_v201_basic_basic_subject_include_search_test
+  :file_name: basic_basic_subject_include_search_test.rb
+- :id: usdf_v201_basic_basic_formulary_include_search_test
+  :file_name: basic_basic_formulary_include_search_test.rb
+- :id: usdf_v201_basic_validation_test
+  :file_name: basic_validation_test.rb
 - :id: usdf_v201_basic_must_support_test
   :file_name: basic_must_support_test.rb
+- :id: usdf_v201_basic_reference_resolution_test
+  :file_name: basic_reference_resolution_test.rb
 :id: usdf_v201_basic
 :file_name: basic_group.rb
