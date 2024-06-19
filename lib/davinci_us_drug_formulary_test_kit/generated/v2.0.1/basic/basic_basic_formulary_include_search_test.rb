@@ -20,7 +20,8 @@ module DaVinciUSDrugFormularyTestKit
         @properties ||= SearchTestProperties.new(
           resource_type: 'Basic',
           search_param_names: ["code"],
-          include_param: 'Basic:formulary'
+          include_param: 'Basic:formulary',
+          include_param_search_param: 'formulary'
         )
       end
 

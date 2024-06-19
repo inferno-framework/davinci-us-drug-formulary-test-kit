@@ -113,6 +113,7 @@
     - formulary-item
     :type: CodeableConcept
     :contains_multiple: false
+    :multiple_or: true
   :subject:
     :paths:
     - subject
@@ -121,8 +122,9 @@
     :comparators: {}
     :values: []
     :type: Reference
-    :target: Account
+    :target: MedicationKnowledge
     :contains_multiple: false
+    :multiple_or: true
   :status:
     :paths:
     - extension.where(url='http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-AvailabilityStatus-extension').value

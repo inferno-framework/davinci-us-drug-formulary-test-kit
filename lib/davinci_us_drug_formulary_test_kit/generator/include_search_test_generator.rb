@@ -1,6 +1,5 @@
 require_relative 'naming'
 require_relative 'special_cases'
-require 'pry'
 
 module DaVinciUSDrugFormularyTestKit
   class Generator
@@ -53,7 +52,25 @@ module DaVinciUSDrugFormularyTestKit
           properties[:resource_type] = "'#{resource_type}'"
           properties[:search_param_names] = search_param_names
           properties[:include_param] = "'#{include_param}'"
+          properties[:include_param_search_param] = "'#{include_param_search_param}'"
         end
+      end
+
+      def include_param_search_param
+        # Returns the `searchParam` part of the `include_param` string, which should be
+        # formatted as `SourceType:searchParam(:targetType)`. See (https://hl7.org/fhir/R4/search.html#table)
+        # If the `include_param` is formatted incorrectly, returns `include_param`.
+        #
+        # Example:
+        # if `include_param = "Basic:subject"` then
+        # `include_param_search_param = "subject"`
+        # if `include_param = "subject"` then
+        # `include_param_search_param = "subject"`
+        #
+        # The `searchParam` part of `include_param` is necessary for indexing dictionaries generated
+        # from the `searchParams` list in the Capability Statement.
+        params = include_param.split(':')
+        params.length > 1 ? params[1] : include_param
       end
 
       def include_param_string
@@ -61,8 +78,8 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def include_param_resource
-        res_type = group_metadata.search_definitions[:"#{SpecialCases.search_param(include_param)}"][:type]
-        res_type = group_metadata.search_definitions[:"#{SpecialCases.search_param(include_param)}"][:target] if res_type == 'Reference'
+        res_type = group_metadata.search_definitions[:"#{include_param_search_param}"][:type]
+        res_type = group_metadata.search_definitions[:"#{include_param_search_param}"][:target] if res_type == 'Reference'
         res_type
       end
     end

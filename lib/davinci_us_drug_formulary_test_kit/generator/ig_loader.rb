@@ -4,7 +4,6 @@ require 'pathname'
 require 'rubygems/package'
 require 'zlib'
 require_relative 'ig_resources'
-require 'pry'
 
 module DaVinciUSDrugFormularyTestKit
   class Generator
@@ -20,12 +19,14 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def load
-        # `IGResources`` uses the first resource it finds for a resource type.
-        # Perform `load_standalone_resources` first so that any modified resources
+        # `IGResources` uses the first resource it finds for a resource type.
+        # Perform `load_overwrite_resources` first so that any modified resources
         # are accessed instead of the original.
-        load_standalone_resources_after
+        # Perform `load_supplement_resources` last so only extra information gets
+        # added and duplicates don't overwrite the original.
+        load_overwrite_resources
         load_ig
-        load_standalone_resources
+        load_supplement_resources
       end
 
       def load_ig
@@ -57,32 +58,16 @@ module DaVinciUSDrugFormularyTestKit
         ig_resources
       end
 
-      def load_standalone_resources
-        ig_directory = ig_file_name.chomp('.tgz')
-
-        Dir.glob(File.join(ig_directory, '*.json')).each do |file_path|
-          resource = FHIR.from_contents(File.read(file_path))
-          next if resource.nil?
-
-          if resource.resourceType == 'Bundle' && !resource.entry.nil?
-            resource_arr = resource.entry
-            resource_arr.each do |entry|
-              ig_resources.add(entry.resource)
-            end
-          else
-            ig_resources.add(resource)
-          end
-        rescue StandardError
-          file_name = file_path.split('/').last
-          puts "#{file_name} does not appear to be a FHIR resource."
-          next
-        end
-
-        ig_resources
+      def load_overwrite_resources
+        load_standalone_resources('_overwrite')
       end
 
-      def load_standalone_resources_after
-        ig_directory = "#{ig_file_name.chomp('.tgz')}_after"
+      def load_supplement_resources
+        load_standalone_resources('_supplement')
+      end
+
+      def load_standalone_resources(appendage = '')
+        ig_directory = "#{ig_file_name.chomp('.tgz')}#{appendage}"
 
         Dir.glob(File.join(ig_directory, '*.json')).each do |file_path|
           resource = FHIR.from_contents(File.read(file_path))

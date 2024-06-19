@@ -1,5 +1,4 @@
 require_relative '../../lib/davinci_us_drug_formulary_test_kit/search_test'
-require 'pry'
 
 RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
   let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_us_drug_formulary_v201') }
@@ -206,6 +205,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
         def properties
           @properties ||= DaVinciUSDrugFormularyTestKit::SearchTestProperties.new(
             include_param: 'Basic:subject',
+            include_param_search_param: 'subject',
             resource_type: 'Basic',
             search_param_names: ['code']
           )

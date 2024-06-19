@@ -20,7 +20,8 @@ module DaVinciUSDrugFormularyTestKit
         @properties ||= SearchTestProperties.new(
           resource_type: 'InsurancePlan',
           search_param_names: ["coverage-type"],
-          include_param: 'InsurancePlan:formulary-coverage'
+          include_param: 'InsurancePlan:formulary-coverage',
+          include_param_search_param: 'formulary-coverage'
         )
       end
 
