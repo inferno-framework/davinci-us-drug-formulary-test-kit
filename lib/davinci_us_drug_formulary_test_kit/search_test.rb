@@ -1,7 +1,6 @@
 require_relative 'date_search_validation'
 require_relative 'fhir_resource_navigation'
 require_relative 'search_test_properties'
-require_relative 'generator/special_cases'
 
 module DaVinciUSDrugFormularyTestKit
   module SearchTest

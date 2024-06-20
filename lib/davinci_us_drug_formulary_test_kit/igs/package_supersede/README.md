@@ -1,6 +1,6 @@
-# IG Overwrite Files
+# IG Supersede Files
 
-The files in this directory will overwrite files in the <ig package>.tgz IG.
+The files in this directory will supersede files in the <ig package>.tgz IG.
 Add files to this directory if you need to correct errors in the IG.
 
 ## CapabilityStatement-usdf-server.json
@@ -22,7 +22,7 @@ The [FHIR documentation](https://hl7.org/fhir/r4/search.html#table) states that 
 
 
 
-This capability statement overwrites the original with the following:
+This capability statement supersedes the original with the following:
 
 ``` json
 "searchInclude": [

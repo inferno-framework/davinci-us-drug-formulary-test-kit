@@ -7,10 +7,6 @@ module DaVinciUSDrugFormularyTestKit
         resources_by_type[resource.resourceType] << resource
       end
 
-      # : this finds the first capability statement that satisfies 
-      # capability_statement_resource.rest.any? { |r| r.mode == mode }
-      # TODO: make this return the capability statement I want (the second one I load in)
-      # OR make it so the second one overwrites the first
       def capability_statement(mode = 'server')
         resources_by_type['CapabilityStatement'].find do |capability_statement_resource|
           capability_statement_resource.rest.any? { |r| r.mode == mode }

@@ -1,5 +1,4 @@
 require_relative 'naming'
-require_relative 'special_cases'
 
 module DaVinciUSDrugFormularyTestKit
   class Generator
@@ -40,7 +39,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def search_identifier
-        include_param.gsub(/[-:]/, '_').underscore 
+        include_param.gsub(/[-:]/, '_').underscore
       end
 
       def class_name

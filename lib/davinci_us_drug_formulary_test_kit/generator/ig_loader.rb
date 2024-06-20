@@ -20,11 +20,11 @@ module DaVinciUSDrugFormularyTestKit
 
       def load
         # `IGResources` uses the first resource it finds for a resource type.
-        # Perform `load_overwrite_resources` first so that any modified resources
+        # Perform `load_supersede_resources` first so that any modified resources
         # are accessed instead of the original.
         # Perform `load_supplement_resources` last so only extra information gets
-        # added and duplicates don't overwrite the original.
-        load_overwrite_resources
+        # added and duplicates don't supersede the original.
+        load_supersede_resources
         load_ig
         load_supplement_resources
       end
@@ -58,8 +58,8 @@ module DaVinciUSDrugFormularyTestKit
         ig_resources
       end
 
-      def load_overwrite_resources
-        load_standalone_resources('_overwrite')
+      def load_supersede_resources
+        load_standalone_resources('_supersede')
       end
 
       def load_supplement_resources
