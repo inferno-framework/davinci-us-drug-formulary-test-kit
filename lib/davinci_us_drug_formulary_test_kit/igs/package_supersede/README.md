@@ -16,7 +16,7 @@ The original capability statement includes the following:
     "subject",
     "formulary"
 ],
-```                    
+```
 
 The [FHIR documentation](https://hl7.org/fhir/r4/search.html#table) states that the allowable content for `_include` is `SourceType:searchParam(:targetType)`.
 
