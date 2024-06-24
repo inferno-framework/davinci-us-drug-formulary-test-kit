@@ -60,12 +60,6 @@ module DaVinciUSDrugFormularyTestKit
         # formatted as `SourceType:searchParam(:targetType)`. See (https://hl7.org/fhir/R4/search.html#table)
         # If the `include_param` is formatted incorrectly, returns `include_param`.
         #
-        # Example:
-        # if `include_param = "Basic:subject"` then
-        # `include_param_search_param = "subject"`
-        # if `include_param = "subject"` then
-        # `include_param_search_param = "subject"`
-        #
         # The `searchParam` part of `include_param` is necessary for indexing dictionaries generated
         # from the `searchParams` list in the Capability Statement.
         params = include_param.split(':')

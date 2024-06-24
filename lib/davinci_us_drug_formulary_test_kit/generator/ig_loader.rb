@@ -20,10 +20,10 @@ module DaVinciUSDrugFormularyTestKit
 
       def load
         # `IGResources` uses the first resource it finds for a resource type.
-        # Perform `load_supersede_resources` first so that any modified resources
-        # are accessed instead of the original.
-        # Perform `load_supplement_resources` last so only extra information gets
-        # added and duplicates don't supersede the original.
+        # To "supercede" resources, load them first. Any duplicate resources will
+        # be accessed instead of the IG resources because they are "first."
+        # To "supplement" resources, load them last. Any duplicate resources will
+        # be ignored because the IG resources are "first."
         load_supersede_resources
         load_ig
         load_supplement_resources
