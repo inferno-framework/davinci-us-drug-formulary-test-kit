@@ -6,11 +6,11 @@ module DaVinciUSDrugFormularyTestKit
     class BasicFormularyIncludeSearchTest < Inferno::Test
       include DaVinciUSDrugFormularyTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from Basic search by _include=formulary'
+      title 'Server returns InsurancePlan resources from Basic search by _include=Basic:formulary'
       description %(
-        A server SHALL be capable of supporting _includes for formulary.
+        A server SHALL be capable of supporting _includes for Basic:formulary.
 
-        This test will perform a search using _include=formulary and
+        This test will perform a search using _include=Basic:formulary and
         will pass if the referenced InsurancePlan is included in the response.
       )
 
@@ -20,7 +20,8 @@ module DaVinciUSDrugFormularyTestKit
         @properties ||= SearchTestProperties.new(
           resource_type: 'Basic',
           search_param_names: ["code"],
-          include_param: 'formulary'
+          include_param: 'Basic:formulary',
+          include_search_look_up_param: 'formulary'
         )
       end
 

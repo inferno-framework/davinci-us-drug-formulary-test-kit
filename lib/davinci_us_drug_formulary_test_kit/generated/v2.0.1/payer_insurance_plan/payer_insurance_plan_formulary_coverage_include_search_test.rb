@@ -6,11 +6,11 @@ module DaVinciUSDrugFormularyTestKit
     class PayerInsurancePlanFormularyCoverageIncludeSearchTest < Inferno::Test
       include DaVinciUSDrugFormularyTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from InsurancePlan search by _include=formulary-coverage'
+      title 'Server returns InsurancePlan resources from InsurancePlan search by _include=InsurancePlan:formulary-coverage'
       description %(
-        A server SHALL be capable of supporting _includes for formulary-coverage.
+        A server SHALL be capable of supporting _includes for InsurancePlan:formulary-coverage.
 
-        This test will perform a search using _include=formulary-coverage and
+        This test will perform a search using _include=InsurancePlan:formulary-coverage and
         will pass if the referenced InsurancePlan is included in the response.
       )
 
@@ -20,7 +20,8 @@ module DaVinciUSDrugFormularyTestKit
         @properties ||= SearchTestProperties.new(
           resource_type: 'InsurancePlan',
           search_param_names: ["coverage-type"],
-          include_param: 'formulary-coverage'
+          include_param: 'InsurancePlan:formulary-coverage',
+          include_search_look_up_param: 'formulary-coverage'
         )
       end
 

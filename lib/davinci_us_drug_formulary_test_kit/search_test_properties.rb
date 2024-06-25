@@ -4,6 +4,7 @@ module DaVinciUSDrugFormularyTestKit
       :resource_type,
       :search_param_names,
       :include_param,
+      :include_search_look_up_param,
       :input_ids,
       :first_search,
       :fixed_value_search,

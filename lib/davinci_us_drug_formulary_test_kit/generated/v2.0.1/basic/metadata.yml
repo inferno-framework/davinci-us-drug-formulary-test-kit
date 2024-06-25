@@ -205,8 +205,8 @@
     :contains_multiple: false
     :multiple_or: true
 :include_params:
-- subject
-- formulary
+- Basic:subject
+- Basic:formulary
 :must_supports:
   :extensions:
   - :id: Basic.extension:usdf-FormularyReference-extension

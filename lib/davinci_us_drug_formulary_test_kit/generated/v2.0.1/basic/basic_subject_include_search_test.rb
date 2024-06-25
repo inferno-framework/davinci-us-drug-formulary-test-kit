@@ -6,11 +6,11 @@ module DaVinciUSDrugFormularyTestKit
     class BasicSubjectIncludeSearchTest < Inferno::Test
       include DaVinciUSDrugFormularyTestKit::SearchTest
 
-      title 'Server returns MedicationKnowledge resources from Basic search by _include=subject'
+      title 'Server returns MedicationKnowledge resources from Basic search by _include=Basic:subject'
       description %(
-        A server SHALL be capable of supporting _includes for subject.
+        A server SHALL be capable of supporting _includes for Basic:subject.
 
-        This test will perform a search using _include=subject and
+        This test will perform a search using _include=Basic:subject and
         will pass if the referenced MedicationKnowledge is included in the response.
       )
 
@@ -20,7 +20,8 @@ module DaVinciUSDrugFormularyTestKit
         @properties ||= SearchTestProperties.new(
           resource_type: 'Basic',
           search_param_names: ["code"],
-          include_param: 'subject'
+          include_param: 'Basic:subject',
+          include_search_look_up_param: 'subject'
         )
       end
 

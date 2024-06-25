@@ -204,7 +204,8 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
 
         def properties
           @properties ||= DaVinciUSDrugFormularyTestKit::SearchTestProperties.new(
-            include_param: 'subject',
+            include_param: 'Basic:subject',
+            include_search_look_up_param: 'subject',
             resource_type: 'Basic',
             search_param_names: ['code']
           )
@@ -242,7 +243,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
 
     it 'passes when the referenced resource is included in the bundle' do
       get_request =
-        stub_request(:get, "#{url}/Basic?_include=subject&code=formulary-item")
+        stub_request(:get, "#{url}/Basic?_include=Basic:subject&code=formulary-item")
           .to_return(status: 200, body: bundle.to_json)
 
       result = run(formulary_item_include_test, url:, input_ids:)
@@ -255,7 +256,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
       bundle.entry.pop
 
       get_request =
-        stub_request(:get, "#{url}/Basic?_include=subject&code=formulary-item")
+        stub_request(:get, "#{url}/Basic?_include=Basic:subject&code=formulary-item")
           .to_return(status: 200, body: bundle.to_json)
 
       result = run(formulary_item_include_test, url:, input_ids:)
@@ -268,7 +269,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
       bundle.entry.first.resource.subject = nil
 
       get_request =
-        stub_request(:get, "#{url}/Basic?_include=subject&code=formulary-item")
+        stub_request(:get, "#{url}/Basic?_include=Basic:subject&code=formulary-item")
           .to_return(status: 200, body: bundle.to_json)
 
       result = run(formulary_item_include_test, url:, input_ids:)

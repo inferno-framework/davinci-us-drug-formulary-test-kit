@@ -19,11 +19,18 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def load
+        # `IGResources` uses the first resource it finds for a resource type.
+        # To "supercede" resources, load them first. Any duplicate resources will
+        # be accessed instead of the IG resources because they are "first."
+        # To "supplement" resources, load them last. Any duplicate resources will
+        # be ignored because the IG resources are "first."
+        load_supersede_resources
         load_ig
-        load_standalone_resources
+        load_supplement_resources
       end
 
       def load_ig
+
         tar = Gem::Package::TarReader.new(
           Zlib::GzipReader.open(ig_file_name)
         )
@@ -51,8 +58,16 @@ module DaVinciUSDrugFormularyTestKit
         ig_resources
       end
 
-      def load_standalone_resources
-        ig_directory = ig_file_name.chomp('.tgz')
+      def load_supersede_resources
+        load_standalone_resources('_supersede')
+      end
+
+      def load_supplement_resources
+        load_standalone_resources('_supplement')
+      end
+
+      def load_standalone_resources(appendage = '')
+        ig_directory = "#{ig_file_name.chomp('.tgz')}#{appendage}"
 
         Dir.glob(File.join(ig_directory, '*.json')).each do |file_path|
           resource = FHIR.from_contents(File.read(file_path))
@@ -63,6 +78,8 @@ module DaVinciUSDrugFormularyTestKit
             resource_arr.each do |entry|
               ig_resources.add(entry.resource)
             end
+          else
+            ig_resources.add(resource)
           end
         rescue StandardError
           file_name = file_path.split('/').last

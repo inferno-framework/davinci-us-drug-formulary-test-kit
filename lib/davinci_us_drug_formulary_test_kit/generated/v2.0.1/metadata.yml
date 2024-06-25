@@ -215,7 +215,7 @@
       :contains_multiple: true
       :multiple_or: true
   :include_params: &1
-  - formulary-coverage
+  - InsurancePlan:formulary-coverage
   :must_supports:
     :extensions:
     - :id: InsurancePlan.coverage:drug-coverage.extension:usdf-FormularyReference-extension
@@ -791,8 +791,8 @@
       :contains_multiple: false
       :multiple_or: true
   :include_params:
-  - subject
-  - formulary
+  - Basic:subject
+  - Basic:formulary
   :must_supports:
     :extensions:
     - :id: Basic.extension:usdf-FormularyReference-extension
