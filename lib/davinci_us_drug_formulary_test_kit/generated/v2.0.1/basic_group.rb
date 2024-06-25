@@ -8,8 +8,8 @@ require_relative 'basic/basic_formulary_search_test'
 require_relative 'basic/basic_pharmacy_benefit_type_search_test'
 require_relative 'basic/basic_drug_tier_search_test'
 require_relative 'basic/basic_read_test'
-require_relative 'basic/basic_basic_subject_include_search_test'
-require_relative 'basic/basic_basic_formulary_include_search_test'
+require_relative 'basic/basic_subject_include_search_test'
+require_relative 'basic/basic_formulary_include_search_test'
 require_relative 'basic/basic_validation_test'
 require_relative 'basic/basic_must_support_test'
 require_relative 'basic/basic_reference_resolution_test'
@@ -97,8 +97,8 @@ read succeeds.
       test from: :usdf_v201_basic_pharmacy_benefit_type_search_test
       test from: :usdf_v201_basic_drug_tier_search_test
       test from: :usdf_v201_basic_read_test
-      test from: :usdf_v201_basic_basic_subject_include_search_test
-      test from: :usdf_v201_basic_basic_formulary_include_search_test
+      test from: :usdf_v201_basic_subject_include_search_test
+      test from: :usdf_v201_basic_formulary_include_search_test
       test from: :usdf_v201_basic_validation_test
       test from: :usdf_v201_basic_must_support_test
       test from: :usdf_v201_basic_reference_resolution_test

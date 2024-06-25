@@ -13,7 +13,7 @@ module DaVinciUSDrugFormularyTestKit
                    :resource_type,
                    :search_param_names,
                    :include_param,
-                   :include_param_search_param,
+                   :include_search_look_up_param,
                    :saves_delayed_references?,
                    :first_search?,
                    :fixed_value_search?,
@@ -94,7 +94,7 @@ module DaVinciUSDrugFormularyTestKit
 
             # For resources in the bundle with the relevant reference, check the bundle for the referenced resource
             matched_resources&.each do |match|
-              search_param_paths(include_param_search_param).each do |include_ref_path|
+              search_param_paths(include_search_look_up_param).each do |include_ref_path|
                 include_ref = resolve_path(match, include_ref_path).first
                 next unless include_ref.present?
 

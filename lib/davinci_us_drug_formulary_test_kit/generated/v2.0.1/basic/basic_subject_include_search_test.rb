@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciUSDrugFormularyTestKit
   module DaVinciUSDrugFormularyV201
-    class BasicBasicSubjectIncludeSearchTest < Inferno::Test
+    class BasicSubjectIncludeSearchTest < Inferno::Test
       include DaVinciUSDrugFormularyTestKit::SearchTest
 
       title 'Server returns MedicationKnowledge resources from Basic search by _include=Basic:subject'
@@ -14,14 +14,14 @@ module DaVinciUSDrugFormularyTestKit
         will pass if the referenced MedicationKnowledge is included in the response.
       )
 
-      id :usdf_v201_basic_basic_subject_include_search_test
+      id :usdf_v201_basic_subject_include_search_test
 
       def self.properties
         @properties ||= SearchTestProperties.new(
           resource_type: 'Basic',
           search_param_names: ["code"],
           include_param: 'Basic:subject',
-          include_param_search_param: 'subject'
+          include_search_look_up_param: 'subject'
         )
       end
 

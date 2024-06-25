@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciUSDrugFormularyTestKit
   module DaVinciUSDrugFormularyV201
-    class BasicBasicFormularyIncludeSearchTest < Inferno::Test
+    class BasicFormularyIncludeSearchTest < Inferno::Test
       include DaVinciUSDrugFormularyTestKit::SearchTest
 
       title 'Server returns InsurancePlan resources from Basic search by _include=Basic:formulary'
@@ -14,14 +14,14 @@ module DaVinciUSDrugFormularyTestKit
         will pass if the referenced InsurancePlan is included in the response.
       )
 
-      id :usdf_v201_basic_basic_formulary_include_search_test
+      id :usdf_v201_basic_formulary_include_search_test
 
       def self.properties
         @properties ||= SearchTestProperties.new(
           resource_type: 'Basic',
           search_param_names: ["code"],
           include_param: 'Basic:formulary',
-          include_param_search_param: 'formulary'
+          include_search_look_up_param: 'formulary'
         )
       end
 

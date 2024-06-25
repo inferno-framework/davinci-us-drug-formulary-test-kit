@@ -205,7 +205,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
         def properties
           @properties ||= DaVinciUSDrugFormularyTestKit::SearchTestProperties.new(
             include_param: 'Basic:subject',
-            include_param_search_param: 'subject',
+            include_search_look_up_param: 'subject',
             resource_type: 'Basic',
             search_param_names: ['code']
           )

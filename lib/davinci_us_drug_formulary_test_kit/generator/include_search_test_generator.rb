@@ -39,7 +39,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def search_identifier
-        include_param.gsub(/[-:]/, '_').underscore
+        include_search_look_up_param.gsub(/[-:]/, '_').underscore
       end
 
       def class_name
@@ -51,11 +51,11 @@ module DaVinciUSDrugFormularyTestKit
           properties[:resource_type] = "'#{resource_type}'"
           properties[:search_param_names] = search_param_names
           properties[:include_param] = "'#{include_param}'"
-          properties[:include_param_search_param] = "'#{include_param_search_param}'"
+          properties[:include_search_look_up_param] = "'#{include_search_look_up_param}'"
         end
       end
 
-      def include_param_search_param
+      def include_search_look_up_param
         # Returns the `searchParam` part of the `include_param` string, which should be
         # formatted as `SourceType:searchParam(:targetType)`. See (https://hl7.org/fhir/R4/search.html#table)
         # If the `include_param` is formatted incorrectly, returns `include_param`.
@@ -71,8 +71,8 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def include_param_resource
-        res_type = group_metadata.search_definitions[:"#{include_param_search_param}"][:type]
-        res_type = group_metadata.search_definitions[:"#{include_param_search_param}"][:target] if res_type == 'Reference'
+        res_type = group_metadata.search_definitions[:"#{include_search_look_up_param}"][:type]
+        res_type = group_metadata.search_definitions[:"#{include_search_look_up_param}"][:target] if res_type == 'Reference'
         res_type
       end
     end
