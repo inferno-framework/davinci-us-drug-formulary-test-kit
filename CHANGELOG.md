@@ -1,3 +1,7 @@
+# 0.10.2
+* Fi 2718 _include search parameter fix. by @edeyoung in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/12
+* Dependency Updates 2024-07-03 by @Jammjammjamm in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/13
+
 # 0.10.1
 * Fix preset suite id by @Jammjammjamm in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/10
 
