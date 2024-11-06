@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     davinci_us_drug_formulary_test_kit (0.10.3)
-      inferno_core (>= 0.5.0)
+      inferno_core (~> 0.5.0)
       tls_test_kit (~> 0.2.0)
 
 GEM
