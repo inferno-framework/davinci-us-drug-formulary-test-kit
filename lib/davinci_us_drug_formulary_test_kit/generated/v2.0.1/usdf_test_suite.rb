@@ -84,8 +84,12 @@ module DaVinciUSDrugFormularyTestKit
           url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/issues'
         },
         {
-          label: 'Source Code',
+          label: 'Open Source',
           url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit'
+        },
+        {
+          label: 'Download',
+          url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/releases'
         },
         {
           label: 'Implementation Guide',
