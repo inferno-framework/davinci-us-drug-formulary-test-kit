@@ -45,7 +45,6 @@ module DaVinciUSDrugFormularyTestKit
           - Multiple And
           - Comparators
       )
-      version VERSION
 
       id :davinci_us_drug_formulary_v201
 
