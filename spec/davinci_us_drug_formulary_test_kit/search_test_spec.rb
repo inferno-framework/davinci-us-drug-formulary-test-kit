@@ -113,6 +113,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
 
       result = run(medication_knowledge_search_test, url:)
 
+      # binding.pry
       expect(result.result).to eq('pass')
 
       expect(get_request).to have_been_made.once
