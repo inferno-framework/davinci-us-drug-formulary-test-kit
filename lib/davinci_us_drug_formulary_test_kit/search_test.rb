@@ -131,7 +131,7 @@ module DaVinciUSDrugFormularyTestKit
       check_search_response
 
       resources_returned =
-        fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+        select_all_bundled_resources
 
       return [] if resources_returned.blank?
 
@@ -166,7 +166,7 @@ module DaVinciUSDrugFormularyTestKit
 
       check_search_response
 
-      post_search_resources = fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+      post_search_resources = select_all_bundled_resources
 
       filter_insurance_plan(post_search_resources) if resource_type == 'InsurancePlan'
 
@@ -272,7 +272,7 @@ module DaVinciUSDrugFormularyTestKit
 
           search_and_check_response(params_with_comparator)
 
-          fetch_all_bundled_resources.each do |resource|
+          fetch_all_bundled_resources(resource_type: resource_type, bundle: resource).each do |resource|
             check_resource_against_params(resource, params_with_comparator) if resource.resourceType == resource_type
           end
         end
@@ -304,9 +304,7 @@ module DaVinciUSDrugFormularyTestKit
 
       search_and_check_response(new_search_params)
 
-      reference_with_type_resources = fetch_all_bundled_resources.select do |resource|
-        resource.resourceType == resource_type
-      end
+      reference_with_type_resources = select_all_bundled_resources
 
       filter_insurance_plan(reference_with_type_resources) if resource_type == 'InsurancePlan'
 
@@ -329,9 +327,7 @@ module DaVinciUSDrugFormularyTestKit
       search_params = params.merge(new_search_params)
       search_and_check_response(search_params)
 
-      resources_returned =
-        fetch_all_bundled_resources
-          .select { |resource| resource.resourceType == resource_type }
+      resources_returned = select_all_bundled_resources
 
       assert resources_returned.present?, 'No resources were returned when searching by `system|code`'
 
@@ -378,9 +374,7 @@ module DaVinciUSDrugFormularyTestKit
 
         search_and_check_response(search_params)
 
-        resources_returned =
-          fetch_all_bundled_resources
-            .select { |resource| resource.resourceType == resource_type }
+        resources_returned = select_all_bundled_resources
 
         multiple_or_search_params.each do |param_name|
           missing_values[param_name.to_sym] =
@@ -508,51 +502,14 @@ module DaVinciUSDrugFormularyTestKit
       "#{msg}. Please use resources with more information"
     end
 
-    def fetch_all_bundled_resources(
-      reply_handler: nil,
-      max_pages: 20,
-      additional_resource_types: [],
-      resource_type: self.resource_type
-    )
-      page_count = 1
-      resources = []
-      bundle = resource
-
-      until bundle.nil? || page_count == max_pages
-        resources += bundle&.entry&.map { |entry| entry&.resource }
-        next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
-        reply_handler&.call(response)
-
-        break if next_bundle_link.blank?
-
-        reply = fhir_client.raw_read_url(next_bundle_link)
-
-        store_request('outgoing') { reply }
-        error_message = cant_resolve_next_bundle_message(next_bundle_link)
-
-        assert_response_status(200)
-        assert_valid_json(reply.body, error_message)
-
-        bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
-
-        page_count += 1
+    def select_all_bundled_resources
+      if resource_type == 'MedicationRequest'
+        fetch_all_bundled_resources(resource_type: resource_type, bundle: resource, additional_resource_types: ['Medication'])
+          .select{ |resource| resource.resourceType == resource_type }
+      else
+        fetch_all_bundled_resources(resource_type: resource_type, bundle: resource)
+          .select{ |resource| resource.resourceType == resource_type }
       end
-
-      valid_resource_types = [resource_type, 'OperationOutcome'].concat(additional_resource_types)
-      valid_resource_types << 'Medication' if resource_type == 'MedicationRequest'
-
-      invalid_resource_types =
-        resources.reject { |entry| valid_resource_types.include? entry.resourceType }
-          .map(&:resourceType)
-          .uniq
-
-      if invalid_resource_types.any?
-        info "Received resource type(s) #{invalid_resource_types.join(', ')} in search bundle, " \
-             "but only expected resource types #{valid_resource_types.join(', ')}. " \
-             'This is unusual but allowed if the server believes additional resource types are relevant.'
-      end
-
-      resources
     end
 
     def cant_resolve_next_bundle_message(link)

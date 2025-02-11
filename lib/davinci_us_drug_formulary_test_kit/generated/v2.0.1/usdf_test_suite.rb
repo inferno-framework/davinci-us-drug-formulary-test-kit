@@ -45,7 +45,6 @@ module DaVinciUSDrugFormularyTestKit
           - Multiple And
           - Comparators
       )
-      version VERSION
 
       id :davinci_us_drug_formulary_v201
 
@@ -85,8 +84,12 @@ module DaVinciUSDrugFormularyTestKit
           url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/issues'
         },
         {
-          label: 'Source Code',
+          label: 'Open Source',
           url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit'
+        },
+        {
+          label: 'Download',
+          url: 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/releases'
         },
         {
           label: 'Implementation Guide',
