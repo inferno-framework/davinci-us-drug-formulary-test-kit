@@ -1,4 +1,3 @@
-require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '<%= capability_statement_file_name %>'
 <% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
@@ -97,14 +96,14 @@ module DaVinciUSDrugFormularyTestKit
       input :url,
         title: 'FHIR Endpoint',
         description: 'URL of the FHIR endpoint'
-      input :smart_credentials,
+      input :smart_auth_info,
         title: 'OAuth Credentials',
-        type: :oauth_credentials,
+        type: :auth_info,
         optional: true
 
       fhir_client do
         url :url
-        oauth_credentials :smart_credentials
+        auth_info :smart_auth_info
       end
 
       group from: :<%= capability_statement_group_id %>
