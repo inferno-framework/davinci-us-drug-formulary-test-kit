@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     davinci_us_drug_formulary_test_kit (0.11.0)
-      inferno_core (~> 0.6.2)
+      inferno_core (~> 0.6.7)
       tls_test_kit (~> 0.3.0)
 
 GEM
@@ -135,7 +135,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    inferno_core (0.6.6)
+    inferno_core (0.6.7)
       activesupport (~> 6.1.7.5)
       base62-rb (= 0.3.1)
       blueprinter (= 0.25.2)
@@ -178,7 +178,7 @@ GEM
     mime-types (3.6.1)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0304)
+    mime-types-data (3.2025.0318)
     mini_portile2 (2.8.8)
     minitest (5.25.5)
     multi_json (1.15.0)
