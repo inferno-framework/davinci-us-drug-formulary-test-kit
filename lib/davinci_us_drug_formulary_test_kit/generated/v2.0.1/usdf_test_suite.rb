@@ -1,4 +1,3 @@
-require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '../../custom_groups/v2.0.1/capability_statement_group'
 require_relative 'payer_insurance_plan_group'
@@ -100,14 +99,14 @@ module DaVinciUSDrugFormularyTestKit
       input :url,
         title: 'FHIR Endpoint',
         description: 'URL of the FHIR endpoint'
-      input :smart_credentials,
+      input :smart_auth_info,
         title: 'OAuth Credentials',
-        type: :oauth_credentials,
+        type: :auth_info,
         optional: true
 
       fhir_client do
         url :url
-        oauth_credentials :smart_credentials
+        auth_info :smart_auth_info
       end
 
       group from: :usdf_v201_capability_statement
