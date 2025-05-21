@@ -109,13 +109,50 @@ module DaVinciUSDrugFormularyTestKit
         auth_info :smart_auth_info
       end
 
-      group from: :usdf_v201_capability_statement
+      group from: :usdf_v201_capability_statement do
+        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@51', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@53',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@54'
+      end
   
-      group from: :usdf_v201_payer_insurance_plan
-      group from: :usdf_v201_formulary
-      group from: :usdf_v201_basic
-      group from: :usdf_v201_medication_knowledge
-      group from: :usdf_v201_location
+      group from: :usdf_v201_payer_insurance_plan do
+        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@20', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@21',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@22', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@23',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@24', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@25',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@26', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@27',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@28', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@29'
+      end
+      
+      group from: :usdf_v201_formulary do
+        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@20', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@21',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@22', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@23',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@24', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@25',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@26', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@27',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@28', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@29'
+      end
+      
+      group from: :usdf_v201_basic do
+        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@36', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@37',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@38', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@39',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@40', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@41',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@42', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@43',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@44'
+      end
+      
+      group from: :usdf_v201_medication_knowledge do
+        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@14', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@15',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@16', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@17',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@19', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@45',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@46', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@47',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@48', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@49',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@50'
+      end
+      
+      group from: :usdf_v201_location do
+        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@30', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@31',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@32', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@33',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@34', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@35'
+      end
+      
     end
   end
 end
