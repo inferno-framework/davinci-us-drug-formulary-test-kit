@@ -1,0 +1,13 @@
+test_kit_id: davinci_us_drug_formulary_test_kit
+
+suites: 
+  - id: davinci_us_drug_formulary_v201
+    class_name: DaVinciUSDrugFormularyTestKit::USDFV201::USDFTestSuite
+    suite_actor: Server
+
+requirement_sets:
+  - id: hl7.fhir.us.davinci-drug-formulary_2.0.1
+    folder: PDex Formulary
+    requirements: All
+    actor_map:
+      - {spec: Server, test_kit: Server}
