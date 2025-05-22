@@ -6,6 +6,8 @@ require_relative 'basic_group'
 require_relative 'medication_knowledge_group'
 require_relative 'location_group'
 
+require_relative '../../custom_groups/v2.0.1/visual_inspection_and_attestation'
+
 module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class USDFTestSuite < Inferno::TestSuite
@@ -152,6 +154,9 @@ module DaVinciUSDrugFormularyTestKit
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@34', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@35'
       end
       
+      group from: :usdf_v201_visual_inspection_and_attestation do
+        optional
+      end
     end
   end
 end
