@@ -25,7 +25,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def output
-        @output ||= ERB.new(template).result(binding)
+        @output ||= ERB.new(template, trim_mode: '-').result(binding)
       end
 
       def base_output_file_name
