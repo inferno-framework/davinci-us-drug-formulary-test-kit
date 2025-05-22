@@ -139,9 +139,8 @@ module DaVinciUSDrugFormularyTestKit
       end
       
       group from: :usdf_v201_medication_knowledge do
-        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@14', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@15',
-                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@16', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@17',
-                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@19', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@45',
+        verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@15', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@16',
+                              'hl7.fhir.us.davinci-drug-formulary_2.0.1@17', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@45',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@46', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@47',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@48', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@49',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@50'
