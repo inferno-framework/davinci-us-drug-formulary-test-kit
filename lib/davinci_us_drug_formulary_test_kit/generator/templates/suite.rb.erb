@@ -2,6 +2,10 @@ require_relative '../../version'
 require_relative '<%= capability_statement_file_name %>'
 <% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
 <% end %>
+<%- if module_name.include?('USDFV201') -%>
+require_relative '../../custom_groups/v2.0.1/visual_inspection_and_attestation'
+<%- end -%>
+
 module DaVinciUSDrugFormularyTestKit
   module <%= module_name %>
     class <%= class_name %> < Inferno::TestSuite
@@ -143,6 +147,11 @@ module DaVinciUSDrugFormularyTestKit
       <%- end -%>
       end
       <% end %>
+      <%- if module_name.include?('USDFV201') -%>
+      group from: :usdf_v201_visual_inspection_and_attestation do
+        optional
+      end
+      <%- end -%>
     end
   end
 end
