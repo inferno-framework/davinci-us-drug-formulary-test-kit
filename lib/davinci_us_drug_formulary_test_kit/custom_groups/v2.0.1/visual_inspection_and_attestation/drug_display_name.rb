@@ -1,6 +1,10 @@
+require_relative '../../../generated/v2.0.1/urls'
+
 module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class FormularyDrugNameSearchDisplayTest < Inferno::Test
+      include URLs
+      
       title 'Supports drug name search using general drug form group codes and names'
 
       description <<~DESCRIPTION

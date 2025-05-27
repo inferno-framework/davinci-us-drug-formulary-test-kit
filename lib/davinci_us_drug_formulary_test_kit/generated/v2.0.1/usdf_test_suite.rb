@@ -1,4 +1,5 @@
 require_relative '../../version'
+require_relative 'urls'
 require_relative '../../custom_groups/v2.0.1/capability_statement_group'
 require_relative 'payer_insurance_plan_group'
 require_relative 'formulary_group'
@@ -109,6 +110,13 @@ module DaVinciUSDrugFormularyTestKit
       fhir_client do
         url :url
         auth_info :smart_auth_info
+      end
+
+      resume_test_route :get, RESUME_PASS_PATH do |request|
+        request.query_parameters['token']
+      end
+      resume_test_route :get, RESUME_FAIL_PATH, result: 'fail' do |request|
+        request.query_parameters['token']
       end
 
       group from: :usdf_v201_capability_statement do

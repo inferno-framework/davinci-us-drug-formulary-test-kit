@@ -1,6 +1,10 @@
+require_relative '../../../generated/v2.0.1/urls'
+
 module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class FormularyRxNormCodingTest < Inferno::Test
+      include URLs
+
       title 'Includes RxNorm SCDG/SBDG codes for SCD/SBD drug types'
 
       description <<~DESCRIPTION

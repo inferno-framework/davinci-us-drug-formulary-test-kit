@@ -1,6 +1,10 @@
+require_relative '../../../generated/v2.0.1/urls'
+
 module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class FormularyAuthenticatedAccessTest < Inferno::Test
+      include URLs
+      
       title 'Provides member-associated formulary data via authenticated access'
 
       description <<~DESCRIPTION

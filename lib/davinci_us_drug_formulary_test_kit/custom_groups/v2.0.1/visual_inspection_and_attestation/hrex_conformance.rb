@@ -1,6 +1,10 @@
+require_relative '../../../generated/v2.0.1/urls'
+
 module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class FormularyHRexConformanceTest < Inferno::Test
+      include URLs
+      
       title 'Conforms to HRex conformance expectations'
 
       description <<~DESCRIPTION
