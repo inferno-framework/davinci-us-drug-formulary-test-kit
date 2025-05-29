@@ -1,4 +1,5 @@
-require_relative 'visual_inspection_and_attestation/authenticated_access'
+require_relative 'visual_inspection_and_attestation/authenticated_api_security'
+require_relative 'visual_inspection_and_attestation/member_scoped_access'
 require_relative 'visual_inspection_and_attestation/drug_display_name'
 require_relative 'visual_inspection_and_attestation/hrex_conformance'
 require_relative 'visual_inspection_and_attestation/rxnorm_coding'
@@ -16,7 +17,8 @@ module DaVinciUSDrugFormularyTestKit
 
       run_as_group
 
-    test from: :usdf_v201_authenticated_access
+    test from: :usdf_v201_authenticated_api_security
+    test from: :usdf_v201_member_scoped_access
     test from: :usdf_v201_drug_display_name
     test from: :usdf_v201_hrex_conformance
     test from: :usdf_v201_rxnorm_coding
