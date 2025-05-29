@@ -99,14 +99,6 @@ module DaVinciUSDrugFormularyTestKit
         }
       ]
 
-      input :url,
-        title: 'FHIR Endpoint',
-        description: 'URL of the FHIR endpoint'
-      input :smart_auth_info,
-        title: 'OAuth Credentials',
-        type: :auth_info,
-        optional: true
-
       fhir_client do
         url :url
         auth_info :smart_auth_info
@@ -125,6 +117,13 @@ module DaVinciUSDrugFormularyTestKit
       end
   
       group from: :usdf_v201_payer_insurance_plan do
+        input :url,
+          title: 'FHIR Endpoint',
+          description: 'URL of the FHIR endpoint'
+        input :smart_auth_info,
+          title: 'OAuth Credentials',
+          type: :auth_info,
+          optional: true
         verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@20', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@21',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@22', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@23',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@24', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@25',
@@ -133,6 +132,13 @@ module DaVinciUSDrugFormularyTestKit
       end
       
       group from: :usdf_v201_formulary do
+        input :url,
+          title: 'FHIR Endpoint',
+          description: 'URL of the FHIR endpoint'
+        input :smart_auth_info,
+          title: 'OAuth Credentials',
+          type: :auth_info,
+          optional: true
         verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@20', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@21',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@22', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@23',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@24', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@25',
@@ -141,6 +147,13 @@ module DaVinciUSDrugFormularyTestKit
       end
       
       group from: :usdf_v201_basic do
+        input :url,
+          title: 'FHIR Endpoint',
+          description: 'URL of the FHIR endpoint'
+        input :smart_auth_info,
+          title: 'OAuth Credentials',
+          type: :auth_info,
+          optional: true
         verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@36', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@37',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@38', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@39',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@40', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@41',
@@ -149,6 +162,13 @@ module DaVinciUSDrugFormularyTestKit
       end
       
       group from: :usdf_v201_medication_knowledge do
+        input :url,
+          title: 'FHIR Endpoint',
+          description: 'URL of the FHIR endpoint'
+        input :smart_auth_info,
+          title: 'OAuth Credentials',
+          type: :auth_info,
+          optional: true
         verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@15', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@16',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@17', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@45',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@46', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@47',
@@ -157,6 +177,13 @@ module DaVinciUSDrugFormularyTestKit
       end
       
       group from: :usdf_v201_location do
+        input :url,
+          title: 'FHIR Endpoint',
+          description: 'URL of the FHIR endpoint'
+        input :smart_auth_info,
+          title: 'OAuth Credentials',
+          type: :auth_info,
+          optional: true
         verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@30', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@31',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@32', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@33',
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@34', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@35'
