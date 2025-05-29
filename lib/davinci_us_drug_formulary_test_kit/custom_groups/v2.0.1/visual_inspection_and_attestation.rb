@@ -17,11 +17,11 @@ module DaVinciUSDrugFormularyTestKit
 
       run_as_group
 
-    test from: :usdf_v201_authenticated_api_security
-    test from: :usdf_v201_member_scoped_access
-    test from: :usdf_v201_drug_display_name
-    test from: :usdf_v201_hrex_conformance
-    test from: :usdf_v201_rxnorm_coding
+      test from: :usdf_v201_authenticated_api_security
+      test from: :usdf_v201_member_scoped_access
+      test from: :usdf_v201_drug_display_name
+      test from: :usdf_v201_hrex_conformance
+      test from: :usdf_v201_rxnorm_coding
     end
   end
 end

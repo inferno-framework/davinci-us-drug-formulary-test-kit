@@ -1,6 +1,10 @@
+require_relative '../../../generated/v2.0.1/urls'
+
 module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class FormularyAuthenticatedApiSecurityTest < Inferno::Test
+      include URLs
+
       title 'Protects PHI/PII in authenticated access and prevents tracking in unauthenticated access'
 
       description <<~DESCRIPTION
