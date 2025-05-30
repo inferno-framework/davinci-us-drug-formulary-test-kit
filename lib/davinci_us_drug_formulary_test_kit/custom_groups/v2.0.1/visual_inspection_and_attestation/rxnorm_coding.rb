@@ -25,7 +25,8 @@ module DaVinciUSDrugFormularyTestKit
             The developer of the Health IT Module attests that the system includes an additional coding repetition
             for each drug with RxNorm Term Type of SCD or SBD, using the corresponding SCDG or SBDG code.
 
-            [Click here](#{resume_pass_url}?token=#{identifier}) if the system **meets** this requirement.  
+            [Click here](#{resume_pass_url}?token=#{identifier}) if the system **meets** this requirement.
+            
             [Click here](#{resume_fail_url}?token=#{identifier}) if the system **does not meet** this requirement.
           MESSAGE
         )
