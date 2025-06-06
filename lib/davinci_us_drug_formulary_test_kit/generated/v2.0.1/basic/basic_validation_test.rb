@@ -8,15 +8,35 @@ module DaVinciUSDrugFormularyTestKit
       id :usdf_v201_basic_validation_test
       title 'Basic resources returned during previous tests conform to the Formulary Item profile'
       description %(
-This test verifies resources returned from the first search conform to
-the [Formulary Item profile](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyItem).
+This test verifies that Basic resources representing formulary items conform to the
+[USDF FormularyItem profile](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyItem).
 
-Systems must demonstrate at least one valid example in order to pass this test.
-It verifies the presence of mandatory elements and that elements with
-required bindings contain appropriate values. CodeableConcept element
-bindings will fail if none of their codings have a code/system belonging
-to the bound ValueSet. Quantity, Coding, and code element bindings will
-fail if their code/system are not found in the valueset.
+The test validates:
+
+Mandatory Elements:
+* Basic.extension - Required extensions for formulary data
+* Basic.code - Must be set to "formulary-item"
+* Basic.subject - Reference to the associated FormularyDrug
+
+Required Extensions:
+* usdf-FormularyReference-extension: Links to parent formulary
+* usdf-AvailabilityStatus-extension: Drug's current status
+* usdf-AvailabilityPeriod-extension: Time period for coverage
+* usdf-PharmacyBenefitType-extension: Pharmacy network and duration
+* usdf-DrugTierID-extension: Cost-sharing tier classification
+* usdf-PriorAuthorization-extension: Prior auth requirements
+* usdf-StepTherapyLimit-extension: Step therapy rules
+* usdf-QuantityLimit-extension: Quantity restrictions
+
+Value Set Bindings:
+* Drug tier codes must come from DrugTierVS
+* Pharmacy benefit types must come from PharmacyBenefitTypeVS
+* Status values must come from PublicationStatusVS
+
+The test will pass if at least one valid example is found that meets all profile requirements.
+If validation errors occur, details will be provided to help identify non-conformant elements.
+
+[USDF Implementation Guide](http://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1/)
 
       )
       output :dar_code_found, :dar_extension_found

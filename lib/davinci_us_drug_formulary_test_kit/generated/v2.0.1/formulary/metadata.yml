@@ -7,7 +7,7 @@
 :profile_name: Formulary
 :profile_version: 2.0.1
 :title: Drug Formulary Definition
-:short_description: Verify that the server properly implements the core formulary structure using the InsurancePlan resource. Tests validate required elements (identifier, status, type), ensure type.coding.code is set to "DRUGPOL", and verify support for essential search parameters including status, identifier, period, type, and name. Must-support elements include meta.lastUpdated, identifier, status, name, and period.
+:short_description: Verify that the server properly implements the core formulary structure using the InsurancePlan resource profiled as Formulary per USDF STU2.0.1 IG requirements. Tests validate required elements including unique identifiers, formulary status (draft/active/retired/unknown), and type code "DRUGPOL" to identify drug formularies. Validates support for essential search parameters including status tracking, identifier lookup, coverage period dates, and formulary names. Ensures proper representation of coverage areas through Location references and coverage types. Must-support elements include meta.lastUpdated, identifier, status, type.coding.code, name, and period. This resource serves as the primary container for organizing drug coverage information.
 :interactions:
 - :code: create
   :expectation: MAY

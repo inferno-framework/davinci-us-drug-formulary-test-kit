@@ -6,14 +6,31 @@ module DaVinciUSDrugFormularyTestKit
     class BasicDrugTierSearchTest < Inferno::Test
       include DaVinciUSDrugFormularyTestKit::SearchTest
 
-      title 'Server returns valid results for Basic search by drug-tier'
+      title 'Server supports FormularyItem search by drug tier classification'
       description %(
-A server SHALL support searching by
-drug-tier on the Basic resource. This test
-will pass if resources are returned and match the search criteria. If
-none are returned, the test is skipped.
+This test verifies the server's ability to search FormularyItem resources by their drug tier classification using the required 'drug-tier' search parameter.
+The server SHALL support searching Basic resources by drug-tier to enable clients to find formulary items based on their cost-sharing tier.
 
-[US Drug Formulary](http://hl7.org/fhir/us/davinci-drug-formulary/STU2/CapabilityStatement-usdf-server.html)
+The drug-tier search parameter maps to the usdf-DrugTierID-extension and supports the following values:
+* generic
+* preferred-generic
+* non-preferred-generic
+* specialty
+* brand
+* preferred-brand
+* non-preferred-brand
+* zero-cost-share-preventative
+* medical-service
+
+This search capability is essential for:
+* Finding all drugs within a specific cost-sharing tier
+* Enabling cost-based drug selection and comparison
+* Supporting formulary analysis by tier structure
+
+The test will pass if matching resources are returned and correctly implement the drug tier extension.
+If no matching resources are found, the test is skipped.
+
+[US Drug Formulary Server CapabilityStatement](http://hl7.org/fhir/us/davinci-drug-formulary/STU2/CapabilityStatement-usdf-server.html)
 
       )
 

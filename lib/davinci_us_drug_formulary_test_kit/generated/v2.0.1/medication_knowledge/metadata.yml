@@ -7,7 +7,7 @@
 :profile_name: Formulary Drug
 :profile_version: 2.0.1
 :title: Standardized Drug Information
-:short_description: Verify that the server properly represents standardized drug information using the MedicationKnowledge resource. Tests validate required code slices for semantic drug terminology (RxNorm) and drug form groupings, ensuring proper standardization of drug information. Validates search capabilities for drug codes, names, and dose forms, and ensures proper status tracking (active/inactive/entered-in-error). Must-support elements include code.coding with specific slices for semantic drug codes and form groups.
+:short_description: Verify that the server properly represents standardized drug information using the MedicationKnowledge resource profiled as FormularyDrug per USDF STU2.0.1 IG requirements. Tests validate required code slices for semantic drug terminology using RxNorm (SCD, SBD, GPCK, or BPCK concepts) and drug form groupings. Ensures proper standardization of drug information through validated terminology bindings and required code slices. Validates search capabilities for drug codes, names (including synonyms), and dose forms. Verifies proper status tracking (active/inactive/entered-in-error) and must-support elements including code.coding slices for semantic drug codes and form groups. This resource provides the standardized drug definitions referenced by FormularyItems.
 :interactions:
 - :code: create
   :expectation: MAY

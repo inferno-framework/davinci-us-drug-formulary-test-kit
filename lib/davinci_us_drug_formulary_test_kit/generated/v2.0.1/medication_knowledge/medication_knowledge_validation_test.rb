@@ -8,15 +8,22 @@ module DaVinciUSDrugFormularyTestKit
       id :usdf_v201_medication_knowledge_validation_test
       title 'MedicationKnowledge resources returned during previous tests conform to the Formulary Drug profile'
       description %(
-This test verifies resources returned from the first search conform to
-the [Formulary Drug profile](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug).
+This test verifies that MedicationKnowledge resources conform to the
+[USDF FormularyDrug profile](http://hl7.org/fhir/us/davinci-drug-formulary/StructureDefinition/usdf-FormularyDrug).
 
-Systems must demonstrate at least one valid example in order to pass this test.
-It verifies the presence of mandatory elements and that elements with
-required bindings contain appropriate values. CodeableConcept element
-bindings will fail if none of their codings have a code/system belonging
-to the bound ValueSet. Quantity, Coding, and code element bindings will
-fail if their code/system are not found in the valueset.
+The test validates:
+
+Mandatory Elements:
+* MedicationKnowledge.code - RxNorm drug codes
+* MedicationKnowledge.code.coding - Required code slices
+* MedicationKnowledge.code.coding.system - Must use RxNorm (http://www.nlm.nih.gov/research/umls/rxnorm)
+* MedicationKnowledge.code.coding.code - Valid RxNorm concept
+* MedicationKnowledge.status - Active/inactive status
+
+The test will pass if at least one valid example is found that meets all profile requirements.
+If validation errors occur, details will be provided to help identify non-conformant elements.
+
+[USDF Implementation Guide](http://hl7.org/fhir/us/davinci-drug-formulary/STU2.0.1/)
 
       )
       output :dar_code_found, :dar_extension_found

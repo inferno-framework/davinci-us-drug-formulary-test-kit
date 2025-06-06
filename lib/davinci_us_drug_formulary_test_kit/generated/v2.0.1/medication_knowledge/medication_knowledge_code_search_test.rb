@@ -6,14 +6,35 @@ module DaVinciUSDrugFormularyTestKit
     class MedicationKnowledgeCodeSearchTest < Inferno::Test
       include DaVinciUSDrugFormularyTestKit::SearchTest
 
-      title 'Server returns valid results for MedicationKnowledge search by code'
+      title 'Server supports FormularyDrug search by RxNorm codes and form groups'
       description %(
-A server SHALL support searching by
-code on the MedicationKnowledge resource. This test
-will pass if resources are returned and match the search criteria. If
-none are returned, the test is skipped.
+This test verifies the server's ability to search FormularyDrug resources by RxNorm codes using the required 'code' search parameter.
+The server SHALL support searching MedicationKnowledge resources by code to enable clients to find drugs using standardized RxNorm terminology.
 
-[US Drug Formulary](http://hl7.org/fhir/us/davinci-drug-formulary/STU2/CapabilityStatement-usdf-server.html)
+The code search parameter validates that resources include:
+* Primary RxNorm codes with Term Types (TTY):
+  - SCD (Semantic Clinical Drug)
+  - SBD (Semantic Branded Drug)
+  - GPCK (Generic Pack)
+  - BPCK (Branded Pack)
+
+* Required form group codes when applicable:
+  - SCDG (Semantic Clinical Drug Form Group) for SCD primary codes
+  - SBDG (Semantic Branded Drug Form Group) for SBD primary codes
+
+In addition to the above codes, there are several codes listed in the value
+set expansions. 
+
+This search capability is essential for:
+* Finding specific drugs using standardized RxNorm identifiers
+* Locating all strength variations of a drug using form group codes
+* Supporting drug selection across equivalent clinical forms
+* Enabling systematic drug coverage analysis
+
+The test will pass if matching resources are returned and properly implement the required RxNorm code slices.
+If no matching resources are found, the test is skipped.
+
+[US Drug Formulary Server CapabilityStatement](http://hl7.org/fhir/us/davinci-drug-formulary/STU2/CapabilityStatement-usdf-server.html)
 
       )
 

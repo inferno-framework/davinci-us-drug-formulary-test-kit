@@ -7,7 +7,7 @@
 :profile_name: Formulary Item
 :profile_version: 2.0.1
 :title: Drug Formulary Item Details
-:short_description: Verify that the server properly implements individual drug entries within a formulary using the Basic resource. Tests validate required extensions for formulary reference, availability status/period, pharmacy benefit types (retail/mail order, in/out network), drug tier identification, prior authorization, step therapy limits, and quantity limits. Ensures proper linking to drug information via MedicationKnowledge references and validates search capabilities for drug tiers, pharmacy benefit types, and formulary references.
+:short_description: Verify that the server properly implements individual drug entries within a formulary using the Basic resource profiled as FormularyItem. Tests validate conformance to the USDF STU2.0.1 IG requirements including required extensions for formulary reference (linking to InsurancePlan), availability status/period, pharmacy benefit types (retail/mail order with network status), drug tier identification (e.g., generic, preferred-brand), utilization management (prior authorization, step therapy, quantity limits). Ensures proper linking to standardized drug information via MedicationKnowledge references and validates search capabilities for drug tiers, pharmacy benefit types, and formulary references. This resource is central to representing individual drug coverage details within a formulary.
 :interactions:
 - :code: create
   :expectation: MAY

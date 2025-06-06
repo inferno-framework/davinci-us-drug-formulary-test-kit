@@ -7,7 +7,7 @@
 :profile_name: Insurance Plan Location
 :profile_version: 2.0.1
 :title: Geographic Coverage Areas
-:short_description: Verify that the server properly defines and manages geographic coverage areas for formularies using the Location resource. Tests validate address handling for coverage area definition, support region specification through GeoJSON extension, and ensure proper search capabilities for geographic criteria (city, state, postal code). This enables accurate determination of where specific formularies apply.
+:short_description: Verify that the server properly defines and manages geographic coverage areas for formularies using the Location resource profiled as InsurancePlanLocation per USDF STU2.0.1 IG requirements. Tests validate address handling for coverage area definition through structured address elements (city, state, postal code) and region specification using the GeoJSON extension for complex geographic boundaries. Ensures proper search capabilities for geographic criteria to enable accurate determination of formulary applicability in specific areas. Must-support elements include address and the location-boundary-geojson extension. This resource defines where formularies apply geographically through references from InsurancePlan.coverageArea.
 :interactions:
 - :code: create
   :expectation: MAY
