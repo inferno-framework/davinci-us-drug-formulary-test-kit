@@ -1,6 +1,5 @@
 require_relative '../../lib/davinci_us_drug_formulary_test_kit/custom_groups/capability_statement/profile_support_test'
 
-
 RSpec.describe DaVinciUSDrugFormularyTestKit::ProfileSupportTest do
   let(:suite_id) { 'davinci_us_drug_formulary_v201' }
   let(:test) { described_class }
