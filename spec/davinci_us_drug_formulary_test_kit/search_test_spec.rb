@@ -1,21 +1,9 @@
 require_relative '../../lib/davinci_us_drug_formulary_test_kit/search_test'
 
-RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_us_drug_formulary_v201') }
-  let(:session_data_repo) { Inferno::Repositories::SessionData.new }
-  let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
+RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest, :runnable do
+  let(:suite_id) { 'davinci_us_drug_formulary_v201' }
   let(:url) { 'http://example.com/fhir' }
   let(:error_outcome) { FHIR::OperationOutcome.new(issue: [{ severity: 'error' }]) }
-
-  def run(runnable, inputs = {})
-    test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
-    test_run = Inferno::Repositories::TestRuns.new.create(test_run_params)
-    inputs.each do |name, value|
-      session_data_repo.save(test_session_id: test_session.id, name:, value:,
-                             type: runnable.config.input_type(name))
-    end
-    Inferno::TestRunner.new(test_session:, test_run:).run(runnable)
-  end
 
   # 1. Search for each of the 4 profiles types
   # 2. RESTful behavior according to FHIR spec
@@ -91,6 +79,7 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest do
     let(:bundle) { FHIR::Bundle.new(entry: [{ resource: medication_knowledge1 }]) }
     let(:test_scratch) { {} }
 
+    # TODO: comment out? - shaumik
     before do
       Inferno::Repositories::Tests.new.insert(medication_knowledge_search_test)
       allow_any_instance_of(medication_knowledge_search_test)
