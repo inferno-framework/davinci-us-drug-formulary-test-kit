@@ -69,7 +69,7 @@ RSpec/ContextWording:
 # Offense count: 4
 # Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
 # Include: **/*_spec*rb*, **/spec/**/*
-RSpec/FilePath:
+RSpec/SpecFilePathSuffix:
   Exclude:
     - 'spec/us_core/date_search_validation_test_spec.rb'
     - 'spec/us_core/generator/must_support_metadata_extractor_spec.rb'
