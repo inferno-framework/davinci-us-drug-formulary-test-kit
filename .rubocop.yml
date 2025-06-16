@@ -9,6 +9,9 @@ AllCops:
   TargetRubyVersion: 3.3.6
   Exclude:
     - 'Gemfile'
+    - 'vendor/**/*.rb'
+    - 'vendor/bundle/**/*'     # https://github.com/rubocop/rubocop/issues/9832
+    - 'gemfiles/vendor/**/*'   # https://github.com/rubocop/rubocop/issues/9832
     - 'lib/davinci_us_drug_formulary_test_kit/generated/**/*'
 
 Layout/LineLength:
@@ -68,12 +71,6 @@ RSpec/DescribeClass:
 RSpec/ExampleLength:
   Enabled: false
 
-RSpec/SpecFilePathFormat:
-  Enabled: true
-
-RSpec/SpecFilePathSuffix:
-  Enabled: true
-
 RSpec/MultipleExpectations:
   Enabled: false
 
@@ -85,6 +82,9 @@ RSpec/NestedGroups:
 
 RSpec/NotToNot:
   EnforcedStyle: to_not
+
+RSpec/SpecFilePathSuffix:
+  Enabled: true
 
 RSpec/SpecFilePathFormat:
   CustomTransform:
