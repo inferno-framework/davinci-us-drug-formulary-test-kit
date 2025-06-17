@@ -79,11 +79,8 @@ RSpec.describe DaVinciUSDrugFormularyTestKit::SearchTest, :runnable do
     let(:bundle) { FHIR::Bundle.new(entry: [{ resource: medication_knowledge1 }]) }
     let(:test_scratch) { {} }
 
-    # TODO: comment out? - shaumik
     before do
       Inferno::Repositories::Tests.new.insert(medication_knowledge_search_test)
-      allow_any_instance_of(medication_knowledge_search_test)
-        .to receive(:scratch).and_return(test_scratch)
     end
 
     it 'passes' do
