@@ -49,7 +49,6 @@ module DaVinciUSDrugFormularyTestKit
     def all_include_search_params
       @all_include_search_params ||=
         search_param_names.each_with_object({}) do |value, params|
-
           params[value] ||= fixed_value_search_param_values.filter_map do |fixed_value|
             fixed_value_search_params(fixed_value, value).merge('_include' => include_param)
           end
@@ -272,7 +271,7 @@ module DaVinciUSDrugFormularyTestKit
 
           search_and_check_response(params_with_comparator)
 
-          fetch_all_bundled_resources(resource_type: resource_type, bundle: resource).each do |resource|
+          fetch_all_bundled_resources(resource_type:, bundle: resource).each do |resource|
             check_resource_against_params(resource, params_with_comparator) if resource.resourceType == resource_type
           end
         end
@@ -504,11 +503,13 @@ module DaVinciUSDrugFormularyTestKit
 
     def select_all_bundled_resources
       if resource_type == 'MedicationRequest'
-        fetch_all_bundled_resources(resource_type: resource_type, bundle: resource, additional_resource_types: ['Medication'])
-          .select{ |resource| resource.resourceType == resource_type }
+        fetch_all_bundled_resources(resource_type:, bundle: resource, additional_resource_types: ['Medication'])
+          .select do |resource|
+          resource.resourceType == resource_type
+        end
       else
-        fetch_all_bundled_resources(resource_type: resource_type, bundle: resource)
-          .select{ |resource| resource.resourceType == resource_type }
+        fetch_all_bundled_resources(resource_type:, bundle: resource)
+          .select { |resource| resource.resourceType == resource_type }
       end
     end
 
