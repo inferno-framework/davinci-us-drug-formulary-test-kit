@@ -1,3 +1,2 @@
 require_relative 'davinci_us_drug_formulary_test_kit/metadata'
-require_relative 'inferno_requirements_tools/ext/inferno_core/runnable'
 require_relative 'davinci_us_drug_formulary_test_kit/generated/v2.0.1/usdf_test_suite'
