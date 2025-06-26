@@ -93,6 +93,14 @@ module DaVinciUSDrugFormularyTestKit
         }
       ]
 
+      requirement_sets(
+        {
+          identifier: 'hl7.fhir.us.davinci-drug-formulary_2.0.1',
+          title: 'Da Vinci Payer Data Exchange (PDex) US Drug Formulary v2.0.1',
+          actor: 'Server'
+        }
+      )
+
       input :url,
         title: 'FHIR Endpoint',
         description: 'URL of the FHIR endpoint'
