@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    davinci_us_drug_formulary_test_kit (0.12.1)
+    davinci_us_drug_formulary_test_kit (0.12.2)
       inferno_core (~> 0.6.15)
       tls_test_kit (~> 0.3.0)
 
@@ -136,7 +136,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    inferno_core (0.6.16)
+    inferno_core (0.6.17)
       activesupport (~> 6.1.7.5)
       base62-rb (= 0.3.1)
       blueprinter (= 0.25.2)
@@ -182,10 +182,10 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0701)
+    mime-types-data (3.2025.0708)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
-    multi_json (1.15.0)
+    multi_json (1.16.0)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
@@ -238,7 +238,7 @@ GEM
     rake (13.3.0)
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    redis-client (0.25.0)
+    redis-client (0.25.1)
       connection_pool
     regexp_parser (2.9.2)
     reline (0.5.9)
@@ -304,8 +304,6 @@ GEM
     sqlite3 (1.7.3)
       mini_portile2 (~> 2.8.0)
     sqlite3 (1.7.3-arm64-darwin)
-    sqlite3 (1.7.3-x86_64-darwin)
-    sqlite3 (1.7.3-x86_64-linux)
     stringio (3.1.1)
     strings (0.2.1)
       strings-ansi (~> 0.2)
@@ -313,7 +311,7 @@ GEM
       unicode_utils (~> 1.4)
     strings-ansi (0.2.0)
     thor (1.2.2)
-    tilt (2.6.0)
+    tilt (2.6.1)
     tls_test_kit (0.3.0)
       inferno_core (>= 0.6.2)
     tty-color (0.6.0)
