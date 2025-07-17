@@ -4,7 +4,6 @@ Gem::Specification.new do |spec|
   spec.name          = 'davinci_us_drug_formulary_test_kit'
   spec.version       = DaVinciUSDrugFormularyTestKit::VERSION
   spec.authors       = ['Stephen MacVicar', 'Tom Strassner', 'Robert Passas']
-  spec.email         = ['inferno@groups.mitre.org']
   spec.summary       = 'DaVinci US Drug Formulary Test Kit'
   spec.description   = 'DaVinci US Drug Formulary Test Kit'
   spec.homepage      = 'https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit'
