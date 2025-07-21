@@ -4,7 +4,7 @@ module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class FormularyHRexConformanceTest < Inferno::Test
       include URLs
-      
+
       title 'Conforms to HRex conformance expectations'
 
       description <<~DESCRIPTION

@@ -4,7 +4,7 @@ module DaVinciUSDrugFormularyTestKit
   module USDFV201
     class FormularyDrugNameSearchDisplayTest < Inferno::Test
       include URLs
-      
+
       title 'Supports drug name search using general drug form group codes and names'
 
       description <<~DESCRIPTION
@@ -30,7 +30,6 @@ module DaVinciUSDrugFormularyTestKit
             [Click here](#{resume_fail_url}?token=#{identifier}) if the system **does not meet** this requirement.
           MESSAGE
         )
-
       end
     end
   end
