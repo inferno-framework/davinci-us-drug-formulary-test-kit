@@ -16,7 +16,7 @@ module DaVinciUSDrugFormularyTestKit
       end.compact
     end
 
-    def find_a_value_at(element, path, include_dar: false, &block)
+    def find_a_value_at(element, path, include_dar: false, &block) # rubocop:disable Style/ArgumentsForwarding
       return nil if element.nil?
 
       elements = Array.wrap(element)
@@ -28,7 +28,7 @@ module DaVinciUSDrugFormularyTestKit
           end
         end
 
-        return elements.find(&block) if block_given?
+        return elements.find(&block) if block_given? # rubocop:disable Style/ArgumentsForwarding
 
         return elements.first
       end

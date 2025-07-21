@@ -1,24 +1,7 @@
 require_relative '../../lib/davinci_us_drug_formulary_test_kit/must_support_test'
 
-RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_us_drug_formulary_v201') }
-  let(:session_data_repo) { Inferno::Repositories::SessionData.new }
-  let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
-  # let(:patient_ref) { 'Patient/85' }
-
-  def run(runnable, inputs = {})
-    test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
-    test_run = Inferno::Repositories::TestRuns.new.create(test_run_params)
-    inputs.each do |name, value|
-      session_data_repo.save(
-        test_session_id: test_session.id,
-        name:,
-        value:,
-        type: runnable.config.input_type(name)
-      )
-    end
-    Inferno::TestRunner.new(test_session:, test_run:).run(runnable)
-  end
+RSpec.describe DaVinciUSDrugFormularyTestKit::MustSupportTest, :runnable do
+  let(:suite_id) { 'davinci_us_drug_formulary_v201' }
 
   describe 'must support test for MedicationKnowledge elements' do
     let(:medication_must_support_test) do

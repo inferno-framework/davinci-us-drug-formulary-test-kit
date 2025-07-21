@@ -1,3 +1,13 @@
+# 0.12.2
+* FI-3815: Fix anonymous block forwarding by @Shaumik-Ashraf in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/28
+
+# 0.12.1
+* FI-3813: Migrate MustSupportTest to use core MS assertion by @dehall in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/21
+* FI:4063 and FI:4067 - Requirements Mapping and Coverage Generation by @emichaud998 in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/22
+* FI-3815: Update Test Kit with new RSpec features by @Shaumik-Ashraf in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/25
+* FI-4155: Requirements Conversion by @tstrass in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/26
+
+
 # 0.12.0
 ## Breaking Change
 This release updates the Da Vinci US Drug Formulary Test Kit to use AuthInfo

@@ -72,7 +72,9 @@ module DaVinciUSDrugFormularyTestKit
 
       def include_param_resource
         res_type = group_metadata.search_definitions[:"#{include_search_look_up_param}"][:type]
-        res_type = group_metadata.search_definitions[:"#{include_search_look_up_param}"][:target] if res_type == 'Reference'
+        if res_type == 'Reference'
+          res_type = group_metadata.search_definitions[:"#{include_search_look_up_param}"][:target]
+        end
         res_type
       end
     end

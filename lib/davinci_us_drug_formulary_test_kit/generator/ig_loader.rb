@@ -30,7 +30,6 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def load_ig
-
         tar = Gem::Package::TarReader.new(
           Zlib::GzipReader.open(ig_file_name)
         )
