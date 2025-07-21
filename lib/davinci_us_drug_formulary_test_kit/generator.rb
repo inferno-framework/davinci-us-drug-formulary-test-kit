@@ -11,6 +11,7 @@ require_relative 'generator/search_test_generator'
 require_relative 'generator/suite_generator'
 require_relative 'generator/validation_test_generator'
 require_relative 'generator/include_search_test_generator'
+require_relative 'generator/urls_generator'
 
 module DaVinciUSDrugFormularyTestKit
   class Generator
@@ -37,6 +38,7 @@ module DaVinciUSDrugFormularyTestKit
       generate_validation_tests
       generate_must_support_tests
       generate_reference_resolution_tests
+      generate_urls
 
       generate_groups
 
@@ -89,6 +91,10 @@ module DaVinciUSDrugFormularyTestKit
 
     def generate_suites
       SuiteGenerator.generate(ig_metadata, base_output_dir)
+    end
+
+    def generate_urls
+      UrlsGenerator.generate(ig_metadata, base_output_dir)
     end
   end
 end
