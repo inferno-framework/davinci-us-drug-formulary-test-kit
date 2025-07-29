@@ -96,5 +96,11 @@ module DaVinciUSDrugFormularyTestKit
     def generate_urls
       UrlsGenerator.generate(ig_metadata, base_output_dir)
     end
+
+    def self.recursive_remove_input(runnable, input)
+      runnable.inputs.delete(input)
+      runnable.input_order.delete(input)
+      runnable.children.each { |child_runnable| recursive_remove_input(child_runnable, input) }
+    end
   end
 end

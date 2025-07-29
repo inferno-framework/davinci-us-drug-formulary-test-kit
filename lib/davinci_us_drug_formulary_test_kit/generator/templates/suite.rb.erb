@@ -1,4 +1,5 @@
 require_relative '../../version'
+require_relative '../../generator'
 require_relative 'urls'
 require_relative '<%= capability_statement_file_name %>'
 <% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
@@ -171,9 +172,10 @@ module DaVinciUSDrugFormularyTestKit
       end
       <% end %>
       <%- if module_name.include?('USDFV201') -%>
-      group from: :usdf_v201_visual_inspection_and_attestation do
-        optional
-      end
+      group from: :usdf_v201_visual_inspection_and_attestation,
+        optional: true
+      Generator::recursive_remove_input(groups.last, :url)
+      Generator::recursive_remove_input(groups.last, :smart_auth_info)
       <%- end -%>
     end
   end
