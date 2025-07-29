@@ -1,4 +1,5 @@
 require_relative '../../version'
+require_relative '../../remove_input'
 require_relative 'urls'
 require_relative '../../custom_groups/v2.0.1/capability_statement_group'
 require_relative 'payer_insurance_plan_group'
@@ -205,9 +206,10 @@ module DaVinciUSDrugFormularyTestKit
                               'hl7.fhir.us.davinci-drug-formulary_2.0.1@34', 'hl7.fhir.us.davinci-drug-formulary_2.0.1@35'
       end
       
-      group from: :usdf_v201_visual_inspection_and_attestation do
-        optional
-      end
+      group from: :usdf_v201_visual_inspection_and_attestation,
+        optional: true
+      RemoveInput::recursive_remove_input(groups.last, :url)
+      RemoveInput::recursive_remove_input(groups.last, :smart_auth_info)
     end
   end
 end
