@@ -51,7 +51,6 @@ module DaVinciUSDrugFormularyTestKit
         )
         pass usdf_v201_rxnorm_coding_note if usdf_v201_rxnorm_coding_note.present?
       end
-
     end
   end
 end

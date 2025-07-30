@@ -22,9 +22,9 @@ module DaVinciUSDrugFormularyTestKit
             title: 'Conforms to HRex conformance expectations',
             description: %(
               The developer of the Health IT Module attests that the system conforms
-                  to the expectations described in the HRex Conformance Expectations section:
+              to the expectations described in the HRex Conformance Expectations section:
 
-                  https://hl7.org/fhir/us/davinci-hrex/STU1/conformance.html
+              https://hl7.org/fhir/us/davinci-hrex/STU1/conformance.html
             ),
             type: 'radio',
             default: 'false',
@@ -57,7 +57,6 @@ module DaVinciUSDrugFormularyTestKit
         )
         pass usdf_v201_hrex_conformance_note if usdf_v201_hrex_conformance_note.present?
       end
-
     end
   end
 end

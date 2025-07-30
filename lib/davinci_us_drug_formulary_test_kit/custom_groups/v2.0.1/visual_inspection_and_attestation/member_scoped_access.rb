@@ -26,10 +26,11 @@ module DaVinciUSDrugFormularyTestKit
             description: %(
               The developer of the Health IT Module attests that:
 
-                  - When queried through authenticated access, the Health IT Module returns:
-                    - All Formularies associated with the member’s group(s), if applicable,
-                    - Only generally available (non-group-restricted) Formularies if the member is not in a group.
-                  - The Health IT Module also provides access to profiled resources (FormularyItem, FormularyDrug) tied to the member’s available plans.
+              - When queried through authenticated access, the Health IT Module returns:
+                - All Formularies associated with the member’s group(s), if applicable,
+                - Only generally available (non-group-restricted) Formularies if the member is not in a group.
+              - The Health IT Module also provides access to profiled resources (FormularyItem, FormularyDrug) tied to
+                the member’s available plans.
             ),
             type: 'radio',
             default: 'false',
@@ -58,12 +59,12 @@ module DaVinciUSDrugFormularyTestKit
             - All Formularies associated with the member’s group(s), if applicable,
             - Only generally available (non-group-restricted) Formularies if the member is not in a group.
 
-          The Health IT Module also provides access to profiled resources (FormularyItem, FormularyDrug) tied to the member’s available plans.
+          The Health IT Module also provides access to profiled resources (FormularyItem, FormularyDrug) tied to the
+          member’s available plans.
 
         )
         pass usdf_v201_member_scoped_access_note if usdf_v201_member_scoped_access_note.present?
       end
-
     end
   end
 end

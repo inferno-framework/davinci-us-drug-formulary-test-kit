@@ -20,7 +20,8 @@ module DaVinciUSDrugFormularyTestKit
             title: 'Supports drug name search using general drug form group codes and names',
             description: %(
               I attest that the Health IT Module supports searching for drugs using general drug form
-                  group codes (SCDG or SBDG) and ensures that the display name associated with those codes is included in search results.
+              group codes (SCDG or SBDG) and ensures that the display name associated with those codes is included
+              in search results.
             ),
             type: 'radio',
             default: 'false',
@@ -51,7 +52,6 @@ module DaVinciUSDrugFormularyTestKit
         )
         pass usdf_v201_drug_display_name_note if usdf_v201_drug_display_name_note.present?
       end
-
     end
   end
 end

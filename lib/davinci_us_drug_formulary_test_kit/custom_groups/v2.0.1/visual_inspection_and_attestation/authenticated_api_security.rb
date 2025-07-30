@@ -24,8 +24,10 @@ module DaVinciUSDrugFormularyTestKit
             description: %(
               The developer of the Health IT Module attests that:
 
-                  - Authenticated access to formulary services containing PHI/PII is protected using authorized, authenticated transactions in accordance with the HRex Security and Privacy framework.
-                  - The system does **not** retain any information through unauthenticated API access that could associate medication queries with the consumer.
+              - Authenticated access to formulary services containing PHI/PII is protected using authorized,
+                authenticated transactions in accordance with the HRex Security and Privacy framework.
+              - The system does **not** retain any information through unauthenticated API access that could
+                associate medication queries with the consumer.
             ),
             type: 'radio',
             default: 'false',
@@ -52,13 +54,14 @@ module DaVinciUSDrugFormularyTestKit
 
           The Health IT Module enforces proper security and privacy handling of formulary data:
 
-          - Authenticated access to formulary services containing PHI/PII is protected using authorized, authenticated transactions in accordance with the HRex Security and Privacy framework.
-          - The system does **not** retain any information through unauthenticated API access that could associate medication queries with the consumer.
+          - Authenticated access to formulary services containing PHI/PII is protected using authorized, authenticated
+            transactions in accordance with the HRex Security and Privacy framework.
+          - The system does **not** retain any information through unauthenticated API access that could associate
+            medication queries with the consumer.
 
         )
         pass usdf_v201_authenticated_api_security_note if usdf_v201_authenticated_api_security_note.present?
       end
-
     end
   end
 end
