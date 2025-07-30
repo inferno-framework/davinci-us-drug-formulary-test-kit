@@ -16,21 +16,42 @@ module DaVinciUSDrugFormularyTestKit
 
       verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@19'
 
+      input :usdf_v201_drug_display_name_options,
+            title: 'Supports drug name search using general drug form group codes and names',
+            description: %(
+              I attest that the Health IT Module supports searching for drugs using general drug form
+                  group codes (SCDG or SBDG) and ensures that the display name associated with those codes is included in search results.
+            ),
+            type: 'radio',
+            default: 'false',
+            options: {
+              list_options: [
+                {
+                  label: 'Yes',
+                  value: 'true'
+                },
+                {
+                  label: 'No',
+                  value: 'false'
+                }
+              ]
+            }
+      input :usdf_v201_drug_display_name_note,
+            title: 'Notes, if applicable:',
+            type: 'textarea',
+            optional: true
+
       run do
-        identifier = SecureRandom.hex(32)
+        assert usdf_v201_drug_display_name_options == 'true', %(
+          The following was not satisfied:
 
-        wait(
-          identifier:,
-          message: <<~MESSAGE
-            I attest that the Health IT Module supports searching for drugs using general drug form
-            group codes (SCDG or SBDG) and ensures that the display name associated with those codes is included in search results.
+          The Health IT Module supports searching for drugs using general drug form group codes (SCDG or SBDG)
+          and ensures that the display name associated with those codes is included in search results.
 
-            [Click here](#{resume_pass_url}?token=#{identifier}) if the system **meets** this requirement.
-
-            [Click here](#{resume_fail_url}?token=#{identifier}) if the system **does not meet** this requirement.
-          MESSAGE
         )
+        pass usdf_v201_drug_display_name_note if usdf_v201_drug_display_name_note.present?
       end
+
     end
   end
 end
