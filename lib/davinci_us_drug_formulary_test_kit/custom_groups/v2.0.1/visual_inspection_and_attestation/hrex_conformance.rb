@@ -18,22 +18,44 @@ module DaVinciUSDrugFormularyTestKit
 
       verifies_requirements 'hl7.fhir.us.davinci-drug-formulary_2.0.1@52'
 
+      input :usdf_v201_hrex_conformance_options,
+            title: 'Conforms to HRex conformance expectations',
+            description: %(
+              The developer of the Health IT Module attests that the system conforms
+              to the expectations described in the HRex Conformance Expectations section:
+
+              https://hl7.org/fhir/us/davinci-hrex/STU1/conformance.html
+            ),
+            type: 'radio',
+            default: 'false',
+            options: {
+              list_options: [
+                {
+                  label: 'Yes',
+                  value: 'true'
+                },
+                {
+                  label: 'No',
+                  value: 'false'
+                }
+              ]
+            }
+      input :usdf_v201_hrex_conformance_note,
+            title: 'Notes, if applicable:',
+            type: 'textarea',
+            optional: true
+
       run do
-        identifier = SecureRandom.hex(32)
+        assert usdf_v201_hrex_conformance_options == 'true', %(
+          The following was not satisfied:
 
-        wait(
-          identifier:,
-          message: <<~MESSAGE
-            The developer of the Health IT Module attests that the system conforms
-            to the expectations described in the HRex Conformance Expectations section:
+          The Health IT Module conforms
+          to the expectations described in the HRex Conformance Expectations section:
 
-            https://hl7.org/fhir/us/davinci-hrex/STU1/conformance.html
+          https://hl7.org/fhir/us/davinci-hrex/STU1/conformance.html
 
-            [Click here](#{resume_pass_url}?token=#{identifier}) if the system **meets** this requirement.
-
-            [Click here](#{resume_fail_url}?token=#{identifier}) if the system **does not meet** this requirement.
-          MESSAGE
         )
+        pass usdf_v201_hrex_conformance_note if usdf_v201_hrex_conformance_note.present?
       end
     end
   end
