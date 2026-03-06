@@ -1,3 +1,6 @@
+# 0.13.1
+* Use public validator functions by @ljtucker in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/36
+
 # 0.13.0
 * FI-4182: Remove inferno@groups.mitre.org email from gemspec by @arscan in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/30
 * added attestation tests to cover requirements gaps. by @edeyoung in https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/23
