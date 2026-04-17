@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     davinci_us_drug_formulary_test_kit (0.13.1)
-      inferno_core (~> 1.1)
+      inferno_core (~> 1.2)
       tls_test_kit (~> 1.0)
 
 GEM
@@ -138,7 +138,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    inferno_core (1.1.0)
+    inferno_core (1.2.0)
       activesupport (~> 6.1.7.5)
       base62-rb (= 0.3.1)
       blueprinter (= 0.25.2)
