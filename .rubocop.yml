@@ -95,3 +95,21 @@ RSpec/SubjectStub:
 
 Gemspec/RequireMFA:
   Enabled: false
+
+Style/ComparableBetween:
+  Enabled: false
+
+Style/FileNull:
+  Enabled: false
+
+Style/MapJoin:
+  Enabled: false
+
+Style/ReduceToHash:
+  Enabled: false
+
+Style/SafeNavigationChainLength:
+  Enabled: false
+
+Style/SelectByKind:
+  Enabled: false

@@ -16,7 +16,7 @@ module DaVinciUSDrugFormularyTestKit
       end.compact
     end
 
-    def find_a_value_at(element, path, include_dar: false, &block) # rubocop:disable Style/ArgumentsForwarding
+    def find_a_value_at(element, path, include_dar: false, &block)
       return nil if element.nil?
 
       elements = Array.wrap(element)
@@ -28,7 +28,7 @@ module DaVinciUSDrugFormularyTestKit
           end
         end
 
-        return elements.find(&block) if block_given? # rubocop:disable Style/ArgumentsForwarding
+        return elements.find(&block) if block_given?
 
         return elements.first
       end
@@ -87,7 +87,7 @@ module DaVinciUSDrugFormularyTestKit
         slices.find do |slice|
           case discriminator[:type]
           when 'patternCodeableConcept'
-            slice_value = discriminator[:path].present? ? slice.send((discriminator[:path]).to_s).coding : slice.coding
+            slice_value = discriminator[:path].present? ? slice.send(discriminator[:path].to_s).coding : slice.coding
             slice_value.any? { |coding| coding.code == discriminator[:code] && coding.system == discriminator[:system] }
           when 'patternCoding'
             slice_value = discriminator[:path].present? ? slice.send(discriminator[:path]) : slice
@@ -117,7 +117,7 @@ module DaVinciUSDrugFormularyTestKit
               slice.is_a? FHIR.const_get(discriminator[:code])
             end
           when 'requiredBinding'
-            discriminator[:path].present? ? slice.send((discriminator[:path]).to_s).coding : slice.coding
+            discriminator[:path].present? ? slice.send(discriminator[:path].to_s).coding : slice.coding
             slice_value { |coding| discriminator[:values].include?(coding.code) }
           end
         end
