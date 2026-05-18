@@ -87,7 +87,7 @@ module DaVinciUSDrugFormularyTestKit
       end
 
       def fixed_value_search?
-        first_search? && (search_metadata[:names] == ['status'] || search_metadata[:names] == ['code'])
+        first_search? && [['status'], ['code']].include?(search_metadata[:names])
       end
 
       def fixed_value_search_param_name
