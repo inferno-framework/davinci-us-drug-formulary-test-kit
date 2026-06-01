@@ -1,3 +1,6 @@
+# 0.13.3
+* specify snomedCT version for FHIR validator to use
+
 # 0.13.2
 * Update gemspec dependencies to new released verisons of inferno-core (1.2.2) and tls-test-kit (1.0.2) in: 
 https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/39
