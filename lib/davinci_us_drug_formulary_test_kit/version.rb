@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module DaVinciUSDrugFormularyTestKit
-  VERSION = '0.13.3'
-  LAST_UPDATED = '2026-06-01'
+  VERSION = '0.13.4'
+  LAST_UPDATED = '2026-10-21'
 end
