@@ -1,3 +1,7 @@
+# 0.13.4
+* Remove unused roo pin from gemspec in:
+https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit/pull/42
+
 # 0.13.3
 * specify snomedCT version for FHIR validator to use
 
